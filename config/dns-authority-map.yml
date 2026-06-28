@@ -1,0 +1,31 @@
+# DNS authority map baseline
+
+status: pending_user_evidence
+
+providers:
+  registrar: Domeneshop
+  primary_dns_when_wix_nameservers_are_active: Wix
+  server_hosting: Domeneshop
+  database_hosting: Domeneshop
+
+domains:
+  nanotech-solutions.com:
+    registrar: Domeneshop
+    authoritative_dns: Wix
+    evidence_status: pending
+
+  atlas-ai.no:
+    registrar: Domeneshop
+    authoritative_dns: Wix
+    evidence_status: pending
+
+  solarex.no:
+    registrar: Domeneshop
+    authoritative_dns: Wix
+    evidence_status: pending
+
+required_evidence:
+  - current_dns_record_export_or_screenshots
+  - nameserver_confirmation
+  - domain_connection_method
+  - provider_access_boundary
