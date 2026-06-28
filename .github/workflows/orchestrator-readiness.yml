@@ -1,0 +1,68 @@
+name: Orchestrator Readiness
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  readiness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate baseline files
+        run: |
+          set -euo pipefail
+          test -f README.md
+          test -f config/repositories.yml
+          test -f config/approval-policy.yml
+          test -f config/workflow-routing.yml
+          test -f config/dns-authority-map.yml
+          test -f docs/ORCHESTRATOR_ARCHITECTURE.md
+          test -f docs/CONNECTOR_CAPABILITY_MAP.md
+          test -f docs/EVIDENCE_REQUIREMENTS.md
+          test -f docs/PRODUCTION_WRITE_GATE.md
+
+      - name: Validate safety posture markers
+        run: |
+          set -euo pipefail
+          grep -q 'READ_ONLY_REPORTING_ONLY' README.md
+          grep -q 'NO_AUTONOMOUS_LIVE_CHANGE' README.md
+          grep -q 'LIVE_CHANGE_NOT_APPROVED' docs/PRODUCTION_WRITE_GATE.md
+
+      - name: Generate readiness report
+        run: |
+          mkdir -p artifacts
+          cat > artifacts/orchestrator-readiness-report.md <<'REPORT'
+          # Orchestrator Readiness Report — 01:55, 29.06.2026
+
+          Status: baseline_ready
+
+          Validated files:
+          - README.md
+          - config/repositories.yml
+          - config/approval-policy.yml
+          - config/workflow-routing.yml
+          - config/dns-authority-map.yml
+          - docs/ORCHESTRATOR_ARCHITECTURE.md
+          - docs/CONNECTOR_CAPABILITY_MAP.md
+          - docs/EVIDENCE_REQUIREMENTS.md
+          - docs/PRODUCTION_WRITE_GATE.md
+
+          Boundary:
+          - read-only reporting only
+          - no autonomous live change
+          - live change not approved
+          REPORT
+
+      - name: Upload readiness report
+        uses: actions/upload-artifact@v4
+        with:
+          name: orchestrator-readiness-report
+          path: artifacts/orchestrator-readiness-report.md
+          if-no-files-found: error
