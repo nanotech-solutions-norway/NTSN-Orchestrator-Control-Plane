@@ -1,0 +1,22 @@
+# Managed repositories
+
+repositories:
+  powershell:
+    repo: nanotech-solutions-norway/Powershell-
+    role: powershell_control_plane
+
+  python:
+    repo: nanotech-solutions-norway/Phyton
+    role: python_control_plane
+
+  domeneshop_mcp:
+    repo: nanotech-solutions-norway/Domeneshop---MCP-
+    role: domeneshop_mcp_bridge
+
+  conta_mcp:
+    repo: nanotech-solutions-norway/Conta-MCP
+    role: conta_mcp_bridge
+
+  memory_ops:
+    repo: nanotech-solutions-norway/ai-memory-ops
+    role: audit_memory_layer
