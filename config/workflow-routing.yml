@@ -1,0 +1,28 @@
+# Workflow routing baseline
+
+commands:
+  powershell_quality_gate:
+    repo: nanotech-solutions-norway/Powershell-
+    workflow: CI - PowerShell Quality Gate
+    approval: auto_approved
+
+  powershell_control_plane_readiness:
+    repo: nanotech-solutions-norway/Powershell-
+    workflow: Manual - Control Plane Readiness
+    approval: auto_approved
+
+  python_full_validation:
+    repo: nanotech-solutions-norway/Phyton
+    workflow: CI - Python Full Validation
+    approval: auto_approved
+
+  python_run_registered_script:
+    repo: nanotech-solutions-norway/Phyton
+    workflow: Manual - Python Run Script
+    approval: auto_approved
+    required_mode: read_only
+
+  domeneshop_mcp_validation:
+    repo: nanotech-solutions-norway/Domeneshop---MCP-
+    workflow: Validate Domeneshop MCP Repository
+    approval: auto_approved
