@@ -1,0 +1,24 @@
+# Approval policy
+
+classification:
+  auto_approved:
+    - inspect_repository_files
+    - inspect_committed_documentation
+    - inspect_workflow_yaml
+    - generate_readiness_report
+    - generate_evidence_index
+    - run_read_only_validation
+
+  pending_review:
+    - apply_dns_change
+    - upload_server_files
+    - apply_database_migration
+    - enable_write_tools
+    - production_deployment
+    - destructive_operation
+
+rules:
+  default_mode: read_only
+  provider_changes_default: pending_review
+  destructive_changes_default: pending_review
+  require_operator_signoff_for_live_change: true
