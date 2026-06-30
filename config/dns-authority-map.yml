@@ -1,6 +1,9 @@
-# DNS authority map baseline
+# DNS authority map — 21:25, 30.06.2026
 
-status: pending_user_evidence
+status: wix_readonly_evidence_collected
+classification: READ_ONLY
+live_change_approval: NOT_APPROVED
+last_wix_readonly_retrieval: "2026-06-30T21:25:00+02:00"
 
 providers:
   registrar: Domeneshop
@@ -8,24 +11,167 @@ providers:
   server_hosting: Domeneshop
   database_hosting: Domeneshop
 
-domains:
-  nanotech-solutions.com:
-    registrar: Domeneshop
-    authoritative_dns: Wix
-    evidence_status: pending
-
+wix_connected_domains:
   atlas-ai.no:
-    registrar: Domeneshop
+    connection_type: NAMESERVERS
+    propagation_status: COMPLETED
+    site_assignment: PRIMARY
+    site_id: 1448ccad-68f0-43ea-8f0e-c9d8c0366082
+    dns_zone_status: retrieved
     authoritative_dns: Wix
-    evidence_status: pending
+    dnssec_enabled: false
+    apex_a:
+      - 185.230.63.171
+      - 185.230.63.186
+      - 185.230.63.107
+    ns:
+      - ns10.wixdns.net
+      - ns11.wixdns.net
+    notable_records:
+      - host: mcp.atlas-ai.no
+        type: A
+        values:
+          - 194.63.249.234
+      - host: monitor.atlas-ai.no
+        type: A
+        values:
+          - 194.63.249.234
+      - host: pip.atlas-ai.no
+        type: A
+        values:
+          - 194.63.249.234
+      - host: www.atlas-ai.no
+        type: CNAME
+        values:
+          - cdn1.wixdns.net
+      - host: en.atlas-ai.no
+        type: CNAME
+        values:
+          - cdn1.wixdns.net
+    redacted_txt_records_present: true
 
+  nanotech-solutions.com:
+    connection_type: NAMESERVERS
+    propagation_status: COMPLETED
+    site_assignment: PRIMARY
+    site_id: cf070c42-c4a1-44f7-b000-087d7c75f19d
+    dns_zone_status: retrieved
+    authoritative_dns: Wix
+    dnssec_enabled: true
+    dnssec_key_tag: 41942
+    apex_a:
+      - 185.230.63.107
+      - 185.230.63.186
+      - 185.230.63.171
+    ns:
+      - ns11.wixdns.net
+      - ns10.wixdns.net
+    mx:
+      - 0 mx.domeneshop.no
+    spf: "v=spf1 include:_spf.domeneshop.no ~all"
+    notable_records:
+      - host: forms.nanotech-solutions.com
+        type: A
+        values:
+          - 194.63.249.211
+      - host: www.nanotech-solutions.com
+        type: CNAME
+        values:
+          - cdn1.wixdns.net
+      - host: en.nanotech-solutions.com
+        type: CNAME
+        values:
+          - cdn1.wixdns.net
+      - host: no.nanotech-solutions.com
+        type: CNAME
+        values:
+          - cdn1.wixdns.net
+    mail_records_present: true
+    redacted_verification_records_present: true
+
+  ainorge.com:
+    connection_type: NAMESERVERS
+    propagation_status: COMPLETED
+    dns_zone_status: retrieved
+    authoritative_dns: Wix
+    dnssec_enabled: false
+    apex_a:
+      - 185.230.63.171
+      - 185.230.63.186
+      - 185.230.63.107
+    ns:
+      - ns10.wixdns.net
+      - ns11.wixdns.net
+    spf: "v=spf1 -all"
+    review_notes:
+      - mx_value_returned_as_blank_after_priority_0
+
+  airlite.no:
+    connection_type: NAMESERVERS
+    propagation_status: COMPLETED
+    dns_zone_status: retrieved
+    authoritative_dns: Wix
+    dnssec_enabled: false
+    apex_a:
+      - 185.230.63.107
+      - 185.230.63.186
+      - 185.230.63.171
+    ns:
+      - ns11.wixdns.net
+      - ns10.wixdns.net
+
+  nanoconcept.no:
+    connection_type: NAMESERVERS
+    propagation_status: FAILED
+    dns_zone_status: retrieved
+    authoritative_dns: Wix
+    dnssec_enabled: false
+    apex_a:
+      - 185.230.63.171
+      - 185.230.63.186
+      - 185.230.63.107
+    ns:
+      - ns10.wixdns.net
+      - ns11.wixdns.net
+    mx:
+      - 10 mx.domeneshop.no
+    spf: "v=spf1 include:_spf.domeneshop.no ~all"
+    review_notes:
+      - wix_connected_domain_propagation_failed
+
+  onyx-norge.no:
+    connection_type: NAMESERVERS
+    propagation_status: FAILED
+    dns_zone_status: retrieved
+    authoritative_dns: Wix
+    dnssec_enabled: false
+    apex_a:
+      - 185.230.63.171
+      - 185.230.63.186
+      - 185.230.63.107
+    ns:
+      - ns11.wixdns.net
+      - ns10.wixdns.net
+    review_notes:
+      - wix_connected_domain_propagation_failed
+
+  ntsn.no:
+    connection_type: NAMESERVERS
+    propagation_status: COMPLETED
+    dns_zone_status: not_retrieved_connector_blocked
+    authoritative_dns: Wix
+    review_notes:
+      - dns_zone_fetch_blocked_by_connector_safety_layer
+
+not_returned_by_wix_connected_domain_inventory:
   solarex.no:
-    registrar: Domeneshop
-    authoritative_dns: Wix
-    evidence_status: pending
+    previous_expected_registrar: Domeneshop
+    evidence_status: not_returned_by_wix_connector
+    review_notes:
+      - not_listed_in_wix_connected_domains_response
 
-required_evidence:
-  - current_dns_record_export_or_screenshots
-  - nameserver_confirmation
-  - domain_connection_method
-  - provider_access_boundary
+required_followup_evidence:
+  - public_dns_lookup_for_failed_propagation_domains
+  - ntsn_no_dns_zone_export_or_successful_retry
+  - solarex_no_authority_confirmation
+  - operator_review_before_any_dns_change
