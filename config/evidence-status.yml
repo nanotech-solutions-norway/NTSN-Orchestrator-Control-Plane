@@ -5,10 +5,19 @@ status_legend:
   received: evidence package received but not yet fully validated
   indexed: evidence package indexed into orchestrator repo
   active: evidence is active in orchestrator scope
+  validated: workflow or operator validation completed
   out_of_scope: intentionally excluded from current scope
   pending_admin_export: connector evidence incomplete; manual/admin export required
+  pending_attachment_access: user reported an attachment, but it was not accessible in the current runtime/file-search context
 
 categories:
+  orchestrator_readiness_workflow:
+    status: validated
+    validation_source: operator_reported_workflow_result
+    reported_result: Validated
+    validation_file: docs/validation/ORCHESTRATOR_READINESS_VALIDATED_20260702.md
+    control_status: evidence_intake_ready_no_live_write_approval
+
   wix_dns:
     status: indexed
     active_scope:
@@ -53,13 +62,16 @@ categories:
       - DOMENESHOP_ACCESS_BOUNDARY.md
 
   mcp_runtime_client_config:
-    status: pending
+    status: pending_attachment_access
+    user_reported: MCP evidence attached
+    runtime_access_result: not_found_in_accessible_uploads_or_file_search
     required_files:
       - MCP_RUNTIME_INVENTORY.md
       - MCP_CLIENT_CONFIG_SANITIZED.json
       - MCP_TOOL_REGISTRY.md
       - MCP_RUNTIME_HEALTH_REPORT.md
       - MCP_WRITE_CAPABILITY_AUDIT.md
+    control_status: not_indexed_do_not_assume_runtime_readiness
 
 current_global_control_status:
   live_provider_write_approved: false
