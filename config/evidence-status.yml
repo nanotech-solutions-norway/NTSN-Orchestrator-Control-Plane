@@ -8,7 +8,6 @@ status_legend:
   validated: workflow or operator validation completed
   out_of_scope: intentionally excluded from current scope
   pending_admin_export: connector evidence incomplete; manual/admin export required
-  pending_attachment_access: user reported an attachment, but it was not accessible in the current runtime/file-search context
 
 categories:
   orchestrator_readiness_workflow:
@@ -52,6 +51,29 @@ categories:
     intake_file: docs/evidence/GITHUB_ENVIRONMENT_EVIDENCE_INTAKE_1122_02072026.md
     control_status: connector_evidence_indexed_admin_export_still_required_for_complete_proof
 
+  mcp_runtime_client_config:
+    status: indexed
+    source_package: NTSN_MCP_Runtime_Config_Evidence_1138_02072026.zip
+    intake_file: docs/evidence/MCP_RUNTIME_CONFIG_EVIDENCE_INTAKE_1138_02072026.md
+    detected_runtime_categories:
+      - NTSN Orchestrator Control Plane
+      - Domeneshop MCP bridge
+      - Conta MCP initial endpoint
+      - Conta Bridge v2 accounting bridge
+      - Atlas AI monitor and PIP API bridge
+      - SolarEX and NTSN forms SQL backend monitored target
+      - PowerShell execution control plane
+      - Python execution control plane
+      - Memory Vault governed memory and evidence layer
+      - Atlas AI website and governance runtime
+      - Wix connector boundary
+    detected_readiness_classes:
+      - READ_ONLY_READY
+      - PLAN_ONLY_READY
+      - CONTROLLED_WRITE_PENDING_APPROVAL
+      - NOT_CONFIGURED
+    control_status: indexed_live_write_not_approved
+
   domeneshop_provider:
     status: pending
     required_files:
@@ -60,18 +82,7 @@ categories:
       - DOMENESHOP_SQL_SCHEMA_SANITIZED.md
       - DOMENESHOP_RUNTIME_ENDPOINTS.md
       - DOMENESHOP_ACCESS_BOUNDARY.md
-
-  mcp_runtime_client_config:
-    status: pending_attachment_access
-    user_reported: MCP evidence attached
-    runtime_access_result: not_found_in_accessible_uploads_or_file_search
-    required_files:
-      - MCP_RUNTIME_INVENTORY.md
-      - MCP_CLIENT_CONFIG_SANITIZED.json
-      - MCP_TOOL_REGISTRY.md
-      - MCP_RUNTIME_HEALTH_REPORT.md
-      - MCP_WRITE_CAPABILITY_AUDIT.md
-    control_status: not_indexed_do_not_assume_runtime_readiness
+    note: separate provider/server/SQL evidence still required beyond MCP runtime index
 
 current_global_control_status:
   live_provider_write_approved: false
