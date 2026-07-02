@@ -8,6 +8,7 @@ status_legend:
   validated: workflow or operator validation completed
   out_of_scope: intentionally excluded from current scope
   pending_admin_export: connector evidence incomplete; manual/admin export required
+  pending_review: source evidence is indexed but explicitly marked pending review or requires live/manual confirmation
 
 categories:
   orchestrator_readiness_workflow:
@@ -75,14 +76,21 @@ categories:
     control_status: indexed_live_write_not_approved
 
   domeneshop_provider:
-    status: pending
-    required_files:
+    status: indexed_pending_review
+    source_package: domeneshop_provider_evidence_1205_02072026.zip
+    intake_file: docs/evidence/DOMENESHOP_PROVIDER_EVIDENCE_INTAKE_1205_02072026.md
+    included_files:
       - DOMENESHOP_SERVER_INVENTORY.md
       - DOMENESHOP_SERVER_FILE_TREE_SANITIZED.txt
       - DOMENESHOP_SQL_SCHEMA_SANITIZED.md
       - DOMENESHOP_RUNTIME_ENDPOINTS.md
       - DOMENESHOP_ACCESS_BOUNDARY.md
-    note: separate provider/server/SQL evidence still required beyond MCP runtime index
+    control_status: indexed_source_pending_review_no_live_write_approval
+    remaining_confirmation_items:
+      - live_ftp_sftp_tree_confirmation
+      - full_sql_schema_metadata_export
+      - operator_controlled_endpoint_validation
+      - provider_control_panel_export_where_required
 
 current_global_control_status:
   live_provider_write_approved: false
