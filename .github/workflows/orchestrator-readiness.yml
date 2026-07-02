@@ -23,10 +23,14 @@ jobs:
           test -f config/approval-policy.yml
           test -f config/workflow-routing.yml
           test -f config/dns-authority-map.yml
+          test -f config/evidence-status.yml
           test -f docs/ORCHESTRATOR_ARCHITECTURE.md
           test -f docs/CONNECTOR_CAPABILITY_MAP.md
           test -f docs/EVIDENCE_REQUIREMENTS.md
           test -f docs/PRODUCTION_WRITE_GATE.md
+          test -f docs/PYTHON_ENVIRONMENT_CONTROL_PLANE_INCLUSION_20260702.md
+          test -f docs/evidence/CUSTOM_GPT_EVIDENCE_INTAKE_20260702.md
+          test -f docs/evidence/GITHUB_ENVIRONMENT_EVIDENCE_INTAKE_1122_02072026.md
 
       - name: Validate safety posture markers
         run: |
@@ -34,14 +38,25 @@ jobs:
           grep -q 'READ_ONLY_REPORTING_ONLY' README.md
           grep -q 'NO_AUTONOMOUS_LIVE_CHANGE' README.md
           grep -q 'LIVE_CHANGE_NOT_APPROVED' docs/PRODUCTION_WRITE_GATE.md
+          grep -q 'live_provider_write_approved: false' config/evidence-status.yml
+          grep -q 'dns_write_approved: false' config/evidence-status.yml
+          grep -q 'production_deployment_approved: false' config/evidence-status.yml
+          grep -q 'destructive_operations_approved: false' config/evidence-status.yml
+
+      - name: Validate Python inclusion markers
+        run: |
+          set -euo pipefail
+          grep -q 'nanotech-solutions-norway/Phyton' config/repositories.yml
+          grep -q 'CI - Python Full Validation' config/workflow-routing.yml
+          grep -q 'PYTHON_ENVIRONMENT_INCLUDED' docs/PYTHON_ENVIRONMENT_CONTROL_PLANE_INCLUSION_20260702.md
 
       - name: Generate readiness report
         run: |
           mkdir -p artifacts
           cat > artifacts/orchestrator-readiness-report.md <<'REPORT'
-          # Orchestrator Readiness Report — 01:55, 29.06.2026
+          # Orchestrator Readiness Report — 2026-07-02
 
-          Status: baseline_ready
+          Status: evidence_intake_ready
 
           Validated files:
           - README.md
@@ -49,15 +64,30 @@ jobs:
           - config/approval-policy.yml
           - config/workflow-routing.yml
           - config/dns-authority-map.yml
+          - config/evidence-status.yml
           - docs/ORCHESTRATOR_ARCHITECTURE.md
           - docs/CONNECTOR_CAPABILITY_MAP.md
           - docs/EVIDENCE_REQUIREMENTS.md
           - docs/PRODUCTION_WRITE_GATE.md
+          - docs/PYTHON_ENVIRONMENT_CONTROL_PLANE_INCLUSION_20260702.md
+          - docs/evidence/CUSTOM_GPT_EVIDENCE_INTAKE_20260702.md
+          - docs/evidence/GITHUB_ENVIRONMENT_EVIDENCE_INTAKE_1122_02072026.md
+
+          Included environments:
+          - Orchestrator control plane
+          - PowerShell control plane
+          - Python control plane
+          - Domeneshop MCP
+          - Conta MCP pending evidence
+          - Memory/audit layer
 
           Boundary:
           - read-only reporting only
           - no autonomous live change
           - live change not approved
+          - DNS writes not approved
+          - production deployment not approved
+          - destructive operations not approved
           REPORT
 
       - name: Upload readiness report
