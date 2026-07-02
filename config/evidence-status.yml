@@ -1,0 +1,68 @@
+# Evidence status — updated 2026-07-02
+
+status_legend:
+  pending: evidence requested but not yet received
+  received: evidence package received but not yet fully validated
+  indexed: evidence package indexed into orchestrator repo
+  active: evidence is active in orchestrator scope
+  out_of_scope: intentionally excluded from current scope
+  pending_admin_export: connector evidence incomplete; manual/admin export required
+
+categories:
+  wix_dns:
+    status: indexed
+    active_scope:
+      - atlas-ai.no
+      - nanotech-solutions.com
+      - ainorge.com
+      - airlite.no
+    out_of_scope_by_user_instruction_20260702:
+      - solarex.no
+      - nanoconcept.no
+      - onyx-norge.no
+      - ntsn.no
+    evidence_file: docs/WIX_DNS_READONLY_EVIDENCE_2125_30062026.md
+    control_status: read_only_no_dns_write_approval
+
+  python_environment:
+    status: active
+    repository: nanotech-solutions-norway/Phyton
+    inclusion_file: docs/PYTHON_ENVIRONMENT_CONTROL_PLANE_INCLUSION_20260702.md
+    control_status: development_only_read_only_repository_local
+    next_validation: CI - Python Full Validation
+
+  custom_gpt_configuration:
+    status: indexed
+    source_package: NTSN_CUSTOM_GPT_CONTROL_PLANE_EVIDENCE_20260702(1).zip
+    intake_file: docs/evidence/CUSTOM_GPT_EVIDENCE_INTAKE_20260702.md
+    control_status: capability_boundary_review_required_before_write_authority
+
+  github_environment_boundary:
+    status: indexed
+    source_package: GitHub_Environment_Secrets_Boundary_Evidence_1122_02072026.zip
+    intake_file: docs/evidence/GITHUB_ENVIRONMENT_EVIDENCE_INTAKE_1122_02072026.md
+    control_status: connector_evidence_indexed_admin_export_still_required_for_complete_proof
+
+  domeneshop_provider:
+    status: pending
+    required_files:
+      - DOMENESHOP_SERVER_INVENTORY.md
+      - DOMENESHOP_SERVER_FILE_TREE_SANITIZED.txt
+      - DOMENESHOP_SQL_SCHEMA_SANITIZED.md
+      - DOMENESHOP_RUNTIME_ENDPOINTS.md
+      - DOMENESHOP_ACCESS_BOUNDARY.md
+
+  mcp_runtime_client_config:
+    status: pending
+    required_files:
+      - MCP_RUNTIME_INVENTORY.md
+      - MCP_CLIENT_CONFIG_SANITIZED.json
+      - MCP_TOOL_REGISTRY.md
+      - MCP_RUNTIME_HEALTH_REPORT.md
+      - MCP_WRITE_CAPABILITY_AUDIT.md
+
+current_global_control_status:
+  live_provider_write_approved: false
+  dns_write_approved: false
+  production_deployment_approved: false
+  destructive_operations_approved: false
