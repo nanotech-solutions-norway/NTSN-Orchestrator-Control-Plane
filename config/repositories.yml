@@ -1,22 +1,64 @@
-# Managed repositories
+# Managed repositories — updated 2026-07-02
 
 repositories:
+  orchestrator:
+    repo: nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane
+    role: cross_system_orchestrator_control_plane
+    current_posture: read_only_report_driven
+    default_branch: main
+    evidence_status: active
+
   powershell:
     repo: nanotech-solutions-norway/Powershell-
-    role: powershell_control_plane
+    role: powershell_execution_control_plane
+    current_posture: read_only_report_driven
+    default_branch: main
+    validation_source: docs/CONTROL_PLANE_COMPLETION_REPORT.md
+    orchestrator_status: included
 
   python:
     repo: nanotech-solutions-norway/Phyton
-    role: python_control_plane
+    role: python_execution_testing_debugging_validation_layer
+    current_posture: development_only_read_only_repository_local
+    default_branch: main
+    validation_source: docs/PHASE7_OPERATIONS_HANDOFF.md
+    primary_workflows:
+      - CI - Python Quality Gate
+      - CI - Python Full Validation
+      - Manual - Python Debug
+      - Manual - Python Run Script
+      - Manual - Python Inspect Artifacts
+      - Manual - Python Validate Registry
+    registered_scripts:
+      - hello_control_plane
+      - repository_inventory
+      - workflow_inventory
+      - dependency_inventory
+      - repository_health_report
+      - control_plane_readiness
+    orchestrator_status: included_as_execution_environment
+    write_boundary: no_staging_no_production_no_external_system_writes
 
   domeneshop_mcp:
     repo: nanotech-solutions-norway/Domeneshop---MCP-
     role: domeneshop_mcp_bridge
+    current_posture: read_only_runtime_plus_deployment_planning
+    default_branch: main
+    validation_source: docs/CONTROLLED_USE_ACCEPTANCE_INDEX.md
+    orchestrator_status: included
 
   conta_mcp:
     repo: nanotech-solutions-norway/Conta-MCP
     role: conta_mcp_bridge
+    current_posture: pending_evidence_intake
+    default_branch: main
+    validation_source: pending
+    orchestrator_status: included_pending_evidence
 
   memory_ops:
     repo: nanotech-solutions-norway/ai-memory-ops
-    role: audit_memory_layer
+    role: governed_memory_audit_layer
+    current_posture: reviewed_memory_updates_only
+    default_branch: main
+    validation_source: README.md
+    orchestrator_status: referenced_governance_layer
