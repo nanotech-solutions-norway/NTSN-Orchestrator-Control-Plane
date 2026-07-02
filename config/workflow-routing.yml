@@ -1,28 +1,75 @@
-# Workflow routing baseline
+# Workflow routing baseline — updated 2026-07-02
 
 commands:
   powershell_quality_gate:
     repo: nanotech-solutions-norway/Powershell-
     workflow: CI - PowerShell Quality Gate
     approval: auto_approved
+    action_class: READ_ONLY
 
   powershell_control_plane_readiness:
     repo: nanotech-solutions-norway/Powershell-
     workflow: Manual - Control Plane Readiness
     approval: auto_approved
+    action_class: REPORT_ONLY
+
+  python_quality_gate:
+    repo: nanotech-solutions-norway/Phyton
+    workflow: CI - Python Quality Gate
+    approval: auto_approved
+    action_class: READ_ONLY
 
   python_full_validation:
     repo: nanotech-solutions-norway/Phyton
     workflow: CI - Python Full Validation
     approval: auto_approved
+    action_class: REPORT_ONLY
+    default_validation_route: true
+
+  python_debug:
+    repo: nanotech-solutions-norway/Phyton
+    workflow: Manual - Python Debug
+    approval: auto_approved
+    action_class: REPORT_ONLY
+    required_environment: development
 
   python_run_registered_script:
     repo: nanotech-solutions-norway/Phyton
     workflow: Manual - Python Run Script
     approval: auto_approved
+    action_class: READ_ONLY
+    required_environment: development
     required_mode: read_only
+    allowed_scripts:
+      - hello_control_plane
+      - repository_inventory
+      - workflow_inventory
+      - dependency_inventory
+      - repository_health_report
+      - control_plane_readiness
+
+  python_inspect_artifacts:
+    repo: nanotech-solutions-norway/Phyton
+    workflow: Manual - Python Inspect Artifacts
+    approval: auto_approved
+    action_class: REPORT_ONLY
+    required_environment: development
+
+  python_validate_registry:
+    repo: nanotech-solutions-norway/Phyton
+    workflow: Manual - Python Validate Registry
+    approval: auto_approved
+    action_class: REPORT_ONLY
+    required_environment: development
 
   domeneshop_mcp_validation:
     repo: nanotech-solutions-norway/Domeneshop---MCP-
     workflow: Validate Domeneshop MCP Repository
     approval: auto_approved
+    action_class: REPORT_ONLY
+
+  orchestrator_readiness:
+    repo: nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane
+    workflow: Orchestrator Readiness
+    approval: auto_approved
+    action_class: REPORT_ONLY
