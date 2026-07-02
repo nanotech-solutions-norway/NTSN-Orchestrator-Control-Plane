@@ -1,9 +1,10 @@
-# DNS authority map — 21:25, 30.06.2026
+# DNS authority map — updated 2026-07-02
 
-status: wix_readonly_evidence_collected
+status: wix_readonly_evidence_collected_active_scope_reduced
 classification: READ_ONLY
 live_change_approval: NOT_APPROVED
 last_wix_readonly_retrieval: "2026-06-30T21:25:00+02:00"
+active_scope_note: "User instructed 2026-07-02 to ignore solarex.no, nanoconcept.no, onyx-norge.no, and ntsn.no. These domains are excluded from current orchestrator DNS readiness follow-up."
 
 providers:
   registrar: Domeneshop
@@ -11,7 +12,7 @@ providers:
   server_hosting: Domeneshop
   database_hosting: Domeneshop
 
-wix_connected_domains:
+active_wix_dns_scope:
   atlas-ai.no:
     connection_type: NAMESERVERS
     propagation_status: COMPLETED
@@ -120,58 +121,11 @@ wix_connected_domains:
       - ns11.wixdns.net
       - ns10.wixdns.net
 
-  nanoconcept.no:
-    connection_type: NAMESERVERS
-    propagation_status: FAILED
-    dns_zone_status: retrieved
-    authoritative_dns: Wix
-    dnssec_enabled: false
-    apex_a:
-      - 185.230.63.171
-      - 185.230.63.186
-      - 185.230.63.107
-    ns:
-      - ns10.wixdns.net
-      - ns11.wixdns.net
-    mx:
-      - 10 mx.domeneshop.no
-    spf: "v=spf1 include:_spf.domeneshop.no ~all"
-    review_notes:
-      - wix_connected_domain_propagation_failed
-
-  onyx-norge.no:
-    connection_type: NAMESERVERS
-    propagation_status: FAILED
-    dns_zone_status: retrieved
-    authoritative_dns: Wix
-    dnssec_enabled: false
-    apex_a:
-      - 185.230.63.171
-      - 185.230.63.186
-      - 185.230.63.107
-    ns:
-      - ns11.wixdns.net
-      - ns10.wixdns.net
-    review_notes:
-      - wix_connected_domain_propagation_failed
-
-  ntsn.no:
-    connection_type: NAMESERVERS
-    propagation_status: COMPLETED
-    dns_zone_status: not_retrieved_connector_blocked
-    authoritative_dns: Wix
-    review_notes:
-      - dns_zone_fetch_blocked_by_connector_safety_layer
-
-not_returned_by_wix_connected_domain_inventory:
-  solarex.no:
-    previous_expected_registrar: Domeneshop
-    evidence_status: not_returned_by_wix_connector
-    review_notes:
-      - not_listed_in_wix_connected_domains_response
+out_of_scope_by_user_instruction_20260702:
+  - solarex.no
+  - nanoconcept.no
+  - onyx-norge.no
+  - ntsn.no
 
 required_followup_evidence:
-  - public_dns_lookup_for_failed_propagation_domains
-  - ntsn_no_dns_zone_export_or_successful_retry
-  - solarex_no_authority_confirmation
   - operator_review_before_any_dns_change
