@@ -1,0 +1,154 @@
+# Read-only route map — O-RT2 — 2026-07-03
+
+release_train: O-RT2
+runtime_contract: GET_ONLY
+live_write_approved: false
+unknown_action_default: NOT_CONFIGURED
+conflict_default: PENDING_REVIEW
+
+routes:
+  - id: orchestrator_status
+    path: /orchestrator/v1/status
+    method: GET
+    action_class: READ_ONLY_READY
+    source_files:
+      - config/evidence-status.yml
+      - config/approval-policy.yml
+    returns:
+      - release_train_status
+      - global_write_gates
+      - evidence_intake_status
+    forbidden:
+      - provider_mutation
+      - secret_readout
+      - private_payload_export
+
+  - id: orchestrator_registry
+    path: /orchestrator/v1/registry
+    method: GET
+    action_class: READ_ONLY_READY
+    source_files:
+      - config/orchestrator-registry.json
+      - docs/ORCHESTRATOR_REGISTRY.md
+    returns:
+      - canonical_registry
+      - managed_repositories
+      - capabilities
+      - evidence_references
+
+  - id: route_map
+    path: /orchestrator/v1/route-map
+    method: GET
+    action_class: READ_ONLY_READY
+    source_files:
+      - config/read-only-routes.yml
+    returns:
+      - read_only_routes
+      - methods
+      - action_classes
+      - source_files
+
+  - id: capability_matrix
+    path: /orchestrator/v1/capability-matrix
+    method: GET
+    action_class: READ_ONLY_READY
+    source_files:
+      - config/orchestrator-registry.json
+      - config/action-classification.yml
+    returns:
+      - capability_id
+      - class
+      - target
+      - decision
+      - evidence
+
+  - id: dependency_graph
+    path: /orchestrator/v1/dependency-graph
+    method: GET
+    action_class: READ_ONLY_READY
+    source_files:
+      - config/repositories.yml
+      - config/provider-boundary.yml
+      - config/orchestrator-registry.json
+    returns:
+      - managed_repositories
+      - provider_boundaries
+      - runtime_dependencies
+      - evidence_links
+
+  - id: provider_boundary
+    path: /orchestrator/v1/provider-boundary
+    method: GET
+    action_class: READ_ONLY_READY
+    source_files:
+      - config/provider-boundary.yml
+    returns:
+      - provider_roles
+      - read_allowed
+      - write_status
+      - blocked_without_approval
+      - caveats
+
+  - id: evidence_status
+    path: /orchestrator/v1/evidence-status
+    method: GET
+    action_class: READ_ONLY_READY
+    source_files:
+      - config/evidence-status.yml
+    returns:
+      - evidence_categories
+      - status
+      - control_status
+      - global_write_gates
+
+  - id: validation_status
+    path: /orchestrator/v1/validation-status
+    method: GET
+    action_class: READ_ONLY_READY
+    source_files:
+      - docs/validation/ORCHESTRATOR_READINESS_VALIDATED_20260702.md
+      - docs/validation/ORT1_CANONICAL_REGISTRY_COMPLETE_20260703.md
+      - docs/validation/MCP_EVIDENCE_INDEXED_20260702.md
+      - docs/validation/DOMENESHOP_EVIDENCE_INDEXED_20260702.md
+    returns:
+      - validation_records
+      - completion_status
+      - pending_review_notes
+
+  - id: pending_review
+    path: /orchestrator/v1/pending-review
+    method: GET
+    action_class: READ_ONLY_READY
+    source_files:
+      - docs/PENDING_REVIEW_ITEMS_ORT1_20260703.md
+    returns:
+      - pending_review_items
+      - owners_or_review_paths
+      - required_resolution
+      - current_action_class
+
+  - id: openapi_schema
+    path: /orchestrator/v1/openapi
+    method: GET
+    action_class: READ_ONLY_READY
+    source_files:
+      - openapi/orchestrator-readonly.openapi.json
+    returns:
+      - openapi_schema
+
+blocked_methods:
+  - POST
+  - PUT
+  - PATCH
+  - DELETE
+
+blocked_action_classes:
+  - LIVE_WRITE_APPROVED
+  - DNS_WRITE
+  - FTP_SFTP_WRITE
+  - SQL_WRITE
+  - ACCOUNTING_WRITE_OR_SUBMISSION
+  - PRODUCTION_DEPLOYMENT
+  - DESTRUCTIVE_OPERATION
+  - BULK_SYNC_OR_DELETE
+  - DIRECT_PROVIDER_PUBLISH
