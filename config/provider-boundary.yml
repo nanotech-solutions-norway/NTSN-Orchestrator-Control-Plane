@@ -1,0 +1,139 @@
+# Provider boundary — O-RT1 — 2026-07-03
+
+classification_source: canonical_orchestrator_registry
+live_provider_write_approved: false
+
+providers:
+  github:
+    role: repository_governance_workflow_validation_evidence
+    read_allowed:
+      - repository_metadata
+      - committed_files
+      - workflow_yaml
+      - pull_request_issue_metadata
+      - workflow_artifact_when_available
+    write_status: CONTROLLED_WRITE_PENDING_APPROVAL
+    blocked_without_approval:
+      - create_or_update_files
+      - create_pull_request
+      - dispatch_workflow_with_write_effect
+      - modify_environment_or_secrets
+    caveats:
+      - full_environment_and_branch_protection_admin_export_still_required_for_complete_proof
+      - secret_values_must_never_be_exported
+
+  wix:
+    role: website_dns_domain_connector_evidence
+    read_allowed:
+      - connected_domain_inventory
+      - dns_zone_readout_when_connector_allows
+      - site_metadata
+    write_status: CONTROLLED_WRITE_PENDING_APPROVAL
+    blocked_without_approval:
+      - dns_record_mutation
+      - site_publish
+      - provider_settings_update
+      - app_install_or_remove
+    caveats:
+      - live_action_schema_review_pending
+      - active_dns_scope_excludes_user_ignored_domains
+
+  domeneshop:
+    role: registrar_server_sql_runtime_provider
+    read_allowed:
+      - provider_evidence_index
+      - sanitized_file_tree
+      - metadata_only_sql_schema
+      - public_or_operator_controlled_health_get
+    write_status: CONTROLLED_WRITE_PENDING_APPROVAL
+    blocked_without_approval:
+      - dns_mutation
+      - ftp_sftp_upload_delete_move
+      - sql_write_migration_delete
+      - control_panel_changes
+      - provider_secret_or_env_export
+    caveats:
+      - source_package_marked_pending_review
+      - live_ftp_tree_not_confirmed
+      - full_sql_metadata_export_pending
+      - live_endpoint_crawl_pending
+
+  conta:
+    role: accounting_bridge_and_provider_api_boundary
+    read_allowed:
+      - read_only_reports
+      - route_map
+      - capability_matrix
+      - validation_status
+    write_status: CONTROLLED_WRITE_PENDING_APPROVAL
+    blocked_without_approval:
+      - accounting_create
+      - accounting_post
+      - accounting_submit
+      - accounting_delete
+      - statutory_or_vat_submission
+    caveats:
+      - write_control_evidence_pending_review
+
+  powershell:
+    role: local_operator_validation_and_handoff
+    read_allowed:
+      - registry_tests
+      - no_write_exposure_tests
+      - capability_compare_reports
+      - transfer_pack_generation
+    write_status: CONTROLLED_WRITE_PENDING_APPROVAL
+    blocked_without_approval:
+      - deployment_scripts
+      - provider_mutations
+      - production_changes
+    caveats:
+      - deployment_script_review_pending
+
+  python:
+    role: execution_testing_debugging_validation_layer
+    read_allowed:
+      - quality_gate
+      - full_validation
+      - debug_report
+      - artifact_inspection
+      - registry_validation
+    write_status: NOT_CONFIGURED
+    blocked_without_approval:
+      - staging_write
+      - production_write
+      - external_system_write
+      - secret_consuming_script
+      - arbitrary_shell_command
+    caveats:
+      - development_only_repository_local_boundary
+
+  custom_gpt:
+    role: planner_validator_operator_interface
+    read_allowed:
+      - visible_instruction_review
+      - action_schema_index_review
+      - knowledge_file_index_review
+    write_status: CONTROLLED_WRITE_PENDING_APPROVAL
+    blocked_without_approval:
+      - write_capable_action_trust
+      - provider_mutation
+      - direct_live_action_execution
+    caveats:
+      - custom_gpt_orchestrator_text_pending_review
+      - project_orchestrator_text_pending_review
+
+  memory_ops:
+    role: governed_memory_audit_layer
+    read_allowed:
+      - memory_audit_evidence
+      - approved_memory_update_review
+    write_status: CONTROLLED_WRITE_PENDING_APPROVAL
+    blocked_without_approval:
+      - unreviewed_memory_write_back
+      - memory_update_that_changes_approval_state
+    caveats:
+      - governed_memory_write_back_review_pending
+
+boundary_rule: provider_adapters_may_not_exceed_declared_capability_or_approval_state
+unknown_provider_action: NOT_CONFIGURED
