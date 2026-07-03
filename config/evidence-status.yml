@@ -10,6 +10,7 @@ status_legend:
   pending_admin_export: connector evidence incomplete; manual/admin export required
   pending_review: source evidence is indexed but explicitly marked pending review or requires live/manual confirmation
   canonical: repository-controlled canonical source for current release train
+  runtime_contract: repository-controlled runtime/schema contract
 
 categories:
   ort1_canonical_registry:
@@ -25,6 +26,18 @@ categories:
       - tests/Test-OrchestratorRegistry.ps1
       - tests/Test-OrchestratorNoWriteExposure.ps1
     control_status: canonical_registry_complete_no_live_write_approval
+
+  ort2_readonly_control_plane_runtime:
+    status: runtime_contract
+    release_train: O-RT2
+    runtime_doc: docs/ORT2_READONLY_CONTROL_PLANE_RUNTIME_20260703.md
+    route_map: config/read-only-routes.yml
+    openapi_schema: openapi/orchestrator-readonly.openapi.json
+    tests:
+      - tests/Test-OrchestratorReadOnlyRuntime.ps1
+      - tests/Test-OrchestratorOpenApiGetOnly.ps1
+    validation_file: docs/validation/ORT2_READONLY_RUNTIME_COMPLETE_20260703.md
+    control_status: get_only_runtime_contract_complete_no_live_write_approval
 
   orchestrator_readiness_workflow:
     status: validated
