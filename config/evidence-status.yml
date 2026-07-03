@@ -1,4 +1,4 @@
-# Evidence status — updated 2026-07-02
+# Evidence status — updated 2026-07-03
 
 status_legend:
   pending: evidence requested but not yet received
@@ -9,8 +9,23 @@ status_legend:
   out_of_scope: intentionally excluded from current scope
   pending_admin_export: connector evidence incomplete; manual/admin export required
   pending_review: source evidence is indexed but explicitly marked pending review or requires live/manual confirmation
+  canonical: repository-controlled canonical source for current release train
 
 categories:
+  ort1_canonical_registry:
+    status: canonical
+    release_train: O-RT1
+    registry_file: docs/ORCHESTRATOR_REGISTRY.md
+    registry_json: config/orchestrator-registry.json
+    pending_review_file: docs/PENDING_REVIEW_ITEMS_ORT1_20260703.md
+    conflict_policy_file: docs/CONFLICT_POLICY_ORT1_20260703.md
+    action_classification_file: config/action-classification.yml
+    provider_boundary_file: config/provider-boundary.yml
+    tests:
+      - tests/Test-OrchestratorRegistry.ps1
+      - tests/Test-OrchestratorNoWriteExposure.ps1
+    control_status: canonical_registry_complete_no_live_write_approval
+
   orchestrator_readiness_workflow:
     status: validated
     validation_source: operator_reported_workflow_result
