@@ -1,0 +1,68 @@
+# Action classification — O-RT1 — 2026-07-03
+
+classification_source: canonical_orchestrator_registry
+live_write_approved_exists: false
+
+classes:
+  READ_ONLY_READY:
+    description: Safe read, inspect, list, summarize, validate, or report action.
+    allowed_without_operator_write_approval: true
+    may_touch_provider_state: false
+    examples:
+      - repository_file_fetch
+      - evidence_status_read
+      - registry_readout
+      - route_map_readout
+      - readiness_report_generation
+      - endpoint_health_get_without_private_payload
+
+  PLAN_ONLY_READY:
+    description: Generates plans, dry-run instructions, evidence packs, or change proposals without executing mutations.
+    allowed_without_operator_write_approval: true
+    may_touch_provider_state: false
+    requires_no_execution: true
+    examples:
+      - orchestration_plan_compile
+      - rollback_plan_generate
+      - draft_pr_instruction_pack
+      - provider_preflight_plan
+
+  CONTROLLED_WRITE_PENDING_APPROVAL:
+    description: Designed write path exists or may exist, but execution is blocked pending explicit approval and validation.
+    allowed_without_operator_write_approval: false
+    may_touch_provider_state: true
+    requires:
+      - explicit_operator_approval
+      - dry_run_or_plan_evidence
+      - rollback_or_disable_plan
+      - validation_evidence
+      - audit_record
+    examples:
+      - github_pr_create_or_file_write
+      - dns_record_mutation
+      - ftp_sftp_upload_or_delete
+      - sql_write_or_migration
+      - accounting_create_post_submit_delete
+      - production_deployment
+      - provider_publish
+
+  NOT_CONFIGURED:
+    description: Capability lacks registry/evidence/configuration or has unknown safety boundary.
+    allowed_without_operator_write_approval: false
+    may_touch_provider_state: unknown
+    default_for_unknown_actions: true
+
+forced_block_actions:
+  - DNS_WRITE
+  - FTP_SFTP_WRITE
+  - SQL_WRITE
+  - ACCOUNTING_WRITE_OR_SUBMISSION
+  - PRODUCTION_DEPLOYMENT
+  - DESTRUCTIVE_OPERATION
+  - BULK_SYNC_OR_DELETE
+  - DIRECT_PROVIDER_PUBLISH
+  - SECRET_READOUT
+  - PRIVATE_PAYLOAD_EXPORT
+
+unknown_action_resolution: NOT_CONFIGURED
+conflict_resolution: PENDING_REVIEW
