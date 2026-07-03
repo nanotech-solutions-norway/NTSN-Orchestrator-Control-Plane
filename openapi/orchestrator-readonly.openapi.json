@@ -1,0 +1,290 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "NTSN Orchestrator Control Plane Read-only API",
+    "version": "0.2.0-ort2",
+    "description": "GET-only read-only introspection schema for O-RT2. No write, mutation, deployment, DNS, FTP/SFTP, SQL, accounting, destructive, or direct provider-publish actions are exposed."
+  },
+  "servers": [
+    {
+      "url": "https://orchestrator.local.example",
+      "description": "Placeholder read-only contract URL. This schema is a repository contract, not a live deployment endpoint."
+    }
+  ],
+  "x-release-train": "O-RT2",
+  "x-runtime-contract": "GET_ONLY",
+  "x-live-write-approved": false,
+  "x-unknown-action-default": "NOT_CONFIGURED",
+  "paths": {
+    "/orchestrator/v1/status": {
+      "get": {
+        "operationId": "getOrchestratorStatus",
+        "summary": "Read orchestrator status and global write gates",
+        "x-action-class": "READ_ONLY_READY",
+        "x-source-files": ["config/evidence-status.yml", "config/approval-policy.yml"],
+        "responses": {
+          "200": {
+            "description": "Read-only status response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ReadOnlyStatusResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orchestrator/v1/registry": {
+      "get": {
+        "operationId": "getOrchestratorRegistry",
+        "summary": "Read canonical registry",
+        "x-action-class": "READ_ONLY_READY",
+        "x-source-files": ["config/orchestrator-registry.json", "docs/ORCHESTRATOR_REGISTRY.md"],
+        "responses": {
+          "200": {
+            "description": "Canonical registry response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RegistryResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orchestrator/v1/route-map": {
+      "get": {
+        "operationId": "getRouteMap",
+        "summary": "Read GET-only route map",
+        "x-action-class": "READ_ONLY_READY",
+        "x-source-files": ["config/read-only-routes.yml"],
+        "responses": {
+          "200": {
+            "description": "Route map response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RouteMapResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orchestrator/v1/capability-matrix": {
+      "get": {
+        "operationId": "getCapabilityMatrix",
+        "summary": "Read capability matrix",
+        "x-action-class": "READ_ONLY_READY",
+        "x-source-files": ["config/orchestrator-registry.json", "config/action-classification.yml"],
+        "responses": {
+          "200": {
+            "description": "Capability matrix response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CapabilityMatrixResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orchestrator/v1/dependency-graph": {
+      "get": {
+        "operationId": "getDependencyGraph",
+        "summary": "Read dependency graph",
+        "x-action-class": "READ_ONLY_READY",
+        "x-source-files": ["config/repositories.yml", "config/provider-boundary.yml", "config/orchestrator-registry.json"],
+        "responses": {
+          "200": {
+            "description": "Dependency graph response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DependencyGraphResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orchestrator/v1/provider-boundary": {
+      "get": {
+        "operationId": "getProviderBoundary",
+        "summary": "Read provider boundary map",
+        "x-action-class": "READ_ONLY_READY",
+        "x-source-files": ["config/provider-boundary.yml"],
+        "responses": {
+          "200": {
+            "description": "Provider boundary response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ProviderBoundaryResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orchestrator/v1/evidence-status": {
+      "get": {
+        "operationId": "getEvidenceStatus",
+        "summary": "Read evidence status tracker",
+        "x-action-class": "READ_ONLY_READY",
+        "x-source-files": ["config/evidence-status.yml"],
+        "responses": {
+          "200": {
+            "description": "Evidence status response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EvidenceStatusResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orchestrator/v1/validation-status": {
+      "get": {
+        "operationId": "getValidationStatus",
+        "summary": "Read validation status",
+        "x-action-class": "READ_ONLY_READY",
+        "x-source-files": ["docs/validation/*.md"],
+        "responses": {
+          "200": {
+            "description": "Validation status response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ValidationStatusResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orchestrator/v1/pending-review": {
+      "get": {
+        "operationId": "getPendingReview",
+        "summary": "Read pending-review register",
+        "x-action-class": "READ_ONLY_READY",
+        "x-source-files": ["docs/PENDING_REVIEW_ITEMS_ORT1_20260703.md"],
+        "responses": {
+          "200": {
+            "description": "Pending-review response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PendingReviewResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orchestrator/v1/openapi": {
+      "get": {
+        "operationId": "getOpenApiSchema",
+        "summary": "Read this OpenAPI schema",
+        "x-action-class": "READ_ONLY_READY",
+        "x-source-files": ["openapi/orchestrator-readonly.openapi.json"],
+        "responses": {
+          "200": {
+            "description": "OpenAPI schema response",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ReadinessClass": {
+        "type": "string",
+        "enum": ["READ_ONLY_READY", "PLAN_ONLY_READY", "CONTROLLED_WRITE_PENDING_APPROVAL", "NOT_CONFIGURED", "PENDING_REVIEW"]
+      },
+      "GlobalWriteGates": {
+        "type": "object",
+        "properties": {
+          "liveProviderWriteApproved": { "type": "boolean", "const": false },
+          "dnsWriteApproved": { "type": "boolean", "const": false },
+          "productionDeploymentApproved": { "type": "boolean", "const": false },
+          "destructiveOperationsApproved": { "type": "boolean", "const": false }
+        },
+        "required": ["liveProviderWriteApproved", "dnsWriteApproved", "productionDeploymentApproved", "destructiveOperationsApproved"]
+      },
+      "EvidenceReference": {
+        "type": "object",
+        "properties": {
+          "sourceFile": { "type": "string" },
+          "status": { "type": "string" },
+          "classification": { "$ref": "#/components/schemas/ReadinessClass" }
+        },
+        "required": ["sourceFile", "status"]
+      },
+      "ReadOnlyStatusResponse": {
+        "type": "object",
+        "properties": {
+          "releaseTrain": { "type": "string", "const": "O-RT2" },
+          "runtimeContract": { "type": "string", "const": "GET_ONLY" },
+          "globalWriteGates": { "$ref": "#/components/schemas/GlobalWriteGates" },
+          "unknownActionDefault": { "type": "string", "const": "NOT_CONFIGURED" }
+        },
+        "required": ["releaseTrain", "runtimeContract", "globalWriteGates", "unknownActionDefault"]
+      },
+      "RegistryResponse": {
+        "type": "object",
+        "properties": {
+          "registry": { "type": "object" },
+          "evidenceReferences": { "type": "array", "items": { "$ref": "#/components/schemas/EvidenceReference" } }
+        }
+      },
+      "RouteMapResponse": {
+        "type": "object",
+        "properties": {
+          "routes": { "type": "array", "items": { "type": "object" } },
+          "blockedMethods": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "CapabilityMatrixResponse": {
+        "type": "object",
+        "properties": {
+          "capabilities": { "type": "array", "items": { "type": "object" } }
+        }
+      },
+      "DependencyGraphResponse": {
+        "type": "object",
+        "properties": {
+          "repositories": { "type": "object" },
+          "providers": { "type": "object" }
+        }
+      },
+      "ProviderBoundaryResponse": {
+        "type": "object",
+        "properties": {
+          "providers": { "type": "object" },
+          "unknownProviderAction": { "type": "string", "const": "NOT_CONFIGURED" }
+        }
+      },
+      "EvidenceStatusResponse": {
+        "type": "object",
+        "properties": {
+          "categories": { "type": "object" },
+          "currentGlobalControlStatus": { "$ref": "#/components/schemas/GlobalWriteGates" }
+        }
+      },
+      "ValidationStatusResponse": {
+        "type": "object",
+        "properties": {
+          "validationRecords": { "type": "array", "items": { "type": "object" } }
+        }
+      },
+      "PendingReviewResponse": {
+        "type": "object",
+        "properties": {
+          "pendingItems": { "type": "array", "items": { "type": "object" } }
+        }
+      }
+    }
+  }
+}
