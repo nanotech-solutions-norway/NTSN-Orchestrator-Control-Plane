@@ -1,0 +1,60 @@
+{
+  "changeId": "ORT5-SAMPLE-PR-FIRST-CHANGE-PACK-20260703",
+  "releaseTrain": "O-RT5",
+  "mode": "PR_FIRST_CONTROLLED_CHANGE",
+  "executionAllowed": false,
+  "sourcePlan": {
+    "planId": "ORT3-SAMPLE-PROVIDER-CHANGE-PLAN-20260703",
+    "sourceFile": "examples/plan-only/sample_provider_change_plan.json",
+    "mode": "PLAN_ONLY"
+  },
+  "targetRepository": "nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane",
+  "targetBranchStrategy": {
+    "baseBranch": "main",
+    "proposedBranch": "orchestrator/change/sample-pr-first-pack",
+    "directMainWriteAllowed": false
+  },
+  "filesToChange": [
+    {
+      "path": "docs/example-controlled-change.md",
+      "changeType": "review_only",
+      "impact": "none",
+      "notes": "Sample review-only documentation change."
+    }
+  ],
+  "actionClass": "CONTROLLED_WRITE_PENDING_APPROVAL",
+  "approvalRequired": true,
+  "validationRequired": [
+    "./tests/Test-OrchestratorValidationSuite.ps1",
+    "./tests/Test-OrchestratorPrFirstChangePath.ps1",
+    "./tests/Test-OrchestratorChangePackSchema.ps1"
+  ],
+  "rollbackPlan": [
+    "Close the PR without merge if validation fails or approval is not granted.",
+    "Revert the PR commit if a merged documentation/config change must be backed out."
+  ],
+  "deploymentImpact": "none",
+  "blockedActions": [
+    "DIRECT_MAIN_BRANCH_WRITE_FOR_FEATURE_CHANGE",
+    "AUTO_MERGE",
+    "AUTO_DEPLOY",
+    "DNS_WRITE",
+    "FTP_SFTP_WRITE",
+    "SQL_WRITE",
+    "ACCOUNTING_WRITE_OR_SUBMISSION",
+    "PRODUCTION_DEPLOYMENT",
+    "DESTRUCTIVE_OPERATION",
+    "DIRECT_PROVIDER_PUBLISH",
+    "SECRET_VALUE_EXPORT",
+    "PRIVATE_PAYLOAD_EXPORT"
+  ],
+  "auditOutputs": [
+    "Decision record",
+    "Evidence references",
+    "Action class",
+    "Target repository",
+    "Validation outcome",
+    "Rollback path",
+    "Approval status"
+  ]
+}
