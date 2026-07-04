@@ -1,0 +1,111 @@
+# Protected endpoint validation planning — O-RT9 — 2026-07-04
+
+release_train: O-RT9
+mode: PROTECTED_ENDPOINT_VALIDATION_PLANNING
+execution_allowed: false
+live_write_approved: false
+secret_capture_allowed: false
+repository_secret_storage_allowed: false
+chat_secret_entry_allowed: false
+unknown_validation_default: NOT_CONFIGURED
+failed_or_incomplete_validation_default: PENDING_REVIEW
+
+source_evidence:
+  - docs/evidence/MCP_RUNTIME_CLIENT_CONFIG_EVIDENCE_INTAKE_1233_04072026.md
+  - config/mcp-runtime-client-alignment.yml
+
+validation_surfaces:
+  domeneshop-mcp-public-health:
+    surface_type: public_health
+    runtime_readiness: READ_ONLY_READY
+    validation_mode: read_only_public_status
+    protected_value_required: false
+    output_allowed:
+      - sanitized_status
+      - timestamp
+      - source_reference
+  domeneshop-mcp-status:
+    surface_type: protected_status
+    runtime_readiness: PLAN_ONLY_READY
+    validation_mode: operator_local_or_protected_environment
+    protected_value_required: true
+    output_allowed:
+      - sanitized_status
+      - config_presence_only
+      - timestamp
+      - source_reference
+  conta-mcp:
+    surface_type: protected_mcp
+    runtime_readiness: PLAN_ONLY_READY
+    validation_mode: sandbox_first_or_protected_environment
+    protected_value_required: true
+    output_allowed:
+      - sanitized_status
+      - route_presence
+      - timestamp
+      - source_reference
+  ntsn-orchestrator-control-plane:
+    surface_type: repository_control_plane
+    runtime_readiness: READ_ONLY_READY
+    validation_mode: repository_readiness
+    protected_value_required: false
+    output_allowed:
+      - readiness_status
+      - evidence_reference
+  powershell-control-plane:
+    surface_type: github_actions_control_plane
+    runtime_readiness: CONTROLLED_WRITE_PENDING_APPROVAL
+    validation_mode: read_only_or_development_only
+    protected_value_required: false
+    output_allowed:
+      - workflow_status
+      - artifact_reference
+  python-control-plane:
+    surface_type: github_actions_control_plane
+    runtime_readiness: READ_ONLY_READY
+    validation_mode: approved_registered_scripts_only
+    protected_value_required: false
+    output_allowed:
+      - validation_status
+      - artifact_reference
+  github-connector:
+    surface_type: connector
+    runtime_readiness: CONTROLLED_WRITE_PENDING_APPROVAL
+    validation_mode: read_only_repository_inspection
+    protected_value_required: false
+    output_allowed:
+      - metadata_status
+      - evidence_reference
+  wix-connector:
+    surface_type: connector
+    runtime_readiness: PLAN_ONLY_READY
+    validation_mode: connector_scope_review
+    protected_value_required: true
+    output_allowed:
+      - sanitized_connector_status
+      - evidence_reference
+  ai-memory-ops:
+    surface_type: governed_memory_layer
+    runtime_readiness: CONTROLLED_WRITE_PENDING_APPROVAL
+    validation_mode: governed_review_only
+    protected_value_required: false
+    output_allowed:
+      - audit_status
+      - evidence_reference
+
+out_of_scope_until_evidenced:
+  - claude-desktop-local-mcp
+  - cursor-local-mcp
+
+forbidden_outputs:
+  - protected_values
+  - raw_headers
+  - full_env_values
+  - private_payloads
+  - customer_or_accounting_records
+  - provider_mutation_payloads
+
+minimum_validation:
+  - ./tests/Test-OrchestratorProtectedEndpointValidationPlan.ps1
+  - ./tests/Test-OrchestratorMcpRuntimeClientRefresh.ps1
+  - ./tests/Test-OrchestratorValidationSuite.ps1
