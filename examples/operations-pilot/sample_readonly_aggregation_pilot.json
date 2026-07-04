@@ -1,0 +1,56 @@
+{
+  "pilotId": "ORT7-SAMPLE-READONLY-AGGREGATION-20260703",
+  "releaseTrain": "O-RT7",
+  "mode": "APPROVAL_GATED_OPERATIONS_PILOT",
+  "pilotOperation": "read_only_aggregation",
+  "operatorApprovalRequired": true,
+  "executionAllowed": false,
+  "sourceEvidence": [
+    {
+      "sourceFile": "config/evidence-status.yml",
+      "status": "canonical"
+    },
+    {
+      "sourceFile": "config/orchestrator-registry.json",
+      "status": "canonical"
+    },
+    {
+      "sourceFile": "config/provider-adapters.yml",
+      "status": "adapter_contract"
+    }
+  ],
+  "targetAdapters": [
+    "sample_readonly_adapter",
+    "github_adapter",
+    "python_adapter"
+  ],
+  "globalWriteGates": {
+    "liveProviderWriteApproved": false,
+    "dnsWriteApproved": false,
+    "productionDeploymentApproved": false,
+    "destructiveOperationsApproved": false
+  },
+  "blockedActions": [
+    "provider_state_change",
+    "production_deployment",
+    "automatic_merge",
+    "secret_value_export"
+  ],
+  "validationRequired": [
+    "./tests/Test-OrchestratorValidationSuite.ps1",
+    "./tests/Test-OrchestratorOperationsPilot.ps1",
+    "./tests/Test-OrchestratorPilotNoProviderWrite.ps1"
+  ],
+  "auditOutputs": [
+    "pilot_run_id",
+    "operator_approval_status",
+    "source_evidence",
+    "target_adapters",
+    "validation_outcome",
+    "generated_artifacts",
+    "blocked_action_confirmation"
+  ],
+  "generatedArtifacts": [
+    "READ_ONLY_SUMMARY"
+  ]
+}
