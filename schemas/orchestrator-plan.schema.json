@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas-ai.no/schemas/orchestrator-plan.schema.json",
+  "title": "NTSN Orchestrator Plan-only Plan Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "planId",
+    "releaseTrain",
+    "mode",
+    "executionAllowed",
+    "requestedObjective",
+    "sourceEvidence",
+    "globalWriteGates",
+    "steps",
+    "rollbackPlan",
+    "validationPlan",
+    "auditOutputs"
+  ],
+  "properties": {
+    "planId": { "type": "string", "minLength": 1 },
+    "releaseTrain": { "type": "string", "const": "O-RT3" },
+    "mode": { "type": "string", "const": "PLAN_ONLY" },
+    "executionAllowed": { "type": "boolean", "const": false },
+    "requestedObjective": { "type": "string", "minLength": 1 },
+    "sourceEvidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourceFile", "status"],
+        "properties": {
+          "sourceFile": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "minLength": 1 },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "globalWriteGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "liveProviderWriteApproved",
+        "dnsWriteApproved",
+        "productionDeploymentApproved",
+        "destructiveOperationsApproved"
+      ],
+      "properties": {
+        "liveProviderWriteApproved": { "type": "boolean", "const": false },
+        "dnsWriteApproved": { "type": "boolean", "const": false },
+        "productionDeploymentApproved": { "type": "boolean", "const": false },
+        "destructiveOperationsApproved": { "type": "boolean", "const": false }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stepId",
+          "title",
+          "targetSystem",
+          "targetMcpOrProvider",
+          "actionClass",
+          "planAction",
+          "executionAllowed",
+          "approvalRequired",
+          "evidenceRequired",
+          "payloadShape",
+          "validation"
+        ],
+        "properties": {
+          "stepId": { "type": "string", "minLength": 1 },
+          "title": { "type": "string", "minLength": 1 },
+          "targetSystem": { "type": "string", "minLength": 1 },
+          "targetMcpOrProvider": { "type": "string", "minLength": 1 },
+          "actionClass": {
+            "type": "string",
+            "enum": [
+              "READ_ONLY_READY",
+              "PLAN_ONLY_READY",
+              "CONTROLLED_WRITE_PENDING_APPROVAL",
+              "NOT_CONFIGURED",
+              "PENDING_REVIEW"
+            ]
+          },
+          "planAction": {
+            "type": "string",
+            "enum": [
+              "READ_ONLY_STEP",
+              "PLAN_ONLY_STEP",
+              "EVIDENCE_COLLECTION_STEP",
+              "VALIDATION_STEP",
+              "OPERATOR_REVIEW_STEP",
+              "DRAFT_CHANGE_PACK_STEP"
+            ]
+          },
+          "executionAllowed": { "type": "boolean", "const": false },
+          "approvalRequired": { "type": "boolean" },
+          "evidenceRequired": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "payloadShape": {
+            "type": "object",
+            "description": "Placeholder-only payload shape. Must not contain secret values.",
+            "additionalProperties": true
+          },
+          "blockedReason": { "type": "string" },
+          "rollbackReference": { "type": "string" },
+          "validation": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "rollbackPlan": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "validationPlan": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    },
+    "auditOutputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string" }
+    }
+  }
+}
