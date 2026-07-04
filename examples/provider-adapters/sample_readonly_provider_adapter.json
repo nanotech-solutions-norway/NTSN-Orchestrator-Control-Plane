@@ -1,0 +1,30 @@
+{
+  "adapterId": "sample_readonly_adapter",
+  "provider": "orchestrator_registry",
+  "releaseTrain": "O-RT6",
+  "runtimeClass": "READ_ONLY_READY",
+  "readCapabilities": [
+    "registry_read",
+    "evidence_status_read",
+    "capability_matrix_read"
+  ],
+  "planCapabilities": [
+    "read_only_summary_plan"
+  ],
+  "writeCapabilities": [],
+  "approvalRequiredForWrite": true,
+  "dryRunSupported": true,
+  "auditRequired": true,
+  "forbiddenActionCategories": [
+    "provider_mutation",
+    "production_change",
+    "secret_export"
+  ],
+  "evidenceSources": [
+    "config/orchestrator-registry.json",
+    "config/evidence-status.yml",
+    "config/provider-adapters.yml"
+  ],
+  "fallbackOnUnknown": "NOT_CONFIGURED",
+  "executionAllowedByDefault": false
+}
