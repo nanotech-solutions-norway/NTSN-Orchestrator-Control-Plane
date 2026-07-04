@@ -12,6 +12,7 @@ status_legend:
   canonical: repository-controlled canonical source for current release train
   runtime_contract: repository-controlled runtime/schema contract
   plan_contract: repository-controlled plan-only policy/schema contract
+  validation_harness: repository-controlled validation and drift-detection contract
 
 categories:
   ort1_canonical_registry:
@@ -52,6 +53,21 @@ categories:
       - tests/Test-OrchestratorPlanSchema.ps1
     validation_file: docs/validation/ORT3_PLAN_ONLY_ENGINE_COMPLETE_20260703.md
     control_status: plan_only_contract_complete_execution_not_allowed
+
+  ort4_validation_drift_harness:
+    status: validation_harness
+    release_train: O-RT4
+    harness_doc: docs/ORT4_VALIDATION_DRIFT_HARNESS_20260703.md
+    drift_policy: config/drift-detection.yml
+    report_template: reports/templates/ORCHESTRATOR_DRIFT_VALIDATION_REPORT_TEMPLATE.md
+    workflow: .github/workflows/orchestrator-drift-validation.yml
+    tests:
+      - tests/Test-OrchestratorDriftHarness.ps1
+      - tests/Test-OrchestratorRouteOpenApiDrift.ps1
+      - tests/Test-OrchestratorProviderBoundaryDrift.ps1
+      - tests/Test-OrchestratorValidationSuite.ps1
+    validation_file: docs/validation/ORT4_VALIDATION_DRIFT_HARNESS_COMPLETE_20260703.md
+    control_status: validation_only_no_write_calls
 
   orchestrator_readiness_workflow:
     status: validated
