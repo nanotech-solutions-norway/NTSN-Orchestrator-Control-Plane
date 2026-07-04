@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas-ai.no/schemas/change-pack.schema.json",
+  "title": "NTSN Orchestrator PR-first Change Pack Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "changeId",
+    "releaseTrain",
+    "mode",
+    "executionAllowed",
+    "sourcePlan",
+    "targetRepository",
+    "targetBranchStrategy",
+    "filesToChange",
+    "actionClass",
+    "approvalRequired",
+    "validationRequired",
+    "rollbackPlan",
+    "deploymentImpact",
+    "blockedActions",
+    "auditOutputs"
+  ],
+  "properties": {
+    "changeId": { "type": "string", "minLength": 1 },
+    "releaseTrain": { "type": "string", "const": "O-RT5" },
+    "mode": { "type": "string", "const": "PR_FIRST_CONTROLLED_CHANGE" },
+    "executionAllowed": { "type": "boolean", "const": false },
+    "sourcePlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planId", "sourceFile", "mode"],
+      "properties": {
+        "planId": { "type": "string", "minLength": 1 },
+        "sourceFile": { "type": "string", "minLength": 1 },
+        "mode": { "type": "string", "const": "PLAN_ONLY" }
+      }
+    },
+    "targetRepository": { "type": "string", "minLength": 1 },
+    "targetBranchStrategy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["baseBranch", "proposedBranch", "directMainWriteAllowed"],
+      "properties": {
+        "baseBranch": { "type": "string", "const": "main" },
+        "proposedBranch": { "type": "string", "minLength": 1 },
+        "directMainWriteAllowed": { "type": "boolean", "const": false }
+      }
+    },
+    "filesToChange": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "changeType", "impact"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "changeType": { "type": "string", "enum": ["create", "update", "remove", "rename", "review_only"] },
+          "impact": { "type": "string", "enum": ["none", "development", "staging", "production", "provider"] },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "actionClass": {
+      "type": "string",
+      "enum": ["PLAN_ONLY_READY", "CONTROLLED_WRITE_PENDING_APPROVAL", "PENDING_REVIEW", "NOT_CONFIGURED"]
+    },
+    "approvalRequired": { "type": "boolean", "const": true },
+    "validationRequired": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "rollbackPlan": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "deploymentImpact": { "type": "string", "enum": ["none", "development", "staging", "production", "provider"] },
+    "blockedActions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "auditOutputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}
