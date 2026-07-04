@@ -1,0 +1,30 @@
+name: Orchestrator Drift Validation
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run O-RT4 validation suite
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          ./tests/Test-OrchestratorValidationSuite.ps1
+
+      - name: Upload drift validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orchestrator-drift-validation-report
+          path: artifacts/orchestrator-drift-validation-report.md
+          if-no-files-found: warn
