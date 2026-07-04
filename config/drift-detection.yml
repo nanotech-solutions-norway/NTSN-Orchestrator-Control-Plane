@@ -1,0 +1,131 @@
+# Drift detection policy — O-RT4 — 2026-07-03
+
+release_train: O-RT4
+mode: VALIDATION_ONLY
+execution_allowed: false
+live_write_approved: false
+provider_calls_allowed: false
+workflow_dispatch_allowed: false
+secret_readout_allowed: false
+
+severity_levels:
+  INFO:
+    fail_validation: false
+    description: Informational drift or optional metadata difference.
+  LOW:
+    fail_validation: false
+    description: Non-blocking metadata inconsistency.
+  MEDIUM:
+    fail_validation: false
+    default_classification: PENDING_REVIEW
+    description: Evidence mismatch or missing source reference.
+  HIGH:
+    fail_validation: true
+    description: Route/schema/provider-boundary conflict.
+  CRITICAL:
+    fail_validation: true
+    description: Write exposure, live-write approval without canonical evidence, or secret-value exposure.
+
+checks:
+  registry_integrity:
+    severity_on_fail: HIGH
+    files:
+      - docs/ORCHESTRATOR_REGISTRY.md
+      - config/orchestrator-registry.json
+      - config/evidence-status.yml
+      - docs/PENDING_REVIEW_ITEMS_ORT1_20260703.md
+      - docs/CONFLICT_POLICY_ORT1_20260703.md
+    required_markers:
+      - LIVE_WRITE_NOT_APPROVED
+      - PENDING_REVIEW
+      - live_provider_write_approved: false
+
+  route_openapi_drift:
+    severity_on_fail: HIGH
+    files:
+      - config/read-only-routes.yml
+      - openapi/orchestrator-readonly.openapi.json
+    required_methods:
+      - GET
+    forbidden_methods:
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+
+  provider_boundary_drift:
+    severity_on_fail: HIGH
+    files:
+      - config/provider-boundary.yml
+      - config/action-classification.yml
+    required_provider_fields:
+      - role
+      - read_allowed
+      - write_status
+      - blocked_without_approval
+      - caveats
+
+  plan_only_enforcement:
+    severity_on_fail: HIGH
+    files:
+      - docs/ORT3_PLAN_ONLY_ORCHESTRATION_ENGINE_20260703.md
+      - config/plan-only-policy.yml
+      - schemas/orchestrator-plan.schema.json
+      - examples/plan-only/sample_provider_change_plan.json
+    required_markers:
+      - execution_allowed: false
+      - PLAN_ONLY
+      - NO_EXECUTION_ENGINE
+
+  pending_review_visibility:
+    severity_on_fail: MEDIUM
+    files:
+      - docs/PENDING_REVIEW_ITEMS_ORT1_20260703.md
+    required_markers:
+      - PENDING_REVIEW != APPROVED
+      - NO_PENDING_ITEM_APPROVED_FOR_LIVE_WRITE
+
+  secret_pattern_hygiene:
+    severity_on_fail: CRITICAL
+    scan_paths:
+      - config
+      - docs
+      - openapi
+      - schemas
+      - examples
+      - tests
+    forbidden_patterns:
+      - (?i)api[_-]?key\s*[:=]\s*[^<\s]+ 
+      - (?i)bearer\s+[a-z0-9._\-]{12,}
+      - (?i)password\s*[:=]\s*[^<\s]+
+      - (?i)secret\s*[:=]\s*[^<\s]+
+    allowed_placeholders:
+      - <provider-resource-placeholder>
+      - <proposed-change-placeholder>
+      - <not-allowed>
+      - placeholders_only
+
+report:
+  template: reports/templates/ORCHESTRATOR_DRIFT_VALIDATION_REPORT_TEMPLATE.md
+  required_fields:
+    - repository
+    - releaseTrain
+    - validationTimestampUtc
+    - commitShaOrRef
+    - checksRun
+    - findingsBySeverity
+    - globalWriteGates
+    - passFailStatus
+    - nextActions
+
+blocked_validation_behaviors:
+  - provider_endpoint_mutation
+  - workflow_write_dispatch
+  - dns_write
+  - ftp_sftp_write
+  - sql_write
+  - accounting_write
+  - production_deployment
+  - destructive_operation
+  - direct_provider_publish
+  - secret_value_readout
