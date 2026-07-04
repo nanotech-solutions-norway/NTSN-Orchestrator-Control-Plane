@@ -1,0 +1,73 @@
+# MCP runtime/client alignment — O-RT8 — 2026-07-04
+
+release_train: O-RT8
+status: evidence_refresh
+source_package: NTSN_MCP_Runtime_Client_Config_Evidence_1233_04072026.zip
+source_intake: docs/evidence/MCP_RUNTIME_CLIENT_CONFIG_EVIDENCE_INTAKE_1233_04072026.md
+supersedes_for_current_status: docs/evidence/MCP_RUNTIME_CONFIG_EVIDENCE_INTAKE_1138_02072026.md
+live_http_check_performed_in_package: false
+live_write_approved: false
+
+readiness_classes_detected:
+  - READ_ONLY_READY
+  - PLAN_ONLY_READY
+  - CONTROLLED_WRITE_PENDING_APPROVAL
+  - NOT_CONFIGURED
+
+client_entries:
+  conta-mcp:
+    runtime_readiness: PLAN_ONLY_READY
+    classification: remote
+    enabled_status: configured_example_only
+  domeneshop-mcp-public-health:
+    runtime_readiness: READ_ONLY_READY
+    classification: remote
+    enabled_status: enabled_for_read_only_validation
+  domeneshop-mcp-status:
+    runtime_readiness: PLAN_ONLY_READY
+    classification: remote_protected
+    enabled_status: operator_local_only
+  ntsn-orchestrator-control-plane:
+    runtime_readiness: READ_ONLY_READY
+    classification: remote_repository_control_plane
+    enabled_status: repository_ready
+  powershell-control-plane:
+    runtime_readiness: CONTROLLED_WRITE_PENDING_APPROVAL
+    classification: remote_github_actions
+    enabled_status: enabled_read_only_and_limited_development_docs_maintenance
+  python-control-plane:
+    runtime_readiness: READ_ONLY_READY
+    classification: remote_github_actions
+    enabled_status: enabled_for_read_only_registered_scripts
+  github-connector:
+    runtime_readiness: CONTROLLED_WRITE_PENDING_APPROVAL
+    classification: remote_connector
+    enabled_status: available_in_chatgpt_session
+  wix-connector:
+    runtime_readiness: PLAN_ONLY_READY
+    classification: remote_saas_connector
+    enabled_status: not_evidenced_as_project_mcp_runtime
+  ai-memory-ops:
+    runtime_readiness: CONTROLLED_WRITE_PENDING_APPROVAL
+    classification: remote_repository_plus_drive_process
+    enabled_status: governed_use_only
+  claude-desktop-local-mcp:
+    runtime_readiness: NOT_CONFIGURED
+    classification: local
+    enabled_status: not_evidenced
+  cursor-local-mcp:
+    runtime_readiness: NOT_CONFIGURED
+    classification: local
+    enabled_status: not_evidenced
+
+control_status:
+  live_provider_write_approved: false
+  dns_write_approved: false
+  production_deployment_approved: false
+  destructive_operations_approved: false
+
+required_followup:
+  - separate_live_endpoint_validation_plan
+  - protected_status_validation_plan_without_repository_secret_values
+  - local_client_config_evidence_if_claude_or_cursor_should_be_used
+  - adapter_registry_alignment_review
