@@ -1,0 +1,222 @@
+# Provider adapter registry — O-RT6 — 2026-07-03
+
+release_train: O-RT6
+mode: PROVIDER_ADAPTER_CONTRACT
+live_write_approved: false
+adapter_bypass_allowed: false
+unknown_adapter_action_default: NOT_CONFIGURED
+conflict_default: PENDING_REVIEW
+canonical_sources:
+  - config/provider-boundary.yml
+  - config/action-classification.yml
+  - config/orchestrator-registry.json
+  - config/evidence-status.yml
+
+adapter_defaults:
+  auditRequired: true
+  approvalRequiredForWrite: true
+  executionAllowedByDefault: false
+  fallbackOnUnknown: NOT_CONFIGURED
+
+adapters:
+  github:
+    adapterId: github_adapter
+    provider: github
+    runtimeClass: CONTROLLED_WRITE_PENDING_APPROVAL
+    readCapabilities:
+      - repository_metadata_read
+      - file_read
+      - pull_request_metadata_read
+      - workflow_artifact_read
+    planCapabilities:
+      - draft_pr_instruction_pack
+      - change_pack_preparation
+    writeCapabilities:
+      - pr_or_file_change_requires_explicit_approval
+    approvalRequiredForWrite: true
+    dryRunSupported: true
+    auditRequired: true
+    forbiddenActionCategories:
+      - automatic_merge
+      - automatic_deploy
+      - secret_value_export
+      - provider_production_change
+    evidenceSources:
+      - docs/evidence/GITHUB_ENVIRONMENT_EVIDENCE_INTAKE_1122_02072026.md
+      - config/pr-change-control.yml
+    fallbackOnUnknown: NOT_CONFIGURED
+
+  wix:
+    adapterId: wix_adapter
+    provider: wix
+    runtimeClass: CONTROLLED_WRITE_PENDING_APPROVAL
+    readCapabilities:
+      - domain_inventory_read
+      - dns_zone_read_when_connector_allows
+      - site_metadata_read
+    planCapabilities:
+      - dns_change_plan
+      - site_change_review_pack
+    writeCapabilities:
+      - provider_mutation_requires_explicit_approval
+    approvalRequiredForWrite: true
+    dryRunSupported: true
+    auditRequired: true
+    forbiddenActionCategories:
+      - dns_mutation
+      - site_publish
+      - provider_settings_change
+    evidenceSources:
+      - docs/WIX_DNS_READONLY_EVIDENCE_2125_30062026.md
+      - config/provider-boundary.yml
+    fallbackOnUnknown: NOT_CONFIGURED
+
+  domeneshop:
+    adapterId: domeneshop_adapter
+    provider: domeneshop
+    runtimeClass: CONTROLLED_WRITE_PENDING_APPROVAL
+    readCapabilities:
+      - sanitized_server_inventory_read
+      - sanitized_file_tree_read
+      - metadata_only_sql_schema_read
+      - endpoint_inventory_read
+    planCapabilities:
+      - server_change_plan
+      - sql_change_plan
+      - endpoint_validation_plan
+    writeCapabilities:
+      - provider_write_requires_explicit_approval
+    approvalRequiredForWrite: true
+    dryRunSupported: true
+    auditRequired: true
+    forbiddenActionCategories:
+      - dns_mutation
+      - server_file_mutation
+      - sql_mutation
+      - control_panel_change
+    evidenceSources:
+      - docs/evidence/DOMENESHOP_PROVIDER_EVIDENCE_INTAKE_1205_02072026.md
+      - docs/validation/DOMENESHOP_EVIDENCE_INDEXED_20260702.md
+    fallbackOnUnknown: PENDING_REVIEW
+
+  conta:
+    adapterId: conta_adapter
+    provider: conta
+    runtimeClass: CONTROLLED_WRITE_PENDING_APPROVAL
+    readCapabilities:
+      - route_map_read
+      - accounting_report_read
+      - validation_status_read
+    planCapabilities:
+      - accounting_change_plan
+      - write_control_review_pack
+    writeCapabilities:
+      - accounting_write_requires_explicit_approval
+    approvalRequiredForWrite: true
+    dryRunSupported: true
+    auditRequired: true
+    forbiddenActionCategories:
+      - accounting_create_or_modify
+      - accounting_submit
+      - accounting_delete
+    evidenceSources:
+      - config/orchestrator-registry.json
+      - config/provider-boundary.yml
+    fallbackOnUnknown: PENDING_REVIEW
+
+  powershell:
+    adapterId: powershell_adapter
+    provider: powershell
+    runtimeClass: PLAN_ONLY_READY
+    readCapabilities:
+      - validation_report_read
+      - registry_test_read
+      - workflow_report_read
+    planCapabilities:
+      - validation_plan
+      - transfer_pack_plan
+    writeCapabilities:
+      - deployment_or_external_write_requires_explicit_approval
+    approvalRequiredForWrite: true
+    dryRunSupported: true
+    auditRequired: true
+    forbiddenActionCategories:
+      - deployment_execution
+      - provider_mutation
+      - production_change
+    evidenceSources:
+      - config/provider-boundary.yml
+      - config/drift-detection.yml
+    fallbackOnUnknown: NOT_CONFIGURED
+
+  python:
+    adapterId: python_adapter
+    provider: python
+    runtimeClass: READ_ONLY_READY
+    readCapabilities:
+      - quality_gate_report_read
+      - artifact_inspection_read
+      - registry_validation_read
+    planCapabilities:
+      - debug_plan
+      - validation_plan
+    writeCapabilities: []
+    approvalRequiredForWrite: true
+    dryRunSupported: true
+    auditRequired: true
+    forbiddenActionCategories:
+      - external_system_write
+      - production_change
+      - arbitrary_shell_command
+      - secret_consuming_script
+    evidenceSources:
+      - docs/PYTHON_ENVIRONMENT_CONTROL_PLANE_INCLUSION_20260702.md
+      - config/provider-boundary.yml
+    fallbackOnUnknown: NOT_CONFIGURED
+
+  custom_gpt:
+    adapterId: custom_gpt_adapter
+    provider: custom_gpt
+    runtimeClass: PENDING_REVIEW
+    readCapabilities:
+      - visible_instruction_review
+      - action_schema_index_review
+      - knowledge_file_index_review
+    planCapabilities:
+      - instruction_update_plan
+      - capability_boundary_review_pack
+    writeCapabilities:
+      - gpt_action_write_requires_review
+    approvalRequiredForWrite: true
+    dryRunSupported: true
+    auditRequired: true
+    forbiddenActionCategories:
+      - direct_live_provider_action
+      - unreviewed_write_capable_action
+    evidenceSources:
+      - docs/evidence/CUSTOM_GPT_EVIDENCE_INTAKE_20260702.md
+      - docs/PENDING_REVIEW_ITEMS_ORT1_20260703.md
+    fallbackOnUnknown: PENDING_REVIEW
+
+  memory_ops:
+    adapterId: memory_ops_adapter
+    provider: memory_ops
+    runtimeClass: CONTROLLED_WRITE_PENDING_APPROVAL
+    readCapabilities:
+      - memory_audit_read
+      - approved_memory_review_read
+    planCapabilities:
+      - memory_update_plan
+      - audit_pack_plan
+    writeCapabilities:
+      - memory_write_back_requires_explicit_approval
+    approvalRequiredForWrite: true
+    dryRunSupported: true
+    auditRequired: true
+    forbiddenActionCategories:
+      - unreviewed_memory_write
+      - approval_state_change
+    evidenceSources:
+      - config/orchestrator-registry.json
+      - config/provider-boundary.yml
+    fallbackOnUnknown: PENDING_REVIEW
