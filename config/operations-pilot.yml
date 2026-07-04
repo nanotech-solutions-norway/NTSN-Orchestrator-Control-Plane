@@ -1,0 +1,99 @@
+# Operations pilot policy — O-RT7 — 2026-07-03
+
+release_train: O-RT7
+mode: APPROVAL_GATED_OPERATIONS_PILOT
+execution_allowed: false
+live_write_approved: false
+provider_write_allowed: false
+production_write_allowed: false
+auto_merge_allowed: false
+auto_deploy_allowed: false
+secret_readout_allowed: false
+unknown_pilot_action_default: NOT_CONFIGURED
+conflict_default: PENDING_REVIEW
+
+allowed_pilot_operations:
+  read_only_aggregation:
+    action_class: READ_ONLY_READY
+    output_type: READ_ONLY_SUMMARY
+    allowed_sources:
+      - config/evidence-status.yml
+      - config/orchestrator-registry.json
+      - config/provider-adapters.yml
+      - config/read-only-routes.yml
+    executionAllowed: false
+
+  evidence_pack_generation:
+    action_class: PLAN_ONLY_READY
+    output_type: SANITIZED_EVIDENCE_PACK
+    allowed_sources:
+      - docs/evidence
+      - docs/validation
+      - config/evidence-status.yml
+    executionAllowed: false
+
+  draft_change_pack_generation:
+    action_class: PR_FIRST_CHANGE_CONTROL
+    output_type: DRAFT_CHANGE_PACK
+    allowed_sources:
+      - config/pr-change-control.yml
+      - templates/change-pack/PR_FIRST_CHANGE_PACK_TEMPLATE.md
+      - schemas/change-pack.schema.json
+    executionAllowed: false
+
+required_pilot_fields:
+  - pilotId
+  - releaseTrain
+  - mode
+  - pilotOperation
+  - operatorApprovalRequired
+  - executionAllowed
+  - sourceEvidence
+  - targetAdapters
+  - globalWriteGates
+  - blockedActions
+  - validationRequired
+  - auditOutputs
+
+pilot_gates:
+  operatorApprovalRequired: true
+  executionAllowed: false
+  liveProviderWriteApproved: false
+  dnsWriteApproved: false
+  productionDeploymentApproved: false
+  destructiveOperationsApproved: false
+
+allowed_outputs:
+  - READ_ONLY_SUMMARY
+  - SANITIZED_EVIDENCE_PACK
+  - DRAFT_CHANGE_PACK
+  - VALIDATION_REPORT
+  - OPERATOR_REVIEW_NOTES
+
+blocked_action_categories:
+  - provider_state_change
+  - dns_change
+  - server_file_change
+  - sql_change
+  - accounting_change
+  - production_deployment
+  - destructive_operation
+  - direct_provider_publish
+  - automatic_merge
+  - automatic_deploy
+  - secret_value_export
+  - private_payload_export
+
+minimum_validation:
+  - ./tests/Test-OrchestratorValidationSuite.ps1
+  - ./tests/Test-OrchestratorOperationsPilot.ps1
+  - ./tests/Test-OrchestratorPilotNoProviderWrite.ps1
+
+required_audit_outputs:
+  - pilot_run_id
+  - operator_approval_status
+  - source_evidence
+  - target_adapters
+  - validation_outcome
+  - generated_artifacts
+  - blocked_action_confirmation
