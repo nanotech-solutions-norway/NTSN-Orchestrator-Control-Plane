@@ -13,6 +13,7 @@ status_legend:
   runtime_contract: repository-controlled runtime/schema contract
   plan_contract: repository-controlled plan-only policy/schema contract
   validation_harness: repository-controlled validation and drift-detection contract
+  pr_change_control: repository-controlled PR-first controlled change path
 
 categories:
   ort1_canonical_registry:
@@ -68,6 +69,21 @@ categories:
       - tests/Test-OrchestratorValidationSuite.ps1
     validation_file: docs/validation/ORT4_VALIDATION_DRIFT_HARNESS_COMPLETE_20260703.md
     control_status: validation_only_no_write_calls
+
+  ort5_pr_first_controlled_change_path:
+    status: pr_change_control
+    release_train: O-RT5
+    control_doc: docs/ORT5_PR_FIRST_CONTROLLED_CHANGE_PATH_20260703.md
+    policy_file: config/pr-change-control.yml
+    change_pack_schema: schemas/change-pack.schema.json
+    change_pack_template: templates/change-pack/PR_FIRST_CHANGE_PACK_TEMPLATE.md
+    sample_change_pack: examples/change-packs/sample_pr_first_change_pack.json
+    pull_request_template: .github/PULL_REQUEST_TEMPLATE/orchestrator-controlled-change.md
+    tests:
+      - tests/Test-OrchestratorPrFirstChangePath.ps1
+      - tests/Test-OrchestratorChangePackSchema.ps1
+    validation_file: docs/validation/ORT5_PR_FIRST_CHANGE_PATH_COMPLETE_20260703.md
+    control_status: pr_first_change_control_complete_no_direct_provider_or_production_write
 
   orchestrator_readiness_workflow:
     status: validated
