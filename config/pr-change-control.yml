@@ -1,0 +1,88 @@
+# PR-first controlled change policy — O-RT5 — 2026-07-03
+
+release_train: O-RT5
+mode: PR_FIRST_CONTROLLED_CHANGE
+execution_allowed: false
+live_write_approved: false
+auto_merge_allowed: false
+auto_deploy_allowed: false
+provider_write_allowed: false
+production_write_allowed: false
+secret_readout_allowed: false
+
+required_change_pack_fields:
+  - changeId
+  - releaseTrain
+  - mode
+  - executionAllowed
+  - sourcePlan
+  - targetRepository
+  - targetBranchStrategy
+  - filesToChange
+  - actionClass
+  - approvalRequired
+  - validationRequired
+  - rollbackPlan
+  - deploymentImpact
+  - blockedActions
+  - auditOutputs
+
+branch_policy:
+  default_base_branch: main
+  required_branch_prefixes:
+    - orchestrator/change/
+    - chore/orchestrator/
+    - docs/orchestrator/
+  direct_main_feature_change_allowed: false
+  evidence_index_direct_update_allowed: true
+  production_impact_requires_pr: true
+
+review_policy:
+  human_review_required: true
+  approval_must_be_explicit: true
+  approval_scope_required: true
+  merge_decision_record_required: true
+  deployment_decision_separate_from_merge: true
+
+allowed_outputs:
+  - SANITIZED_CHANGE_PACK
+  - DRAFT_PR_INSTRUCTIONS
+  - PATCH_REVIEW_NOTES
+  - ROLLBACK_NOTES
+  - VALIDATION_REQUIREMENTS
+  - HUMAN_REVIEW_CHECKLIST
+
+blocked_actions:
+  - DIRECT_MAIN_BRANCH_WRITE_FOR_FEATURE_CHANGE
+  - AUTO_MERGE
+  - AUTO_DEPLOY
+  - DNS_WRITE
+  - FTP_SFTP_WRITE
+  - SQL_WRITE
+  - ACCOUNTING_WRITE_OR_SUBMISSION
+  - PRODUCTION_DEPLOYMENT
+  - DESTRUCTIVE_OPERATION
+  - DIRECT_PROVIDER_PUBLISH
+  - SECRET_VALUE_EXPORT
+  - PRIVATE_PAYLOAD_EXPORT
+
+minimum_validation:
+  - ./tests/Test-OrchestratorValidationSuite.ps1
+  - ./tests/Test-OrchestratorPrFirstChangePath.ps1
+  - ./tests/Test-OrchestratorChangePackSchema.ps1
+
+required_audit_outputs:
+  - decision
+  - evidence_used
+  - action_class
+  - target_repository
+  - validation_outcome
+  - rollback_or_disable_path
+  - approval_status
+
+execution_boundary:
+  provider_execution: blocked
+  workflow_write_dispatch: blocked
+  production_deployment: blocked
+  merge: requires_human_review_outside_automated_path
+  deployment: separate_approval_required
