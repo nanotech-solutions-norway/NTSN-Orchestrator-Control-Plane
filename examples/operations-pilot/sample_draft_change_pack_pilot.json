@@ -1,0 +1,56 @@
+{
+  "pilotId": "ORT7-SAMPLE-DRAFT-CHANGE-PACK-20260703",
+  "releaseTrain": "O-RT7",
+  "mode": "APPROVAL_GATED_OPERATIONS_PILOT",
+  "pilotOperation": "draft_change_pack_generation",
+  "operatorApprovalRequired": true,
+  "executionAllowed": false,
+  "sourceEvidence": [
+    {
+      "sourceFile": "config/pr-change-control.yml",
+      "status": "pr_change_control"
+    },
+    {
+      "sourceFile": "templates/change-pack/PR_FIRST_CHANGE_PACK_TEMPLATE.md",
+      "status": "template"
+    },
+    {
+      "sourceFile": "schemas/change-pack.schema.json",
+      "status": "schema"
+    }
+  ],
+  "targetAdapters": [
+    "github_adapter"
+  ],
+  "globalWriteGates": {
+    "liveProviderWriteApproved": false,
+    "dnsWriteApproved": false,
+    "productionDeploymentApproved": false,
+    "destructiveOperationsApproved": false
+  },
+  "blockedActions": [
+    "provider_state_change",
+    "production_deployment",
+    "automatic_merge",
+    "automatic_deploy",
+    "secret_value_export"
+  ],
+  "validationRequired": [
+    "./tests/Test-OrchestratorValidationSuite.ps1",
+    "./tests/Test-OrchestratorOperationsPilot.ps1",
+    "./tests/Test-OrchestratorPilotNoProviderWrite.ps1"
+  ],
+  "auditOutputs": [
+    "pilot_run_id",
+    "operator_approval_status",
+    "source_evidence",
+    "target_adapters",
+    "validation_outcome",
+    "generated_artifacts",
+    "blocked_action_confirmation"
+  ],
+  "generatedArtifacts": [
+    "DRAFT_CHANGE_PACK",
+    "OPERATOR_REVIEW_NOTES"
+  ]
+}
