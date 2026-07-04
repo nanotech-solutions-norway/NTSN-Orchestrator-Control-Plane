@@ -14,6 +14,7 @@ status_legend:
   plan_contract: repository-controlled plan-only policy/schema contract
   validation_harness: repository-controlled validation and drift-detection contract
   pr_change_control: repository-controlled PR-first controlled change path
+  adapter_contract: repository-controlled provider adapter contract layer
 
 categories:
   ort1_canonical_registry:
@@ -84,6 +85,20 @@ categories:
       - tests/Test-OrchestratorChangePackSchema.ps1
     validation_file: docs/validation/ORT5_PR_FIRST_CHANGE_PATH_COMPLETE_20260703.md
     control_status: pr_first_change_control_complete_no_direct_provider_or_production_write
+
+  ort6_provider_adapter_control_layer:
+    status: adapter_contract
+    release_train: O-RT6
+    control_doc: docs/ORT6_PROVIDER_ADAPTER_CONTROL_LAYER_20260703.md
+    adapter_registry: config/provider-adapters.yml
+    adapter_schema: schemas/provider-adapter.schema.json
+    adapter_template: templates/provider-adapter/PROVIDER_ADAPTER_CONTRACT_TEMPLATE.md
+    sample_adapter: examples/provider-adapters/sample_readonly_provider_adapter.json
+    tests:
+      - tests/Test-OrchestratorProviderAdapterContracts.ps1
+      - tests/Test-OrchestratorAdapterNoBypass.ps1
+    validation_file: docs/validation/ORT6_PROVIDER_ADAPTER_CONTROL_LAYER_COMPLETE_20260703.md
+    control_status: adapter_contract_complete_no_bypass_no_live_write_approval
 
   orchestrator_readiness_workflow:
     status: validated
