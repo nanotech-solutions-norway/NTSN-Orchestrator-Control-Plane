@@ -1,5 +1,5 @@
 # Test-OrchestratorValidationSuite.ps1
-# Deterministic validation suite runner for O-RT1 through O-RT7.
+# Deterministic validation suite runner for O-RT1 through O-RT8.
 
 [CmdletBinding()]
 param(
@@ -24,7 +24,8 @@ $tests = @(
     'Test-OrchestratorProviderAdapterContracts.ps1',
     'Test-OrchestratorAdapterNoBypass.ps1',
     'Test-OrchestratorOperationsPilot.ps1',
-    'Test-OrchestratorPilotNoProviderWrite.ps1'
+    'Test-OrchestratorPilotNoProviderWrite.ps1',
+    'Test-OrchestratorMcpRuntimeClientRefresh.ps1'
 )
 
 $results = @()
@@ -71,7 +72,7 @@ $reportLines += ''
 $reportLines += '| Field | Value |'
 $reportLines += '|---|---|'
 $reportLines += "| Repository | nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane |"
-$reportLines += "| Release train coverage | O-RT1 through O-RT7 |"
+$reportLines += "| Release train coverage | O-RT1 through O-RT8 |"
 $reportLines += "| Validation timestamp UTC | $timestamp |"
 $reportLines += "| Commit SHA/ref | `${env:GITHUB_SHA} |"
 $reportLines += "| Validation mode | VALIDATION_ONLY |"
@@ -122,4 +123,4 @@ if ($failed.Count -gt 0) {
     throw "Orchestrator validation failed. See report: $ReportPath"
 }
 
-Write-Host "PASSED: Orchestrator validation suite passed for O-RT1 through O-RT7. Report: $ReportPath"
+Write-Host "PASSED: Orchestrator validation suite passed for O-RT1 through O-RT8. Report: $ReportPath"
