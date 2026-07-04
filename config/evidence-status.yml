@@ -15,6 +15,7 @@ status_legend:
   validation_harness: repository-controlled validation and drift-detection contract
   pr_change_control: repository-controlled PR-first controlled change path
   adapter_contract: repository-controlled provider adapter contract layer
+  operations_pilot: repository-controlled approval-gated low-risk operations pilot
 
 categories:
   ort1_canonical_registry:
@@ -99,6 +100,21 @@ categories:
       - tests/Test-OrchestratorAdapterNoBypass.ps1
     validation_file: docs/validation/ORT6_PROVIDER_ADAPTER_CONTROL_LAYER_COMPLETE_20260703.md
     control_status: adapter_contract_complete_no_bypass_no_live_write_approval
+
+  ort7_approval_gated_operations_pilot:
+    status: operations_pilot
+    release_train: O-RT7
+    pilot_doc: docs/ORT7_APPROVAL_GATED_OPERATIONS_PILOT_20260703.md
+    pilot_policy: config/operations-pilot.yml
+    pilot_schema: schemas/operations-pilot.schema.json
+    pilot_runbook_template: templates/operations-pilot/OPERATIONS_PILOT_RUNBOOK_TEMPLATE.md
+    sample_readonly_pilot: examples/operations-pilot/sample_readonly_aggregation_pilot.json
+    sample_draft_change_pack_pilot: examples/operations-pilot/sample_draft_change_pack_pilot.json
+    tests:
+      - tests/Test-OrchestratorOperationsPilot.ps1
+      - tests/Test-OrchestratorPilotNoProviderWrite.ps1
+    validation_file: docs/validation/ORT7_APPROVAL_GATED_OPERATIONS_PILOT_COMPLETE_20260703.md
+    control_status: low_risk_pilot_contract_complete_no_provider_or_production_write
 
   orchestrator_readiness_workflow:
     status: validated
