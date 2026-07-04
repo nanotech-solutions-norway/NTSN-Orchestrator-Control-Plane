@@ -1,0 +1,96 @@
+{
+  "planId": "ORT3-SAMPLE-PROVIDER-CHANGE-PLAN-20260703",
+  "releaseTrain": "O-RT3",
+  "mode": "PLAN_ONLY",
+  "executionAllowed": false,
+  "requestedObjective": "Prepare a review-only plan for a hypothetical provider configuration change without executing it.",
+  "sourceEvidence": [
+    {
+      "sourceFile": "config/orchestrator-registry.json",
+      "status": "canonical"
+    },
+    {
+      "sourceFile": "config/provider-boundary.yml",
+      "status": "canonical"
+    },
+    {
+      "sourceFile": "config/plan-only-policy.yml",
+      "status": "runtime_contract"
+    }
+  ],
+  "globalWriteGates": {
+    "liveProviderWriteApproved": false,
+    "dnsWriteApproved": false,
+    "productionDeploymentApproved": false,
+    "destructiveOperationsApproved": false
+  },
+  "steps": [
+    {
+      "stepId": "step-001",
+      "title": "Read current provider boundary evidence",
+      "targetSystem": "orchestrator",
+      "targetMcpOrProvider": "orchestrator_registry",
+      "actionClass": "READ_ONLY_READY",
+      "planAction": "READ_ONLY_STEP",
+      "executionAllowed": false,
+      "approvalRequired": false,
+      "evidenceRequired": [
+        "config/provider-boundary.yml",
+        "config/evidence-status.yml"
+      ],
+      "payloadShape": {
+        "type": "read_reference",
+        "sourceFiles": [
+          "config/provider-boundary.yml",
+          "config/evidence-status.yml"
+        ]
+      },
+      "validation": [
+        "Confirm source files exist.",
+        "Confirm global write gates remain false."
+      ]
+    },
+    {
+      "stepId": "step-002",
+      "title": "Prepare blocked provider change review step",
+      "targetSystem": "provider",
+      "targetMcpOrProvider": "domeneshop",
+      "actionClass": "CONTROLLED_WRITE_PENDING_APPROVAL",
+      "planAction": "OPERATOR_REVIEW_STEP",
+      "executionAllowed": false,
+      "approvalRequired": true,
+      "evidenceRequired": [
+        "docs/evidence/DOMENESHOP_PROVIDER_EVIDENCE_INTAKE_1205_02072026.md",
+        "docs/PENDING_REVIEW_ITEMS_ORT1_20260703.md"
+      ],
+      "payloadShape": {
+        "type": "placeholder_only_provider_change",
+        "target": "<provider-resource-placeholder>",
+        "change": "<proposed-change-placeholder>",
+        "secretValues": "<not-allowed>"
+      },
+      "blockedReason": "Provider write requires explicit approval, dry-run evidence, rollback plan, and validation evidence.",
+      "rollbackReference": "rollbackPlan[0]",
+      "validation": [
+        "Confirm no provider call was made.",
+        "Confirm no secret or private payload value appears in the plan.",
+        "Confirm change remains blocked pending operator approval."
+      ]
+    }
+  ],
+  "rollbackPlan": [
+    "No runtime rollback required because this is a plan-only artifact and no provider mutation is executed.",
+    "If later converted into an approved controlled write, define a provider-specific disable/revert procedure before execution."
+  ],
+  "validationPlan": [
+    "Run tests/Test-PlanOnlyPolicyEngine.ps1.",
+    "Run tests/Test-OrchestratorPlanSchema.ps1.",
+    "Confirm all executionAllowed fields are false."
+  ],
+  "auditOutputs": [
+    "Plan artifact path.",
+    "Source evidence references.",
+    "Operator approval status.",
+    "Validation report path."
+  ]
+}
