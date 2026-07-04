@@ -11,6 +11,7 @@ status_legend:
   pending_review: source evidence is indexed but explicitly marked pending review or requires live/manual confirmation
   canonical: repository-controlled canonical source for current release train
   runtime_contract: repository-controlled runtime/schema contract
+  plan_contract: repository-controlled plan-only policy/schema contract
 
 categories:
   ort1_canonical_registry:
@@ -38,6 +39,19 @@ categories:
       - tests/Test-OrchestratorOpenApiGetOnly.ps1
     validation_file: docs/validation/ORT2_READONLY_RUNTIME_COMPLETE_20260703.md
     control_status: get_only_runtime_contract_complete_no_live_write_approval
+
+  ort3_plan_only_orchestration_engine:
+    status: plan_contract
+    release_train: O-RT3
+    engine_doc: docs/ORT3_PLAN_ONLY_ORCHESTRATION_ENGINE_20260703.md
+    policy_file: config/plan-only-policy.yml
+    plan_schema: schemas/orchestrator-plan.schema.json
+    sample_plan: examples/plan-only/sample_provider_change_plan.json
+    tests:
+      - tests/Test-PlanOnlyPolicyEngine.ps1
+      - tests/Test-OrchestratorPlanSchema.ps1
+    validation_file: docs/validation/ORT3_PLAN_ONLY_ENGINE_COMPLETE_20260703.md
+    control_status: plan_only_contract_complete_execution_not_allowed
 
   orchestrator_readiness_workflow:
     status: validated
