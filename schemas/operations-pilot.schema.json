@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas-ai.no/schemas/operations-pilot.schema.json",
+  "title": "NTSN Orchestrator Approval-gated Operations Pilot Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "pilotId",
+    "releaseTrain",
+    "mode",
+    "pilotOperation",
+    "operatorApprovalRequired",
+    "executionAllowed",
+    "sourceEvidence",
+    "targetAdapters",
+    "globalWriteGates",
+    "blockedActions",
+    "validationRequired",
+    "auditOutputs"
+  ],
+  "properties": {
+    "pilotId": { "type": "string", "minLength": 1 },
+    "releaseTrain": { "type": "string", "const": "O-RT7" },
+    "mode": { "type": "string", "const": "APPROVAL_GATED_OPERATIONS_PILOT" },
+    "pilotOperation": {
+      "type": "string",
+      "enum": ["read_only_aggregation", "evidence_pack_generation", "draft_change_pack_generation"]
+    },
+    "operatorApprovalRequired": { "type": "boolean", "const": true },
+    "executionAllowed": { "type": "boolean", "const": false },
+    "sourceEvidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourceFile", "status"],
+        "properties": {
+          "sourceFile": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "targetAdapters": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "globalWriteGates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "liveProviderWriteApproved",
+        "dnsWriteApproved",
+        "productionDeploymentApproved",
+        "destructiveOperationsApproved"
+      ],
+      "properties": {
+        "liveProviderWriteApproved": { "type": "boolean", "const": false },
+        "dnsWriteApproved": { "type": "boolean", "const": false },
+        "productionDeploymentApproved": { "type": "boolean", "const": false },
+        "destructiveOperationsApproved": { "type": "boolean", "const": false }
+      }
+    },
+    "blockedActions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "validationRequired": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "auditOutputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "generatedArtifacts": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}
