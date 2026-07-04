@@ -1,0 +1,130 @@
+# Plan-only policy — O-RT3 — 2026-07-03
+
+release_train: O-RT3
+mode: PLAN_ONLY
+execution_allowed: false
+live_write_approved: false
+unknown_action_default: NOT_CONFIGURED
+conflict_default: PENDING_REVIEW
+secret_policy: placeholders_only
+
+required_plan_fields:
+  - planId
+  - mode
+  - executionAllowed
+  - requestedObjective
+  - sourceEvidence
+  - globalWriteGates
+  - steps
+  - rollbackPlan
+  - validationPlan
+  - auditOutputs
+
+step_requirements:
+  required_fields:
+    - stepId
+    - title
+    - targetSystem
+    - targetMcpOrProvider
+    - actionClass
+    - executionAllowed
+    - approvalRequired
+    - evidenceRequired
+    - payloadShape
+    - validation
+  non_readonly_requires:
+    - approvalRequired: true
+    - executionAllowed: false
+    - blockedReason
+    - rollbackReference
+
+allowed_step_classes:
+  - READ_ONLY_READY
+  - PLAN_ONLY_READY
+  - CONTROLLED_WRITE_PENDING_APPROVAL
+  - NOT_CONFIGURED
+  - PENDING_REVIEW
+
+allowed_plan_actions:
+  - READ_ONLY_STEP
+  - PLAN_ONLY_STEP
+  - EVIDENCE_COLLECTION_STEP
+  - VALIDATION_STEP
+  - OPERATOR_REVIEW_STEP
+  - DRAFT_CHANGE_PACK_STEP
+
+blocked_execution_actions:
+  - DNS_WRITE_EXECUTION
+  - FTP_SFTP_WRITE_EXECUTION
+  - SQL_WRITE_EXECUTION
+  - ACCOUNTING_WRITE_EXECUTION
+  - WORKFLOW_WRITE_DISPATCH
+  - PRODUCTION_DEPLOYMENT_EXECUTION
+  - DESTRUCTIVE_OPERATION_EXECUTION
+  - DIRECT_PROVIDER_PUBLISH_EXECUTION
+  - BULK_SYNC_OR_DELETE_EXECUTION
+  - SECRET_READOUT
+  - PRIVATE_PAYLOAD_EXPORT
+
+policy_rules:
+  read_only_request:
+    if: requested_action_class == READ_ONLY_READY
+    then:
+      executionAllowed: false
+      planStepAllowed: true
+      output: read_only_plan_step
+
+  plan_only_request:
+    if: requested_action_class == PLAN_ONLY_READY
+    then:
+      executionAllowed: false
+      planStepAllowed: true
+      output: plan_only_step
+
+  controlled_write_request:
+    if: requested_action_class == CONTROLLED_WRITE_PENDING_APPROVAL
+    then:
+      executionAllowed: false
+      approvalRequired: true
+      blockedReason: explicit_operator_approval_required
+      output: blocked_controlled_write_plan_step
+
+  unknown_action:
+    if: capability_not_in_registry
+    then:
+      executionAllowed: false
+      actionClass: NOT_CONFIGURED
+      blockedReason: capability_not_configured
+
+  conflicting_or_stale_evidence:
+    if: evidence_status in [stale, conflicting, pending_review]
+    then:
+      executionAllowed: false
+      actionClass: PENDING_REVIEW
+      blockedReason: evidence_review_required
+
+  secret_bearing_payload:
+    if: payload_contains_secret_value
+    then:
+      executionAllowed: false
+      actionClass: PENDING_REVIEW
+      blockedReason: secret_value_must_not_enter_plan
+      requiredAction: replace_with_placeholder
+
+  missing_rollback_for_write_class:
+    if: actionClass == CONTROLLED_WRITE_PENDING_APPROVAL and rollbackReference is null
+    then:
+      executionAllowed: false
+      blockedReason: rollback_plan_required
+
+  missing_validation_for_write_class:
+    if: actionClass == CONTROLLED_WRITE_PENDING_APPROVAL and validation is null
+    then:
+      executionAllowed: false
+      blockedReason: validation_plan_required
+
+global_write_gates:
+  liveProviderWriteApproved: false
+  dnsWriteApproved: false
+  productionDeploymentApproved: false
+  destructiveOperationsApproved: false
