@@ -18,6 +18,7 @@ status_legend:
   adapter_contract: repository-controlled provider adapter contract layer
   operations_pilot: repository-controlled approval-gated low-risk operations pilot
   runtime_client_config_refresh: repository-controlled MCP runtime/client evidence refresh
+  protected_endpoint_validation_plan: repository-controlled protected endpoint validation planning
 
 categories:
   ort1_canonical_registry:
@@ -130,6 +131,17 @@ categories:
       - tests/Test-OrchestratorMcpRuntimeClientRefresh.ps1
     validation_file: docs/validation/ORT8_MCP_RUNTIME_CLIENT_CONFIG_REFRESH_COMPLETE_20260704.md
     control_status: refreshed_evidence_indexed_no_live_http_check_no_live_write_approval
+
+  ort9_protected_endpoint_validation_planning:
+    status: protected_endpoint_validation_plan
+    release_train: O-RT9
+    plan_doc: docs/ORT9_PROTECTED_ENDPOINT_VALIDATION_PLANNING_20260704.md
+    validation_policy: config/protected-endpoint-validation.yml
+    runbook_template: templates/protected-endpoint-validation/PROTECTED_ENDPOINT_VALIDATION_RUNBOOK_TEMPLATE.md
+    tests:
+      - tests/Test-OrchestratorProtectedEndpointValidationPlan.ps1
+    validation_file: docs/validation/ORT9_PROTECTED_ENDPOINT_VALIDATION_PLANNING_COMPLETE_20260704.md
+    control_status: protected_validation_planning_complete_no_secret_capture_no_live_write_approval
 
   orchestrator_readiness_workflow:
     status: validated
