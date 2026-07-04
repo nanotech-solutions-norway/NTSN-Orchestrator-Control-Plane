@@ -1,9 +1,10 @@
-# Evidence status — updated 2026-07-03
+# Evidence status — updated 2026-07-04
 
 status_legend:
   pending: evidence requested but not yet received
   received: evidence package received but not yet fully validated
   indexed: evidence package indexed into orchestrator repo
+  refreshed: newer evidence package indexed and set as current status source
   active: evidence is active in orchestrator scope
   validated: workflow or operator validation completed
   out_of_scope: intentionally excluded from current scope
@@ -16,6 +17,7 @@ status_legend:
   pr_change_control: repository-controlled PR-first controlled change path
   adapter_contract: repository-controlled provider adapter contract layer
   operations_pilot: repository-controlled approval-gated low-risk operations pilot
+  runtime_client_config_refresh: repository-controlled MCP runtime/client evidence refresh
 
 categories:
   ort1_canonical_registry:
@@ -116,6 +118,19 @@ categories:
     validation_file: docs/validation/ORT7_APPROVAL_GATED_OPERATIONS_PILOT_COMPLETE_20260703.md
     control_status: low_risk_pilot_contract_complete_no_provider_or_production_write
 
+  ort8_mcp_runtime_client_config_refresh:
+    status: runtime_client_config_refresh
+    release_train: O-RT8
+    refresh_doc: docs/ORT8_MCP_RUNTIME_CLIENT_CONFIG_REFRESH_20260704.md
+    source_package: NTSN_MCP_Runtime_Client_Config_Evidence_1233_04072026.zip
+    intake_file: docs/evidence/MCP_RUNTIME_CLIENT_CONFIG_EVIDENCE_INTAKE_1233_04072026.md
+    alignment_file: config/mcp-runtime-client-alignment.yml
+    supersedes_historical_intake: docs/evidence/MCP_RUNTIME_CONFIG_EVIDENCE_INTAKE_1138_02072026.md
+    tests:
+      - tests/Test-OrchestratorMcpRuntimeClientRefresh.ps1
+    validation_file: docs/validation/ORT8_MCP_RUNTIME_CLIENT_CONFIG_REFRESH_COMPLETE_20260704.md
+    control_status: refreshed_evidence_indexed_no_live_http_check_no_live_write_approval
+
   orchestrator_readiness_workflow:
     status: validated
     validation_source: operator_reported_workflow_result
@@ -158,27 +173,31 @@ categories:
     control_status: connector_evidence_indexed_admin_export_still_required_for_complete_proof
 
   mcp_runtime_client_config:
-    status: indexed
-    source_package: NTSN_MCP_Runtime_Config_Evidence_1138_02072026.zip
-    intake_file: docs/evidence/MCP_RUNTIME_CONFIG_EVIDENCE_INTAKE_1138_02072026.md
-    detected_runtime_categories:
-      - NTSN Orchestrator Control Plane
-      - Domeneshop MCP bridge
-      - Conta MCP initial endpoint
-      - Conta Bridge v2 accounting bridge
-      - Atlas AI monitor and PIP API bridge
-      - SolarEX and NTSN forms SQL backend monitored target
-      - PowerShell execution control plane
-      - Python execution control plane
-      - Memory Vault governed memory and evidence layer
-      - Atlas AI website and governance runtime
-      - Wix connector boundary
+    status: refreshed
+    current_source_package: NTSN_MCP_Runtime_Client_Config_Evidence_1233_04072026.zip
+    current_intake_file: docs/evidence/MCP_RUNTIME_CLIENT_CONFIG_EVIDENCE_INTAKE_1233_04072026.md
+    historical_source_package: NTSN_MCP_Runtime_Config_Evidence_1138_02072026.zip
+    historical_intake_file: docs/evidence/MCP_RUNTIME_CONFIG_EVIDENCE_INTAKE_1138_02072026.md
+    alignment_file: config/mcp-runtime-client-alignment.yml
+    live_http_check_performed_in_current_package: false
+    detected_client_entries:
+      - conta-mcp
+      - domeneshop-mcp-public-health
+      - domeneshop-mcp-status
+      - ntsn-orchestrator-control-plane
+      - powershell-control-plane
+      - python-control-plane
+      - github-connector
+      - wix-connector
+      - ai-memory-ops
+      - claude-desktop-local-mcp
+      - cursor-local-mcp
     detected_readiness_classes:
       - READ_ONLY_READY
       - PLAN_ONLY_READY
       - CONTROLLED_WRITE_PENDING_APPROVAL
       - NOT_CONFIGURED
-    control_status: indexed_live_write_not_approved
+    control_status: refreshed_no_live_write_approved
 
   domeneshop_provider:
     status: indexed_pending_review
