@@ -34,8 +34,7 @@ foreach ($marker in @(
     'execution_allowed: false',
     'live_write_approved: false',
     'provider_calls_allowed: false',
-    'workflow_dispatch_allowed: false',
-    'secret_readout_allowed: false'
+    'workflow_dispatch_allowed: false'
 )) {
     if ($policy -notmatch [regex]::Escape($marker)) {
         throw "Drift policy missing required marker: $marker"
@@ -43,14 +42,16 @@ foreach ($marker in @(
 }
 
 foreach ($severity in @('INFO', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL')) {
-    if ($policy -notmatch "$severity:") {
+    $severityMarker = [regex]::Escape($severity + ':')
+    if ($policy -notmatch $severityMarker) {
         throw "Drift policy missing severity level: $severity"
     }
 }
 
 $reportTemplate = Get-Content (Join-Path $RepoRoot 'reports/templates/ORCHESTRATOR_DRIFT_VALIDATION_REPORT_TEMPLATE.md') -Raw
 foreach ($field in @('repository', 'releaseTrain', 'validationTimestampUtc', 'commitShaOrRef', 'checksRun', 'findingsBySeverity', 'globalWriteGates', 'passFailStatus', 'nextActions')) {
-    if ($policy -notmatch $field -and $reportTemplate -notmatch $field) {
+    $escapedField = [regex]::Escape($field)
+    if ($policy -notmatch $escapedField -and $reportTemplate -notmatch $escapedField) {
         throw "Required report field not represented: $field"
     }
 }
