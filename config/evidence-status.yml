@@ -19,6 +19,7 @@ status_legend:
   operations_pilot: repository-controlled approval-gated low-risk operations pilot
   runtime_client_config_refresh: repository-controlled MCP runtime/client evidence refresh
   protected_endpoint_validation_plan: repository-controlled protected endpoint validation planning
+  runtime_readiness_report_pack: repository-controlled runtime readiness report pack
 
 categories:
   ort1_canonical_registry:
@@ -142,6 +143,17 @@ categories:
       - tests/Test-OrchestratorProtectedEndpointValidationPlan.ps1
     validation_file: docs/validation/ORT9_PROTECTED_ENDPOINT_VALIDATION_PLANNING_COMPLETE_20260704.md
     control_status: protected_validation_planning_complete_no_secret_capture_no_live_write_approval
+
+  ort10_runtime_readiness_report_pack:
+    status: runtime_readiness_report_pack
+    release_train: O-RT10
+    report_pack_doc: docs/ORT10_RUNTIME_READINESS_REPORT_PACK_20260704.md
+    report_pack_config: config/runtime-readiness-report-pack.yml
+    readiness_report: reports/runtime-readiness/ORCHESTRATOR_RUNTIME_READINESS_REPORT_20260704.md
+    tests:
+      - tests/Test-OrchestratorRuntimeReadinessReportPack.ps1
+    validation_file: docs/validation/ORT10_RUNTIME_READINESS_REPORT_PACK_COMPLETE_20260704.md
+    control_status: report_pack_complete_no_endpoint_calls_no_live_write_approval
 
   orchestrator_readiness_workflow:
     status: validated
