@@ -32,7 +32,8 @@ foreach ($marker in @(
 }
 
 foreach ($provider in @('github', 'wix', 'domeneshop', 'conta', 'powershell', 'python', 'custom_gpt', 'memory_ops')) {
-    if ($providerBoundary -notmatch "(?m)^\s{2}$provider:") {
+    $providerPattern = '(?m)^\s{2}' + [regex]::Escape($provider + ':')
+    if ($providerBoundary -notmatch $providerPattern) {
         throw "Provider boundary missing provider: $provider"
     }
 }
