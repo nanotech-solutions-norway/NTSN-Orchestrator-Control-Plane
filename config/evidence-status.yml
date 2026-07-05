@@ -1,4 +1,4 @@
-# Evidence status — updated 2026-07-04
+# Evidence status — updated 2026-07-05
 
 status_legend:
   pending: evidence requested but not yet received
@@ -20,6 +20,8 @@ status_legend:
   runtime_client_config_refresh: repository-controlled MCP runtime/client evidence refresh
   protected_endpoint_validation_plan: repository-controlled protected endpoint validation planning
   runtime_readiness_report_pack: repository-controlled runtime readiness report pack
+  local_client_evidence_pack: repository-controlled local MCP client evidence collection pack
+  log_review: repository-controlled validation log diagnosis and corrective action record
 
 categories:
   ort1_canonical_registry:
@@ -74,6 +76,7 @@ categories:
       - tests/Test-OrchestratorProviderBoundaryDrift.ps1
       - tests/Test-OrchestratorValidationSuite.ps1
     validation_file: docs/validation/ORT4_VALIDATION_DRIFT_HARNESS_COMPLETE_20260703.md
+    latest_log_review: docs/validation/ORCHESTRATOR_DRIFT_VALIDATION_LOG_REVIEW_77656234734_20260705.md
     control_status: validation_only_no_write_calls
 
   ort5_pr_first_controlled_change_path:
@@ -154,6 +157,30 @@ categories:
       - tests/Test-OrchestratorRuntimeReadinessReportPack.ps1
     validation_file: docs/validation/ORT10_RUNTIME_READINESS_REPORT_PACK_COMPLETE_20260704.md
     control_status: report_pack_complete_no_endpoint_calls_no_live_write_approval
+
+  ort11_local_mcp_client_evidence_pack:
+    status: local_client_evidence_pack
+    release_train: O-RT11
+    evidence_pack_doc: docs/ORT11_LOCAL_MCP_CLIENT_EVIDENCE_PACK_20260705.md
+    evidence_config: config/local-mcp-client-evidence.yml
+    sanitization_template: templates/local-mcp-client/LOCAL_MCP_CLIENT_SANITIZATION_TEMPLATE.md
+    claude_example: examples/local-mcp-client/claude_desktop_sanitized_example.json
+    cursor_example: examples/local-mcp-client/cursor_sanitized_example.json
+    tests:
+      - tests/Test-OrchestratorLocalClientEvidencePack.ps1
+    validation_file: docs/validation/ORT11_LOCAL_MCP_CLIENT_EVIDENCE_PACK_PENDING_20260705.md
+    control_status: pending_real_local_client_evidence_no_live_write_approval
+
+  drift_validation_log_review_77656234734:
+    status: log_review
+    source_package: logs_77656234734.zip
+    review_file: docs/validation/ORCHESTRATOR_DRIFT_VALIDATION_LOG_REVIEW_77656234734_20260705.md
+    corrective_files:
+      - tests/Test-OrchestratorDriftHarness.ps1
+      - tests/Test-OrchestratorProviderBoundaryDrift.ps1
+      - tests/Test-OrchestratorProviderAdapterContracts.ps1
+      - tests/Test-OrchestratorValidationSuite.ps1
+    control_status: test_harness_fix_applied_validation_rerun_required
 
   orchestrator_readiness_workflow:
     status: validated
