@@ -1,0 +1,79 @@
+# Runtime readiness report pack — O-RT10 — 2026-07-04
+
+release_train: O-RT10
+mode: RUNTIME_READINESS_REPORT_PACK
+report_only: true
+execution_allowed: false
+live_write_approved: false
+endpoint_calls_allowed: false
+secret_handling_allowed: false
+
+source_phases:
+  O-RT1:
+    name: Canonical Registry and Evidence Freeze
+    status: complete
+    source: docs/ORCHESTRATOR_REGISTRY.md
+  O-RT2:
+    name: Read-only Control Plane Runtime
+    status: complete
+    source: docs/ORT2_READONLY_CONTROL_PLANE_RUNTIME_20260703.md
+  O-RT3:
+    name: Plan-only Orchestration Engine
+    status: complete
+    source: docs/ORT3_PLAN_ONLY_ORCHESTRATION_ENGINE_20260703.md
+  O-RT4:
+    name: Validation and Drift Detection Harness
+    status: complete
+    source: docs/ORT4_VALIDATION_DRIFT_HARNESS_20260703.md
+  O-RT5:
+    name: PR-first Controlled Change Path
+    status: complete
+    source: docs/ORT5_PR_FIRST_CONTROLLED_CHANGE_PATH_20260703.md
+  O-RT6:
+    name: Provider Adapter Control Layer
+    status: complete
+    source: docs/ORT6_PROVIDER_ADAPTER_CONTROL_LAYER_20260703.md
+  O-RT7:
+    name: Approval-gated Operations Pilot
+    status: complete
+    source: docs/ORT7_APPROVAL_GATED_OPERATIONS_PILOT_20260703.md
+  O-RT8:
+    name: MCP Runtime and Client Config Refresh
+    status: complete
+    source: docs/ORT8_MCP_RUNTIME_CLIENT_CONFIG_REFRESH_20260704.md
+  O-RT9:
+    name: Protected Endpoint Validation Planning
+    status: complete
+    source: docs/ORT9_PROTECTED_ENDPOINT_VALIDATION_PLANNING_20260704.md
+
+current_capability_status:
+  report_only: ready
+  read_only: ready
+  plan_only: ready
+  pr_first_change_pack: ready
+  protected_endpoint_validation_planning: ready
+  live_provider_operations: not_approved
+  production_deployment: not_approved
+
+remaining_prerequisites:
+  - operator_controlled_live_endpoint_validation
+  - protected_status_validation_without_protected_value_capture
+  - domeneshop_https_certificate_readiness_confirmation
+  - conta_sandbox_or_server_validation_refresh
+  - github_admin_environment_protection_export
+  - optional_claude_desktop_local_mcp_config_evidence
+  - optional_cursor_local_mcp_config_evidence
+  - provider_specific_rollback_disable_plans
+  - separate_live_operation_approval_package
+
+global_control_status:
+  live_provider_write_approved: false
+  dns_write_approved: false
+  production_deployment_approved: false
+  destructive_operations_approved: false
+
+report_files:
+  - reports/runtime-readiness/ORCHESTRATOR_RUNTIME_READINESS_REPORT_20260704.md
+
+tests:
+  - tests/Test-OrchestratorRuntimeReadinessReportPack.ps1
