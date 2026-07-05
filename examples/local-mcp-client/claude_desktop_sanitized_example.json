@@ -1,0 +1,23 @@
+{
+  "clientId": "claude-desktop-local-mcp",
+  "clientName": "Claude Desktop",
+  "configLocationClass": "user_config_directory",
+  "serverEntries": [
+    {
+      "serverName": "example-local-server",
+      "commandOrUrlClass": "local_command",
+      "argsSanitized": [
+        "<script-or-server-entrypoint>",
+        "<non-sensitive-argument-placeholder>"
+      ],
+      "envVariableNamesOnly": [
+        "EXAMPLE_API_KEY_ENV_NAME_ONLY"
+      ],
+      "enabledStatus": "unknown",
+      "notes": "Example only. Replace with sanitized evidence before marking configured."
+    }
+  ],
+  "evidenceTimestamp": "2026-07-05T00:00:00Z",
+  "sanitizationConfirmed": true,
+  "secretsIncluded": false
+}
