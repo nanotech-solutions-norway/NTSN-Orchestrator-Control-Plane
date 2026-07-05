@@ -45,6 +45,7 @@ foreach ($test in $tests) {
             Severity = 'INFO'
             Finding = 'None'
         }
+        Write-Host "PASSED SUITE ITEM: $test"
     }
     catch {
         $results += [pscustomobject]@{
@@ -53,6 +54,7 @@ foreach ($test in $tests) {
             Severity = 'HIGH'
             Finding = $_.Exception.Message
         }
+        Write-Host "FAILED SUITE ITEM: $test :: $($_.Exception.Message)"
     }
 }
 
@@ -122,7 +124,10 @@ $reportLines += '```'
 $reportLines | Set-Content -Path $ReportPath -Encoding UTF8
 
 if ($failed.Count -gt 0) {
-    throw "Orchestrator validation failed. See report: $ReportPath"
+    foreach ($item in $failed) {
+        Write-Host "VALIDATION FAILURE: $($item.Test) => $($item.Finding)"
+    }
+    throw "Orchestrator validation failed with $($failed.Count) failing test(s). See report: $ReportPath"
 }
 
 Write-Host "PASSED: Orchestrator validation suite passed for O-RT1 through O-RT10. Report: $ReportPath"
