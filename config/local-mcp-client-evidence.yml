@@ -1,0 +1,57 @@
+# Local MCP client evidence collection — O-RT11 — 2026-07-05
+
+release_train: O-RT11
+mode: LOCAL_CLIENT_EVIDENCE_PACK
+status: pending_evidence
+live_write_approved: false
+secret_capture_allowed: false
+
+clients:
+  claude-desktop-local-mcp:
+    client_name: Claude Desktop
+    current_status: NOT_CONFIGURED
+    evidence_status: pending_evidence
+    expected_evidence_file: evidence/local-mcp/claude_desktop_sanitized.json
+    template: templates/local-mcp-client/LOCAL_MCP_CLIENT_SANITIZATION_TEMPLATE.md
+    example: examples/local-mcp-client/claude_desktop_sanitized_example.json
+    accepted_fields:
+      - clientId
+      - clientName
+      - configLocationClass
+      - serverEntries
+      - envVariableNamesOnly
+      - enabledStatus
+      - evidenceTimestamp
+      - sanitizationConfirmed
+      - secretsIncluded
+  cursor-local-mcp:
+    client_name: Cursor
+    current_status: NOT_CONFIGURED
+    evidence_status: pending_evidence
+    expected_evidence_file: evidence/local-mcp/cursor_sanitized.json
+    template: templates/local-mcp-client/LOCAL_MCP_CLIENT_SANITIZATION_TEMPLATE.md
+    example: examples/local-mcp-client/cursor_sanitized_example.json
+    accepted_fields:
+      - clientId
+      - clientName
+      - configLocationClass
+      - serverEntries
+      - envVariableNamesOnly
+      - enabledStatus
+      - evidenceTimestamp
+      - sanitizationConfirmed
+      - secretsIncluded
+
+sanitization_rules:
+  secretsIncluded: false
+  sanitizationConfirmed: true
+  env_values_allowed: false
+  env_variable_names_allowed: true
+  private_headers_allowed: false
+  protected_values_allowed: false
+  raw_tokens_allowed: false
+  full_env_file_allowed: false
+
+validation:
+  test: tests/Test-OrchestratorLocalClientEvidencePack.ps1
+  current_result: pending_until_real_sanitized_evidence_supplied
