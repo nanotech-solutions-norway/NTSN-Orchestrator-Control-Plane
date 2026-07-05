@@ -37,7 +37,8 @@ foreach ($marker in @(
 }
 
 foreach ($adapter in @('github', 'wix', 'domeneshop', 'conta', 'powershell', 'python', 'custom_gpt', 'memory_ops')) {
-    if ($registry -notmatch "(?m)^\s{2}$adapter:") {
+    $adapterPattern = '(?m)^\s{2}' + [regex]::Escape($adapter + ':')
+    if ($registry -notmatch $adapterPattern) {
         throw "Provider adapter registry missing adapter: $adapter"
     }
 }
