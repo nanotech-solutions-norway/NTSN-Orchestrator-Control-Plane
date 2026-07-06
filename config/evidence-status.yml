@@ -1,4 +1,4 @@
-# Evidence status — updated 2026-07-05
+# Evidence status — updated 2026-07-06
 
 status_legend:
   pending: evidence requested but not yet received
@@ -22,6 +22,7 @@ status_legend:
   runtime_readiness_report_pack: repository-controlled runtime readiness report pack
   local_client_evidence_pack: repository-controlled local MCP client evidence collection pack
   log_review: repository-controlled validation log diagnosis and corrective action record
+  admin_export_complete: repository-controlled GitHub admin/environment export completion evidence
 
 categories:
   ort1_canonical_registry:
@@ -76,7 +77,7 @@ categories:
       - tests/Test-OrchestratorProviderBoundaryDrift.ps1
       - tests/Test-OrchestratorValidationSuite.ps1
     validation_file: docs/validation/ORT4_VALIDATION_DRIFT_HARNESS_COMPLETE_20260703.md
-    latest_log_review: docs/validation/ORCHESTRATOR_DRIFT_VALIDATION_LOG_REVIEW_77656234734_20260705.md
+    latest_log_review: docs/validation/ORCHESTRATOR_DRIFT_VALIDATION_LOG_REVIEW_77722940956_20260706.md
     control_status: validation_only_no_write_calls
 
   ort5_pr_first_controlled_change_path:
@@ -182,10 +183,18 @@ categories:
       - tests/Test-OrchestratorValidationSuite.ps1
     control_status: test_harness_fix_applied_validation_rerun_required
 
+  drift_validation_log_review_77722940956:
+    status: log_review
+    source_package: logs_77722940956.zip
+    review_file: docs/validation/ORCHESTRATOR_DRIFT_VALIDATION_LOG_REVIEW_77722940956_20260706.md
+    corrective_files:
+      - tests/Test-OrchestratorPilotNoProviderWrite.ps1
+    control_status: test_harness_fix_applied_validation_rerun_required
+
   orchestrator_readiness_workflow:
     status: validated
     validation_source: operator_reported_workflow_result
-    reported_result: Validated
+    reported_result: Passed
     validation_file: docs/validation/ORCHESTRATOR_READINESS_VALIDATED_20260702.md
     control_status: evidence_intake_ready_no_live_write_approval
 
@@ -218,10 +227,26 @@ categories:
     control_status: capability_boundary_review_required_before_write_authority
 
   github_environment_boundary:
-    status: indexed
+    status: validated
     source_package: GitHub_Environment_Secrets_Boundary_Evidence_1122_02072026.zip
     intake_file: docs/evidence/GITHUB_ENVIRONMENT_EVIDENCE_INTAKE_1122_02072026.md
-    control_status: connector_evidence_indexed_admin_export_still_required_for_complete_proof
+    admin_export_file: docs/evidence/GITHUB_ADMIN_ENVIRONMENT_PROTECTION_EXPORT_20260706.md
+    admin_export_completion_file: docs/validation/GITHUB_ADMIN_ENVIRONMENT_PROTECTION_EXPORT_COMPLETE_20260706.md
+    admin_export_folder: docs/evidence/github-admin-export/
+    control_status: github_admin_environment_protection_export_complete_no_live_write_approval
+
+  github_admin_environment_protection_export:
+    status: admin_export_complete
+    export_file: docs/evidence/GITHUB_ADMIN_ENVIRONMENT_PROTECTION_EXPORT_20260706.md
+    completion_file: docs/validation/GITHUB_ADMIN_ENVIRONMENT_PROTECTION_EXPORT_COMPLETE_20260706.md
+    confirmed_findings:
+      - no_github_environments_configured
+      - no_branch_protection_rules_configured
+      - no_repository_rulesets_configured
+      - actions_policy_review_complete
+      - no_repository_or_environment_secrets_configured
+      - no_repository_or_environment_variables_configured
+    control_status: complete_no_live_write_approval
 
   mcp_runtime_client_config:
     status: refreshed
