@@ -1,19 +1,11 @@
 {
   "repository": "nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane",
-  "exportStatus": "UPLOAD_REVIEWED_PENDING_ACTUAL_ADMIN_VALUES",
-  "uploadReview": {
-    "uploadedFileReceived": true,
-    "uploadedFileContainedPlaceholders": true,
-    "actualEnvironmentMetadataProvided": false,
-    "decision": "Do not mark environments validated until real sanitized environment metadata is supplied."
+  "exportStatus": "COMPLETE_NO_ENVIRONMENTS_CONFIGURED",
+  "source": {
+    "method": "operator_admin_ui_review",
+    "reportedAt": "2026-07-06",
+    "finding": "No GitHub environments are created for this repository."
   },
   "environments": [],
-  "unresolvedFields": [
-    "environment names",
-    "protection rules",
-    "required reviewers",
-    "deployment branch policies",
-    "wait timers"
-  ],
-  "notes": "The uploaded file did not contain actual sanitized environment protection metadata."
+  "notes": "No environment protection rules, reviewers, deployment branch policies, wait timers, environment secrets, or environment variables exist because no environments are configured."
 }
