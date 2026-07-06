@@ -50,6 +50,24 @@ LIVE_WRITE_NOT_APPROVED
 | allow_squash_merge | `true` |
 | allow_update_branch | `false` |
 
+## Uploaded admin export files
+
+Folder:
+
+```text
+docs/evidence/github-admin-export/
+```
+
+| File | Current status |
+|---|---|
+| `GITHUB_REPOSITORY_ADMIN_SETTINGS_SANITIZED.md` | `PARTIAL_CONNECTOR_VERIFIED_EXPORT` |
+| `GITHUB_ACTIONS_POLICY_EXPORT_SANITIZED.md` | `PARTIAL_EXPORT_FROM_WORKFLOW_EVIDENCE` |
+| `GITHUB_ENVIRONMENTS_PROTECTION_EXPORT_SANITIZED.json` | `UPLOAD_REVIEWED_PENDING_ACTUAL_ADMIN_VALUES` |
+| `GITHUB_BRANCH_PROTECTION_EXPORT_SANITIZED.json` | `UPLOAD_REVIEWED_PENDING_ACTUAL_ADMIN_VALUES` |
+| `GITHUB_RULESETS_EXPORT_SANITIZED.json` | `UPLOAD_REVIEWED_PENDING_ACTUAL_ADMIN_VALUES` |
+| `GITHUB_SECRETS_VARIABLES_NAMES_ONLY.md` | `UPLOAD_REVIEWED_NO_NAMES_PROVIDED` |
+| `GITHUB_ADMIN_EXPORT_UPLOAD_REVIEW_20260706.md` | `UPLOAD_REVIEW_COMPLETE` |
+
 ## GitHub Actions workflow protection evidence currently available in repo
 
 | File | Evidence |
@@ -58,39 +76,22 @@ LIVE_WRITE_NOT_APPROVED
 | `docs/validation/ORCHESTRATOR_DRIFT_VALIDATION_LOG_REVIEW_77722940956_20260706.md` | Recent workflow log review. |
 | `docs/validation/ORCHESTRATOR_DRIFT_VALIDATION_LOG_REVIEW_77656234734_20260705.md` | Previous workflow log review. |
 
-## Environment protection evidence status
+## Current admin evidence status
 
-The current connector output verifies repository-level metadata and connector-context permissions. It does not expose a complete export of GitHub repository environments, branch protection rules, required reviewers, deployment branch policies, environment secrets, variables, or rulesets.
-
-Therefore, these fields remain pending admin export:
+The uploaded files were received and the repository placeholders have been replaced. However, several uploaded files still contained template markers rather than actual GitHub admin metadata. These areas remain incomplete until real sanitized values are supplied:
 
 | Evidence item | Status |
 |---|---|
-| GitHub Environments list | `PENDING_ADMIN_EXPORT` |
-| Per-environment protection rules | `PENDING_ADMIN_EXPORT` |
-| Required reviewers for environments | `PENDING_ADMIN_EXPORT` |
-| Environment deployment branch policies | `PENDING_ADMIN_EXPORT` |
-| Branch protection for `main` | `PENDING_ADMIN_EXPORT` |
-| Repository rulesets | `PENDING_ADMIN_EXPORT` |
-| Actions workflow permissions settings | `PENDING_ADMIN_EXPORT` |
-| Actions allowed actions policy | `PENDING_ADMIN_EXPORT` |
-| Secrets inventory, names only | `PENDING_ADMIN_EXPORT` |
-| Variables inventory, names only | `PENDING_ADMIN_EXPORT` |
-
-## Required admin export method
-
-Use GitHub UI or GitHub CLI/API from an admin-authenticated local environment. Export names and policy metadata only. Do not export secret values.
-
-Recommended evidence outputs:
-
-```text
-GITHUB_REPOSITORY_ADMIN_SETTINGS_SANITIZED.md
-GITHUB_ENVIRONMENTS_PROTECTION_EXPORT_SANITIZED.json
-GITHUB_BRANCH_PROTECTION_EXPORT_SANITIZED.json
-GITHUB_RULESETS_EXPORT_SANITIZED.json
-GITHUB_ACTIONS_POLICY_EXPORT_SANITIZED.md
-GITHUB_SECRETS_VARIABLES_NAMES_ONLY.md
-```
+| GitHub Environments list | `PENDING_ACTUAL_ADMIN_VALUES` |
+| Per-environment protection rules | `PENDING_ACTUAL_ADMIN_VALUES` |
+| Required reviewers for environments | `PENDING_ACTUAL_ADMIN_VALUES` |
+| Environment deployment branch policies | `PENDING_ACTUAL_ADMIN_VALUES` |
+| Branch protection for `main` | `PENDING_ACTUAL_ADMIN_VALUES` |
+| Repository rulesets | `PENDING_ACTUAL_ADMIN_VALUES` |
+| Actions allowed actions policy | `UNKNOWN_NOT_PROVIDED` |
+| Default repository workflow token permission | `UNKNOWN_NOT_PROVIDED` |
+| Secrets inventory, names only | `NO_NAMES_PROVIDED` |
+| Variables inventory, names only | `NO_NAMES_PROVIDED` |
 
 ## Required redaction rule
 
@@ -100,10 +101,10 @@ Do not include secret values, token values, private payloads, customer data, ful
 
 ## Current control decision
 
-The available connector evidence supports repository metadata intake and confirms auto-merge is disabled. It is not sufficient to mark GitHub admin/environment protection as fully validated.
+The available evidence supports repository metadata intake and partial admin export tracking. It is still not sufficient to mark GitHub admin/environment protection as fully validated.
 
 ```text
-GITHUB_ADMIN_ENVIRONMENT_PROTECTION_PARTIAL_EXPORT_COMPLETE
-GITHUB_ADMIN_ENVIRONMENT_PROTECTION_FULL_EXPORT_PENDING
+GITHUB_ADMIN_EXPORT_UPLOAD_REVIEW_COMPLETE
+GITHUB_ADMIN_ENVIRONMENT_PROTECTION_FULL_EXPORT_PENDING_ACTUAL_VALUES
 NO_LIVE_WRITE_APPROVAL
 ```
