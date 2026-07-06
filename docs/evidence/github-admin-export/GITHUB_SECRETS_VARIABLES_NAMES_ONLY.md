@@ -9,26 +9,34 @@ nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane
 ## Export status
 
 ```text
-UPLOAD_REVIEWED_NO_NAMES_PROVIDED
+PARTIAL_OPERATOR_UI_REVIEW_SECRETS_ONLY
 ```
 
-## Upload review
+## Operator UI evidence reviewed
 
-The uploaded file was received, but it still contained placeholder values. No actual names-only secret or variable inventory was provided.
+```text
+Repository -> Settings -> Secrets and variables -> Actions -> Secrets tab
+```
 
 ## Repository-level entries
 
 | Type | Name | Scope | Notes |
 |---|---|---|---|
-| secret | `not_provided_in_uploaded_file` | repository | `pending actual names-only export` |
-| variable | `not_provided_in_uploaded_file` | repository | `pending actual names-only export` |
+| secret | `none_configured` | repository | GitHub UI shows: This repository has no secrets. |
+| variable | `not_evidenced_variables_tab_not_shown` | repository | Variables tab was not included in the screenshot. |
 
 ## Environment-level entries
 
 | Environment | Type | Name | Notes |
 |---|---|---|---|
-| `not_provided_in_uploaded_file` | secret | `not_provided_in_uploaded_file` | `pending actual names-only export` |
-| `not_provided_in_uploaded_file` | variable | `not_provided_in_uploaded_file` | `pending actual names-only export` |
+| `not_applicable_no_environments_configured` | secret | `none_configured` | GitHub UI shows no environment secrets; no environments are configured in the admin export. |
+| `not_evidenced_variables_tab_not_shown` | variable | `not_evidenced_variables_tab_not_shown` | Variables tab was not included in the screenshot. |
+
+## Remaining evidence needed
+
+```text
+Variables tab confirmation: no repository variables / list names only if variables exist.
+```
 
 ## Rule
 
