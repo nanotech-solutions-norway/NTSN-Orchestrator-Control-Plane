@@ -1,0 +1,18 @@
+{
+  "repository": "nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane",
+  "exportStatus": "PENDING_ADMIN_EXPORT",
+  "rulesets": [
+    {
+      "name": "<ruleset-name>",
+      "target": "<branch-tag-or-push>",
+      "enforcement": "<active-evaluate-or-disabled>",
+      "conditions": [
+        "<condition-summary>"
+      ],
+      "rules": [
+        "<rule-summary>"
+      ],
+      "notes": "Sanitized metadata only."
+    }
+  ]
+}
