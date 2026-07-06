@@ -12,7 +12,10 @@ nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane
 No GitHub environments created.
 No branch protection rules created.
 No repository rulesets created.
+GitHub Actions policy reviewed in GitHub UI.
 GitHub CLI command failed because gh is not installed or not available on PATH.
+Repository secrets tab reviewed: no repository secrets configured.
+Variables tab not yet evidenced.
 ```
 
 ## Applied updates
@@ -23,22 +26,22 @@ GitHub CLI command failed because gh is not installed or not available on PATH.
 | `GITHUB_ENVIRONMENTS_PROTECTION_EXPORT_SANITIZED.json` | `COMPLETE_NO_ENVIRONMENTS_CONFIGURED` |
 | `GITHUB_BRANCH_PROTECTION_EXPORT_SANITIZED.json` | `COMPLETE_NO_BRANCH_PROTECTION_RULES_CONFIGURED` |
 | `GITHUB_RULESETS_EXPORT_SANITIZED.json` | `COMPLETE_NO_RULESETS_CONFIGURED` |
-| `GITHUB_ACTIONS_POLICY_EXPORT_SANITIZED.md` | `PARTIAL_EXPORT_GH_CLI_NOT_AVAILABLE` |
-| `GITHUB_SECRETS_VARIABLES_NAMES_ONLY.md` | `UPLOAD_REVIEWED_NO_NAMES_PROVIDED` |
+| `GITHUB_ACTIONS_POLICY_EXPORT_SANITIZED.md` | `COMPLETE_OPERATOR_UI_REVIEW` |
+| `GITHUB_SECRETS_VARIABLES_NAMES_ONLY.md` | `PARTIAL_OPERATOR_UI_REVIEW_SECRETS_ONLY` |
 
 ## Control decision
 
 ```text
 UPLOAD_REVIEW_COMPLETE
 NEGATIVE_ADMIN_FINDINGS_RECORDED
-ACTIONS_POLICY_PARTIAL_GH_CLI_NOT_AVAILABLE
-NAMES_ONLY_INVENTORY_PENDING
+ACTIONS_POLICY_OPERATOR_UI_REVIEW_COMPLETE
+REPOSITORY_SECRETS_NONE_OPERATOR_CONFIRMED
+VARIABLES_TAB_PENDING
 NO_LIVE_WRITE_APPROVAL
 ```
 
 ## Remaining required evidence
 
 ```text
-repository-level Actions policy settings
-names-only inventory
+variables tab confirmation
 ```
