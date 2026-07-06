@@ -9,7 +9,7 @@ nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane
 ## Export status
 
 ```text
-PARTIAL_EXPORT_FROM_WORKFLOW_EVIDENCE
+PARTIAL_EXPORT_GH_CLI_NOT_AVAILABLE
 ```
 
 ## Sanitized policy metadata
@@ -17,19 +17,31 @@ PARTIAL_EXPORT_FROM_WORKFLOW_EVIDENCE
 | Policy area | Value | Source |
 |---|---|---|
 | Actions enabled | `true` | Workflow runs exist and were executed |
-| Allowed actions policy | `unknown` | Not provided in uploaded export file |
-| Default workflow token permission | `unknown` | Repository-level admin setting not provided |
+| Allowed actions policy | `unknown` | GitHub CLI unavailable; UI/API export still needed |
+| Default workflow token permission | `unknown` | GitHub CLI unavailable; UI/API export still needed |
 | Observed workflow permission | `contents: read` | Orchestrator Drift Validation log review |
-| Pull request workflow setting | `unknown` | Not provided in uploaded export file |
-| Fork workflow setting | `unknown` | Not provided in uploaded export file |
-| Artifact retention | `unknown` | Not provided in uploaded export file |
+| Pull request workflow setting | `unknown` | GitHub CLI unavailable; UI/API export still needed |
+| Fork workflow setting | `unknown` | GitHub CLI unavailable; UI/API export still needed |
+| Artifact retention | `unknown` | GitHub CLI unavailable; UI/API export still needed |
 
-## Upload review
+## Local CLI attempt
 
-The uploaded file was received, but it still contained placeholder values. The known workflow execution evidence has been applied; unresolved repository-level Actions policy settings remain explicitly `unknown`.
+```text
+gh: The term 'gh' is not recognized as a name of a cmdlet, function, script file, or executable program.
+```
+
+## Resolution path
+
+Use either GitHub UI:
+
+```text
+Repository -> Settings -> Actions -> General
+```
+
+or install/authenticate GitHub CLI locally before rerunning the API export.
 
 ## Notes
 
 ```text
-Use policy names and settings only. No protected values included.
+Policy names and settings only. No protected values included.
 ```
