@@ -15,7 +15,7 @@ No repository rulesets created.
 GitHub Actions policy reviewed in GitHub UI.
 GitHub CLI command failed because gh is not installed or not available on PATH.
 Repository secrets tab reviewed: no repository secrets configured.
-Variables tab not yet evidenced.
+Variables tab reviewed: no repository variables configured.
 ```
 
 ## Applied updates
@@ -27,7 +27,7 @@ Variables tab not yet evidenced.
 | `GITHUB_BRANCH_PROTECTION_EXPORT_SANITIZED.json` | `COMPLETE_NO_BRANCH_PROTECTION_RULES_CONFIGURED` |
 | `GITHUB_RULESETS_EXPORT_SANITIZED.json` | `COMPLETE_NO_RULESETS_CONFIGURED` |
 | `GITHUB_ACTIONS_POLICY_EXPORT_SANITIZED.md` | `COMPLETE_OPERATOR_UI_REVIEW` |
-| `GITHUB_SECRETS_VARIABLES_NAMES_ONLY.md` | `PARTIAL_OPERATOR_UI_REVIEW_SECRETS_ONLY` |
+| `GITHUB_SECRETS_VARIABLES_NAMES_ONLY.md` | `COMPLETE_OPERATOR_UI_REVIEW_NO_SECRETS_OR_VARIABLES` |
 
 ## Control decision
 
@@ -35,13 +35,12 @@ Variables tab not yet evidenced.
 UPLOAD_REVIEW_COMPLETE
 NEGATIVE_ADMIN_FINDINGS_RECORDED
 ACTIONS_POLICY_OPERATOR_UI_REVIEW_COMPLETE
-REPOSITORY_SECRETS_NONE_OPERATOR_CONFIRMED
-VARIABLES_TAB_PENDING
+SECRETS_VARIABLES_NONE_OPERATOR_CONFIRMED
 NO_LIVE_WRITE_APPROVAL
 ```
 
 ## Remaining required evidence
 
 ```text
-variables tab confirmation
+none
 ```
