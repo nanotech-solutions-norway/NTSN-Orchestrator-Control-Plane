@@ -13,7 +13,8 @@ GITHUB_ADMIN_ENVIRONMENT_PROTECTION_EXPORT
 CONNECTOR_VERIFIED_REPOSITORY_METADATA
 OPERATOR_ADMIN_UI_NEGATIVE_FINDINGS_RECORDED
 ACTIONS_POLICY_OPERATOR_UI_REVIEW_COMPLETE
-ADMIN_ENVIRONMENT_PROTECTION_EVIDENCE_PARTIAL
+SECRETS_VARIABLES_OPERATOR_UI_REVIEW_COMPLETE
+ADMIN_ENVIRONMENT_PROTECTION_EVIDENCE_COMPLETE
 NO_SECRET_VALUES_INCLUDED
 LIVE_WRITE_NOT_APPROVED
 ```
@@ -67,7 +68,7 @@ docs/evidence/github-admin-export/
 | `GITHUB_BRANCH_PROTECTION_EXPORT_SANITIZED.json` | `COMPLETE_NO_BRANCH_PROTECTION_RULES_CONFIGURED` |
 | `GITHUB_RULESETS_EXPORT_SANITIZED.json` | `COMPLETE_NO_RULESETS_CONFIGURED` |
 | `GITHUB_ACTIONS_POLICY_EXPORT_SANITIZED.md` | `COMPLETE_OPERATOR_UI_REVIEW` |
-| `GITHUB_SECRETS_VARIABLES_NAMES_ONLY.md` | `PARTIAL_OPERATOR_UI_REVIEW_SECRETS_ONLY` |
+| `GITHUB_SECRETS_VARIABLES_NAMES_ONLY.md` | `COMPLETE_OPERATOR_UI_REVIEW_NO_SECRETS_OR_VARIABLES` |
 | `GITHUB_ADMIN_EXPORT_UPLOAD_REVIEW_20260706.md` | `UPLOAD_REVIEW_COMPLETE` |
 
 ## Current admin evidence status
@@ -88,8 +89,8 @@ docs/evidence/github-admin-export/
 | Allow GitHub Actions to create and approve pull requests | `FALSE_OPERATOR_CONFIRMED` |
 | Repository secrets inventory, names only | `NONE_CONFIGURED_OPERATOR_CONFIRMED` |
 | Environment secrets inventory, names only | `NONE_CONFIGURED_OPERATOR_CONFIRMED` |
-| Repository variables inventory, names only | `PENDING_VARIABLES_TAB_CONFIRMATION` |
-| Environment variables inventory, names only | `PENDING_VARIABLES_TAB_CONFIRMATION` |
+| Repository variables inventory, names only | `NONE_CONFIGURED_OPERATOR_CONFIRMED` |
+| Environment variables inventory, names only | `NONE_CONFIGURED_OPERATOR_CONFIRMED` |
 
 ## GitHub Actions workflow protection evidence currently available in repo
 
@@ -107,7 +108,7 @@ The local PowerShell attempt showed that `gh` is not installed or not available 
 gh: The term 'gh' is not recognized as a name of a cmdlet, function, script file, or executable program.
 ```
 
-GitHub UI evidence has now completed the Actions policy section.
+GitHub UI evidence has completed the Actions policy and names-only inventory sections.
 
 ## Required redaction rule
 
@@ -117,12 +118,11 @@ Do not include secret values, token values, private payloads, customer data, ful
 
 ## Current control decision
 
-The available evidence supports repository metadata intake, negative admin configuration findings for environments, branch protection, and rulesets, and completed Actions policy review. The export remains partial only because the Variables tab has not been evidenced.
+The available evidence supports repository metadata intake, negative admin configuration findings for environments, branch protection, and rulesets, completed Actions policy review, and completed names-only inventory review. This completes the sanitized GitHub admin/environment protection export.
 
 ```text
-GITHUB_ADMIN_EXPORT_NEGATIVE_FINDINGS_RECORDED
+GITHUB_ADMIN_ENVIRONMENT_PROTECTION_EXPORT_COMPLETE
 GITHUB_ACTIONS_POLICY_OPERATOR_UI_REVIEW_COMPLETE
-GITHUB_REPOSITORY_SECRETS_NONE_OPERATOR_CONFIRMED
-GITHUB_VARIABLES_NAMES_ONLY_PENDING
+GITHUB_SECRETS_VARIABLES_NONE_OPERATOR_CONFIRMED
 NO_LIVE_WRITE_APPROVAL
 ```
