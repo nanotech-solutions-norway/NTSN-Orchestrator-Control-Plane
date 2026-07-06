@@ -9,36 +9,27 @@ nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane
 ## Export status
 
 ```text
-PARTIAL_EXPORT_GH_CLI_NOT_AVAILABLE
+COMPLETE_OPERATOR_UI_REVIEW
 ```
 
 ## Sanitized policy metadata
 
 | Policy area | Value | Source |
 |---|---|---|
-| Actions enabled | `true` | Workflow runs exist and were executed |
-| Allowed actions policy | `unknown` | GitHub CLI unavailable; UI/API export still needed |
-| Default workflow token permission | `unknown` | GitHub CLI unavailable; UI/API export still needed |
+| Actions enabled | `true` | Operator GitHub UI review |
+| Actions permission mode | `Allow all actions and reusable workflows` | Operator GitHub UI review |
+| Require actions pinned to full-length commit SHA | `false` | Operator GitHub UI review |
+| Artifact and log retention | `90 days` | Operator GitHub UI review |
+| Fork pull request workflow approval | `Require approval for first-time contributors` | Operator GitHub UI review |
+| Default workflow token permission | `Read repository contents and packages permissions` | Operator GitHub UI review |
 | Observed workflow permission | `contents: read` | Orchestrator Drift Validation log review |
-| Pull request workflow setting | `unknown` | GitHub CLI unavailable; UI/API export still needed |
-| Fork workflow setting | `unknown` | GitHub CLI unavailable; UI/API export still needed |
-| Artifact retention | `unknown` | GitHub CLI unavailable; UI/API export still needed |
+| Allow GitHub Actions to create and approve pull requests | `false` | Operator GitHub UI review |
 
 ## Local CLI attempt
 
 ```text
 gh: The term 'gh' is not recognized as a name of a cmdlet, function, script file, or executable program.
 ```
-
-## Resolution path
-
-Use either GitHub UI:
-
-```text
-Repository -> Settings -> Actions -> General
-```
-
-or install/authenticate GitHub CLI locally before rerunning the API export.
 
 ## Notes
 
