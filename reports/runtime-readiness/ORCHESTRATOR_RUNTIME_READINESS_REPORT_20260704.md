@@ -9,12 +9,13 @@ READ_ONLY_READY
 PLAN_ONLY_READY
 PR_FIRST_CHANGE_PACK_READY
 PROTECTED_ENDPOINT_VALIDATION_PLANNING_READY
+GITHUB_ADMIN_EXPORT_COMPLETE
 LIVE_WRITE_NOT_APPROVED
 ```
 
 ## Scope
 
-This report consolidates O-RT1 through O-RT9 for the NTSN Orchestrator Control Plane.
+This report consolidates O-RT1 through O-RT9 for the NTSN Orchestrator Control Plane, with later GitHub admin/environment protection evidence closure recorded on 2026-07-06.
 
 ## Completed release phases
 
@@ -42,6 +43,7 @@ This report consolidates O-RT1 through O-RT9 for the NTSN Orchestrator Control P
 | Low-risk operations pilot definitions | Ready | O-RT7 controls in place. |
 | MCP runtime/client evidence tracking | Refreshed | O-RT8 current source: 12:33, 04.07.2026 package. |
 | Protected endpoint validation | Planning ready | O-RT9 plan only; no live calls performed. |
+| GitHub admin/environment protection evidence | Complete | Completed 2026-07-06 from connector metadata and operator GitHub UI review. |
 | Live provider operations | Not approved | Requires separate approval package. |
 | Production deployment | Not approved | Requires separate approval package. |
 
@@ -72,6 +74,26 @@ cursor-local-mcp
 
 No entry is classified as `LIVE_WRITE_APPROVED`.
 
+## GitHub admin/environment protection evidence
+
+Current evidence source:
+
+```text
+docs/evidence/GITHUB_ADMIN_ENVIRONMENT_PROTECTION_EXPORT_20260706.md
+docs/validation/GITHUB_ADMIN_ENVIRONMENT_PROTECTION_EXPORT_COMPLETE_20260706.md
+```
+
+Confirmed status:
+
+```text
+No GitHub environments configured.
+No branch protection rules configured.
+No repository rulesets configured.
+Actions policy reviewed through GitHub UI.
+No repository or environment secrets configured.
+No repository or environment variables configured.
+```
+
 ## Remaining gaps before a future controlled live-operation proposal
 
 | Gap | Required resolution |
@@ -80,7 +102,6 @@ No entry is classified as `LIVE_WRITE_APPROVED`.
 | Protected-status validation requires safe handling | Use protected environment or operator-local process; do not store protected values. |
 | Domeneshop HTTPS/certificate readiness remains pending | Confirm certificate correction and public health status. |
 | Conta MCP validation is stale or plan-only | Refresh sandbox/server validation evidence. |
-| GitHub admin/environment protection proof incomplete | Export admin/environment protection evidence without secrets. |
 | Claude Desktop local MCP config absent | Provide sanitized config evidence if required. |
 | Cursor local MCP config absent | Provide sanitized config evidence if required. |
 | Provider write rollback plans absent | Create provider-specific rollback/disable plans before any write proposal. |
@@ -109,6 +130,6 @@ Choose one of:
 A. Run O-RT4/O-RT10 validation workflow and review artifacts.
 B. Proceed to O-RT11 operator-local validation execution pack.
 C. Provide missing sanitized local client config evidence for Claude/Cursor.
-D. Provide GitHub admin/environment protection export.
+D. Proceed with protected endpoint validation planning/execution package.
 E. Hold release train at report-only readiness.
 ```
