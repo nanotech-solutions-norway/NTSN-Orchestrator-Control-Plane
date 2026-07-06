@@ -59,12 +59,12 @@ foreach ($sample in $samples) {
     }
     foreach ($gate in @('liveProviderWriteApproved', 'dnsWriteApproved', 'productionDeploymentApproved', 'destructiveOperationsApproved')) {
         if ($pilot.globalWriteGates.$gate -ne $false) {
-            throw "Pilot sample write gate $gate is not false: $sample"
+            throw ("Pilot sample write gate " + $gate + " is not false: " + $sample)
         }
     }
     foreach ($blocked in @('provider_state_change', 'production_deployment', 'secret_value_export')) {
         if ($pilot.blockedActions -notcontains $blocked) {
-            throw "Pilot sample missing blocked action $blocked: $sample"
+            throw ("Pilot sample missing blocked action " + $blocked + ": " + $sample)
         }
     }
 }
