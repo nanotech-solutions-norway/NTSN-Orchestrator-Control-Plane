@@ -1,19 +1,11 @@
 {
   "repository": "nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane",
-  "exportStatus": "UPLOAD_REVIEWED_PENDING_ACTUAL_ADMIN_VALUES",
-  "uploadReview": {
-    "uploadedFileReceived": true,
-    "uploadedFileContainedPlaceholders": true,
-    "actualRulesetMetadataProvided": false,
-    "decision": "Do not mark rulesets validated until real sanitized ruleset metadata is supplied."
+  "exportStatus": "COMPLETE_NO_RULESETS_CONFIGURED",
+  "source": {
+    "method": "operator_admin_ui_review",
+    "reportedAt": "2026-07-06",
+    "finding": "No repository rulesets are created for this repository."
   },
   "rulesets": [],
-  "unresolvedFields": [
-    "ruleset names",
-    "targets",
-    "enforcement modes",
-    "conditions",
-    "rules"
-  ],
-  "notes": "The uploaded file did not contain actual sanitized ruleset metadata."
+  "notes": "No repository rulesets exist."
 }
