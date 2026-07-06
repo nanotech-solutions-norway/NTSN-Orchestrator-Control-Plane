@@ -1,23 +1,22 @@
 {
   "repository": "nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane",
-  "exportStatus": "UPLOAD_REVIEWED_PENDING_ACTUAL_ADMIN_VALUES",
-  "uploadReview": {
-    "uploadedFileReceived": true,
-    "uploadedFileContainedPlaceholders": true,
-    "actualBranchProtectionMetadataProvided": false,
-    "decision": "Do not mark branch protection validated until real sanitized branch protection metadata is supplied."
+  "exportStatus": "COMPLETE_NO_BRANCH_PROTECTION_RULES_CONFIGURED",
+  "source": {
+    "method": "operator_admin_ui_review",
+    "reportedAt": "2026-07-06",
+    "finding": "No branch protection rules are created for this repository."
   },
   "branches": [
     {
       "branch": "main",
-      "protectionEnabled": "unknown",
+      "protectionEnabled": false,
       "requiredStatusChecks": [],
-      "requiredReviews": "unknown",
-      "dismissStaleReviews": "unknown",
-      "requireLinearHistory": "unknown",
-      "allowForcePushes": "unknown",
-      "allowDeletions": "unknown",
-      "notes": "Uploaded file did not provide actual sanitized branch protection metadata."
+      "requiredReviews": "not_applicable_no_branch_protection_rule",
+      "dismissStaleReviews": "not_applicable_no_branch_protection_rule",
+      "requireLinearHistory": "not_applicable_no_branch_protection_rule",
+      "allowForcePushes": "not_applicable_no_branch_protection_rule",
+      "allowDeletions": "not_applicable_no_branch_protection_rule",
+      "notes": "No branch protection rule exists for main."
     }
   ]
 }
