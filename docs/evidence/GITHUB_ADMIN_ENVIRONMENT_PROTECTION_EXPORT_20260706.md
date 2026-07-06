@@ -12,6 +12,7 @@ nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane
 GITHUB_ADMIN_ENVIRONMENT_PROTECTION_EXPORT
 CONNECTOR_VERIFIED_REPOSITORY_METADATA
 OPERATOR_ADMIN_UI_NEGATIVE_FINDINGS_RECORDED
+ACTIONS_POLICY_OPERATOR_UI_REVIEW_COMPLETE
 ADMIN_ENVIRONMENT_PROTECTION_EVIDENCE_PARTIAL
 NO_SECRET_VALUES_INCLUDED
 LIVE_WRITE_NOT_APPROVED
@@ -65,8 +66,8 @@ docs/evidence/github-admin-export/
 | `GITHUB_ENVIRONMENTS_PROTECTION_EXPORT_SANITIZED.json` | `COMPLETE_NO_ENVIRONMENTS_CONFIGURED` |
 | `GITHUB_BRANCH_PROTECTION_EXPORT_SANITIZED.json` | `COMPLETE_NO_BRANCH_PROTECTION_RULES_CONFIGURED` |
 | `GITHUB_RULESETS_EXPORT_SANITIZED.json` | `COMPLETE_NO_RULESETS_CONFIGURED` |
-| `GITHUB_ACTIONS_POLICY_EXPORT_SANITIZED.md` | `PARTIAL_EXPORT_GH_CLI_NOT_AVAILABLE` |
-| `GITHUB_SECRETS_VARIABLES_NAMES_ONLY.md` | `UPLOAD_REVIEWED_NO_NAMES_PROVIDED` |
+| `GITHUB_ACTIONS_POLICY_EXPORT_SANITIZED.md` | `COMPLETE_OPERATOR_UI_REVIEW` |
+| `GITHUB_SECRETS_VARIABLES_NAMES_ONLY.md` | `PARTIAL_OPERATOR_UI_REVIEW_SECRETS_ONLY` |
 | `GITHUB_ADMIN_EXPORT_UPLOAD_REVIEW_20260706.md` | `UPLOAD_REVIEW_COMPLETE` |
 
 ## Current admin evidence status
@@ -79,10 +80,16 @@ docs/evidence/github-admin-export/
 | Environment deployment branch policies | `NOT_APPLICABLE_NO_ENVIRONMENTS` |
 | Branch protection for `main` | `NONE_CONFIGURED_OPERATOR_CONFIRMED` |
 | Repository rulesets | `NONE_CONFIGURED_OPERATOR_CONFIRMED` |
-| Actions allowed actions policy | `UNKNOWN_GH_CLI_NOT_AVAILABLE` |
-| Default repository workflow token permission | `UNKNOWN_GH_CLI_NOT_AVAILABLE` |
-| Secrets inventory, names only | `NO_NAMES_PROVIDED` |
-| Variables inventory, names only | `NO_NAMES_PROVIDED` |
+| Actions allowed actions policy | `ALLOW_ALL_ACTIONS_AND_REUSABLE_WORKFLOWS_OPERATOR_CONFIRMED` |
+| Require actions pinned to full-length commit SHA | `FALSE_OPERATOR_CONFIRMED` |
+| Artifact and log retention | `90_DAYS_OPERATOR_CONFIRMED` |
+| Fork pull request workflow approval | `REQUIRE_APPROVAL_FOR_FIRST_TIME_CONTRIBUTORS_OPERATOR_CONFIRMED` |
+| Default repository workflow token permission | `READ_REPOSITORY_CONTENTS_AND_PACKAGES_OPERATOR_CONFIRMED` |
+| Allow GitHub Actions to create and approve pull requests | `FALSE_OPERATOR_CONFIRMED` |
+| Repository secrets inventory, names only | `NONE_CONFIGURED_OPERATOR_CONFIRMED` |
+| Environment secrets inventory, names only | `NONE_CONFIGURED_OPERATOR_CONFIRMED` |
+| Repository variables inventory, names only | `PENDING_VARIABLES_TAB_CONFIRMATION` |
+| Environment variables inventory, names only | `PENDING_VARIABLES_TAB_CONFIRMATION` |
 
 ## GitHub Actions workflow protection evidence currently available in repo
 
@@ -100,7 +107,7 @@ The local PowerShell attempt showed that `gh` is not installed or not available 
 gh: The term 'gh' is not recognized as a name of a cmdlet, function, script file, or executable program.
 ```
 
-The remaining Actions policy fields require either GitHub UI review or GitHub CLI/API access from an admin-authenticated environment.
+GitHub UI evidence has now completed the Actions policy section.
 
 ## Required redaction rule
 
@@ -110,11 +117,12 @@ Do not include secret values, token values, private payloads, customer data, ful
 
 ## Current control decision
 
-The available evidence supports repository metadata intake and negative admin configuration findings for environments, branch protection, and rulesets. The export is still partial because Actions policy settings and names-only secret/variable inventories are incomplete.
+The available evidence supports repository metadata intake, negative admin configuration findings for environments, branch protection, and rulesets, and completed Actions policy review. The export remains partial only because the Variables tab has not been evidenced.
 
 ```text
 GITHUB_ADMIN_EXPORT_NEGATIVE_FINDINGS_RECORDED
-GITHUB_ACTIONS_POLICY_PARTIAL_GH_CLI_NOT_AVAILABLE
-GITHUB_SECRETS_VARIABLES_NAMES_ONLY_PENDING
+GITHUB_ACTIONS_POLICY_OPERATOR_UI_REVIEW_COMPLETE
+GITHUB_REPOSITORY_SECRETS_NONE_OPERATOR_CONFIRMED
+GITHUB_VARIABLES_NAMES_ONLY_PENDING
 NO_LIVE_WRITE_APPROVAL
 ```
