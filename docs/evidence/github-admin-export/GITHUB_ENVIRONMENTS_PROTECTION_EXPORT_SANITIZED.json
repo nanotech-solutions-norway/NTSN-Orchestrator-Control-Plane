@@ -1,18 +1,19 @@
 {
   "repository": "nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane",
-  "exportStatus": "PENDING_ADMIN_EXPORT",
-  "environments": [
-    {
-      "name": "<environment-name>",
-      "protectionRules": [
-        "<rule-summary>"
-      ],
-      "requiredReviewers": [
-        "<reviewer-name-or-team-name>"
-      ],
-      "deploymentBranchPolicy": "<policy-summary>",
-      "waitTimerMinutes": "<number-or-none>",
-      "notes": "Sanitized metadata only."
-    }
-  ]
+  "exportStatus": "UPLOAD_REVIEWED_PENDING_ACTUAL_ADMIN_VALUES",
+  "uploadReview": {
+    "uploadedFileReceived": true,
+    "uploadedFileContainedPlaceholders": true,
+    "actualEnvironmentMetadataProvided": false,
+    "decision": "Do not mark environments validated until real sanitized environment metadata is supplied."
+  },
+  "environments": [],
+  "unresolvedFields": [
+    "environment names",
+    "protection rules",
+    "required reviewers",
+    "deployment branch policies",
+    "wait timers"
+  ],
+  "notes": "The uploaded file did not contain actual sanitized environment protection metadata."
 }
