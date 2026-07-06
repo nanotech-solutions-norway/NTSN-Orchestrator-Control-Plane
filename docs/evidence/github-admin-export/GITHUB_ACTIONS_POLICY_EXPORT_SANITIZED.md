@@ -9,22 +9,27 @@ nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane
 ## Export status
 
 ```text
-PENDING_ADMIN_EXPORT
+PARTIAL_EXPORT_FROM_WORKFLOW_EVIDENCE
 ```
 
-## Populate with sanitized policy metadata
+## Sanitized policy metadata
 
-| Policy area | Value |
-|---|---|
-| Actions enabled | `<true/false/unknown>` |
-| Allowed actions policy | `<all/local/selected/unknown>` |
-| Default workflow token permission | `<read-only/read-write/unknown>` |
-| Pull request workflow setting | `<summary>` |
-| Fork workflow setting | `<summary>` |
-| Artifact retention | `<days-or-unknown>` |
+| Policy area | Value | Source |
+|---|---|---|
+| Actions enabled | `true` | Workflow runs exist and were executed |
+| Allowed actions policy | `unknown` | Not provided in uploaded export file |
+| Default workflow token permission | `unknown` | Repository-level admin setting not provided |
+| Observed workflow permission | `contents: read` | Orchestrator Drift Validation log review |
+| Pull request workflow setting | `unknown` | Not provided in uploaded export file |
+| Fork workflow setting | `unknown` | Not provided in uploaded export file |
+| Artifact retention | `unknown` | Not provided in uploaded export file |
+
+## Upload review
+
+The uploaded file was received, but it still contained placeholder values. The known workflow execution evidence has been applied; unresolved repository-level Actions policy settings remain explicitly `unknown`.
 
 ## Notes
 
 ```text
-Use policy names and settings only.
+Use policy names and settings only. No protected values included.
 ```
