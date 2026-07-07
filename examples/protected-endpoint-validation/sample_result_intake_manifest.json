@@ -1,0 +1,28 @@
+{
+  "releaseTrain": "O-RT13",
+  "mode": "ENDPOINT_VALIDATION_RESULT_INTAKE",
+  "realOperatorResultsIngested": false,
+  "intakeLocation": "evidence/protected-endpoint-results",
+  "targets": [
+    {
+      "targetId": "domeneshop_mcp_public_health",
+      "expectedFile": "evidence/protected-endpoint-results/domeneshop_mcp_public_health.json",
+      "status": "pending_operator_result"
+    },
+    {
+      "targetId": "domeneshop_mcp_status",
+      "expectedFile": "evidence/protected-endpoint-results/domeneshop_mcp_status.json",
+      "status": "pending_operator_result"
+    },
+    {
+      "targetId": "conta_mcp",
+      "expectedFile": "evidence/protected-endpoint-results/conta_mcp.json",
+      "status": "pending_operator_result"
+    },
+    {
+      "targetId": "ntsn_orchestrator_control_plane",
+      "expectedFile": "evidence/protected-endpoint-results/ntsn_orchestrator_control_plane.json",
+      "status": "pending_operator_result"
+    }
+  ]
+}
