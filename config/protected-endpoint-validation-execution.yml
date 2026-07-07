@@ -1,0 +1,75 @@
+# Protected endpoint validation execution policy — O-RT12 — 2026-07-06
+
+release_train: O-RT12
+mode: PROTECTED_ENDPOINT_VALIDATION_EXECUTION_PACK
+execution_location: operator_local_or_controlled_readonly_runner
+repository_endpoint_calls_allowed: false
+live_write_approved: false
+result_storage_policy: sanitized_summary_only
+unknown_result_default: PENDING_REVIEW
+
+source_controls:
+  - config/protected-endpoint-validation.yml
+  - config/mcp-runtime-client-alignment.yml
+  - docs/ORT12_PROTECTED_ENDPOINT_VALIDATION_EXECUTION_PACK_20260706.md
+
+validation_targets:
+  domeneshop_mcp_public_health:
+    source_entry: domeneshop-mcp-public-health
+    category: public_health
+    expected_result_class: READ_ONLY_READY
+    operator_command_template: Invoke-WebRequest -Method GET -Uri '<public-health-url>' -UseBasicParsing
+    protected_input_required: false
+    sanitized_result_required: true
+  domeneshop_mcp_status:
+    source_entry: domeneshop-mcp-status
+    category: protected_status
+    expected_result_class: PLAN_ONLY_READY
+    operator_command_template: Invoke-WebRequest -Method GET -Uri '<protected-status-url>' -Headers '<operator-local-header-object>' -UseBasicParsing
+    protected_input_required: true
+    sanitized_result_required: true
+  conta_mcp:
+    source_entry: conta-mcp
+    category: protected_status
+    expected_result_class: PLAN_ONLY_READY
+    operator_command_template: Invoke-WebRequest -Method GET -Uri '<conta-status-or-health-url>' -Headers '<operator-local-header-object>' -UseBasicParsing
+    protected_input_required: true
+    sanitized_result_required: true
+  ntsn_orchestrator_control_plane:
+    source_entry: ntsn-orchestrator-control-plane
+    category: repository_readiness
+    expected_result_class: READ_ONLY_READY
+    operator_command_template: ./tests/Test-OrchestratorValidationSuite.ps1
+    protected_input_required: false
+    sanitized_result_required: true
+
+allowed_result_fields:
+  - validationId
+  - targetId
+  - category
+  - timestampUtc
+  - operator
+  - resultClass
+  - httpStatus
+  - statusSummary
+  - evidenceReference
+  - followUpRequired
+
+blocked_result_fields:
+  - credentialValue
+  - tokenValue
+  - rawHeader
+  - rawPrivateBody
+  - fullEnvValue
+  - mutationPayload
+
+result_classes:
+  - READ_ONLY_READY
+  - PLAN_ONLY_READY
+  - PENDING_REVIEW
+  - NOT_CONFIGURED
+  - FAILED_VALIDATION
+
+minimum_validation:
+  - ./tests/Test-OrchestratorProtectedEndpointExecutionPack.ps1
+  - ./tests/Test-OrchestratorProtectedEndpointValidationPlan.ps1
