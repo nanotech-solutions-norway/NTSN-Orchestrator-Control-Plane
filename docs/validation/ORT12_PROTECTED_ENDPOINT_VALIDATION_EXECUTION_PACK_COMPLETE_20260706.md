@@ -11,7 +11,8 @@ O-RT12 — Protected Endpoint Validation Execution Pack
 ```text
 ORT12_PROTECTED_ENDPOINT_VALIDATION_EXECUTION_PACK_COMPLETE
 OPERATOR_LOCAL_EXECUTION_ONLY
-SANITIZED_RESULT_CAPTURE_ONLY
+GET_ONLY_VALIDATION
+SANITIZED_RESULT_OUTPUT
 READ_ONLY_READY
 PLAN_ONLY_READY
 LIVE_WRITE_NOT_APPROVED
@@ -25,6 +26,7 @@ config/protected-endpoint-validation-execution.yml
 templates/protected-endpoint-validation/PROTECTED_ENDPOINT_OPERATOR_EXECUTION_RUNBOOK.md
 templates/protected-endpoint-validation/PROTECTED_ENDPOINT_RESULT_TEMPLATE.json
 examples/protected-endpoint-validation/sample_sanitized_validation_result.json
+tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1
 tests/Test-OrchestratorProtectedEndpointExecutionPack.ps1
 ```
 
