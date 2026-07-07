@@ -1,0 +1,14 @@
+{
+  "validationId": "<validation-id>",
+  "releaseTrain": "O-RT12",
+  "targetId": "<target-id>",
+  "category": "<category>",
+  "timestampUtc": "<YYYY-MM-DDTHH:mm:ssZ>",
+  "operator": "<operator-name-or-role>",
+  "resultClass": "<READ_ONLY_READY/PLAN_ONLY_READY/PENDING_REVIEW/NOT_CONFIGURED/FAILED_VALIDATION>",
+  "httpStatus": "<status-code-or-not-applicable>",
+  "statusSummary": "<sanitized summary only>",
+  "evidenceReference": "<local-run-id-or-report-reference>",
+  "followUpRequired": "<none-or-summary>",
+  "sanitizationConfirmed": true
+}
