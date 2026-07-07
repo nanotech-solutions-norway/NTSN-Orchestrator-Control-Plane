@@ -7,6 +7,7 @@ repository_endpoint_calls_allowed: false
 live_write_approved: false
 result_storage_policy: sanitized_summary_only
 unknown_result_default: PENDING_REVIEW
+operator_wrapper: tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1
 
 source_controls:
   - config/protected-endpoint-validation.yml
@@ -18,21 +19,21 @@ validation_targets:
     source_entry: domeneshop-mcp-public-health
     category: public_health
     expected_result_class: READ_ONLY_READY
-    operator_command_template: Invoke-WebRequest -Method GET -Uri '<public-health-url>' -UseBasicParsing
+    operator_command_template: ./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 -TargetId domeneshop_mcp_public_health -Category public_health -Uri '<public-health-url>'
     protected_input_required: false
     sanitized_result_required: true
   domeneshop_mcp_status:
     source_entry: domeneshop-mcp-status
     category: protected_status
     expected_result_class: PLAN_ONLY_READY
-    operator_command_template: Invoke-WebRequest -Method GET -Uri '<protected-status-url>' -Headers '<operator-local-header-object>' -UseBasicParsing
+    operator_command_template: ./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 -TargetId domeneshop_mcp_status -Category protected_status -Uri '<protected-status-url>' -AuthEnvVarName '<LOCAL_ENV_VAR_NAME>'
     protected_input_required: true
     sanitized_result_required: true
   conta_mcp:
     source_entry: conta-mcp
-    category: protected_status
+    category: protected_mcp
     expected_result_class: PLAN_ONLY_READY
-    operator_command_template: Invoke-WebRequest -Method GET -Uri '<conta-status-or-health-url>' -Headers '<operator-local-header-object>' -UseBasicParsing
+    operator_command_template: ./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 -TargetId conta_mcp -Category protected_mcp -Uri '<conta-status-or-health-url>' -AuthEnvVarName '<LOCAL_ENV_VAR_NAME>'
     protected_input_required: true
     sanitized_result_required: true
   ntsn_orchestrator_control_plane:
@@ -54,6 +55,7 @@ allowed_result_fields:
   - statusSummary
   - evidenceReference
   - followUpRequired
+  - sanitizationConfirmed
 
 blocked_result_fields:
   - credentialValue
