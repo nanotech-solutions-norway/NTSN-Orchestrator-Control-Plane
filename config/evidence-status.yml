@@ -22,6 +22,7 @@ status_legend:
   runtime_readiness_report_pack: repository-controlled runtime readiness report pack
   local_client_evidence_pack: repository-controlled local MCP client evidence collection pack
   protected_endpoint_execution_pack: repository-controlled protected endpoint operator execution package
+  endpoint_result_intake: repository-controlled sanitized endpoint result intake package
   log_review: repository-controlled validation log diagnosis and corrective action record
   admin_export_complete: repository-controlled GitHub admin/environment export completion evidence
 
@@ -181,10 +182,24 @@ categories:
     operator_runbook: templates/protected-endpoint-validation/PROTECTED_ENDPOINT_OPERATOR_EXECUTION_RUNBOOK.md
     result_template: templates/protected-endpoint-validation/PROTECTED_ENDPOINT_RESULT_TEMPLATE.json
     sample_result: examples/protected-endpoint-validation/sample_sanitized_validation_result.json
+    operator_wrapper: tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1
     tests:
       - tests/Test-OrchestratorProtectedEndpointExecutionPack.ps1
     validation_file: docs/validation/ORT12_PROTECTED_ENDPOINT_VALIDATION_EXECUTION_PACK_COMPLETE_20260706.md
     control_status: operator_local_execution_pack_complete_no_live_write_approval
+
+  ort13_endpoint_validation_result_intake:
+    status: endpoint_result_intake
+    release_train: O-RT13
+    intake_doc: docs/ORT13_ENDPOINT_VALIDATION_RESULT_INTAKE_20260706.md
+    intake_config: config/protected-endpoint-result-intake.yml
+    result_schema: schemas/protected-endpoint-validation-result.schema.json
+    intake_folder: evidence/protected-endpoint-results/
+    sample_manifest: examples/protected-endpoint-validation/sample_result_intake_manifest.json
+    tests:
+      - tests/Test-OrchestratorEndpointValidationResultIntake.ps1
+    validation_file: docs/validation/ORT13_ENDPOINT_VALIDATION_RESULT_INTAKE_READY_20260706.md
+    control_status: intake_framework_ready_pending_operator_results_no_live_write_approval
 
   drift_validation_log_review_77656234734:
     status: log_review
