@@ -1,0 +1,14 @@
+{
+  "validationId": "ORT12-SAMPLE-VALIDATION-RESULT-20260706",
+  "releaseTrain": "O-RT12",
+  "targetId": "domeneshop_mcp_public_health",
+  "category": "public_health",
+  "timestampUtc": "2026-07-06T00:00:00Z",
+  "operator": "operator-local",
+  "resultClass": "PENDING_REVIEW",
+  "httpStatus": "not_run_sample_only",
+  "statusSummary": "Sample sanitized result structure only. No endpoint call was performed.",
+  "evidenceReference": "sample-only",
+  "followUpRequired": "replace with real sanitized operator result after local validation",
+  "sanitizationConfirmed": true
+}
