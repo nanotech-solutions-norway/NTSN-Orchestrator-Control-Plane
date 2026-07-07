@@ -1,5 +1,5 @@
 # Test-OrchestratorValidationSuite.ps1
-# Deterministic validation suite runner for O-RT1 through O-RT12.
+# Deterministic validation suite runner for O-RT1 through O-RT13.
 
 [CmdletBinding()]
 param(
@@ -29,7 +29,8 @@ $tests = @(
     'Test-OrchestratorProtectedEndpointValidationPlan.ps1',
     'Test-OrchestratorRuntimeReadinessReportPack.ps1',
     'Test-OrchestratorLocalClientEvidencePack.ps1',
-    'Test-OrchestratorProtectedEndpointExecutionPack.ps1'
+    'Test-OrchestratorProtectedEndpointExecutionPack.ps1',
+    'Test-OrchestratorEndpointValidationResultIntake.ps1'
 )
 
 $results = @()
@@ -78,7 +79,7 @@ $reportLines += ''
 $reportLines += '| Field | Value |'
 $reportLines += '|---|---|'
 $reportLines += "| Repository | nanotech-solutions-norway/NTSN-Orchestrator-Control-Plane |"
-$reportLines += "| Release train coverage | O-RT1 through O-RT12 |"
+$reportLines += "| Release train coverage | O-RT1 through O-RT13 |"
 $reportLines += "| Validation timestamp UTC | $timestamp |"
 $reportLines += "| Commit SHA/ref | `${env:GITHUB_SHA} |"
 $reportLines += "| Validation mode | VALIDATION_ONLY |"
@@ -132,4 +133,4 @@ if ($failed.Count -gt 0) {
     throw "Orchestrator validation failed with $($failed.Count) failing test(s). See report: $ReportPath"
 }
 
-Write-Host "PASSED: Orchestrator validation suite passed for O-RT1 through O-RT12. Report: $ReportPath"
+Write-Host "PASSED: Orchestrator validation suite passed for O-RT1 through O-RT13. Report: $ReportPath"
