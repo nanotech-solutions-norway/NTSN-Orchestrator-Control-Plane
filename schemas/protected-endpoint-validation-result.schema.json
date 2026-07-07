@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atlas-ai.no/schemas/protected-endpoint-validation-result.schema.json",
+  "title": "Protected Endpoint Validation Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "validationId",
+    "releaseTrain",
+    "targetId",
+    "category",
+    "timestampUtc",
+    "operator",
+    "resultClass",
+    "httpStatus",
+    "statusSummary",
+    "evidenceReference",
+    "followUpRequired",
+    "sanitizationConfirmed"
+  ],
+  "properties": {
+    "validationId": { "type": "string", "minLength": 1 },
+    "releaseTrain": { "type": "string", "enum": ["O-RT12", "O-RT13"] },
+    "targetId": {
+      "type": "string",
+      "enum": [
+        "domeneshop_mcp_public_health",
+        "domeneshop_mcp_status",
+        "conta_mcp",
+        "ntsn_orchestrator_control_plane"
+      ]
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "public_health",
+        "protected_status",
+        "protected_mcp",
+        "repository_readiness",
+        "github_actions_readiness",
+        "connector_scope_review",
+        "governed_review"
+      ]
+    },
+    "timestampUtc": { "type": "string", "minLength": 1 },
+    "operator": { "type": "string", "minLength": 1 },
+    "resultClass": {
+      "type": "string",
+      "enum": ["READ_ONLY_READY", "PLAN_ONLY_READY", "PENDING_REVIEW", "NOT_CONFIGURED", "FAILED_VALIDATION"]
+    },
+    "httpStatus": { "type": "string", "minLength": 1 },
+    "statusSummary": { "type": "string", "minLength": 1 },
+    "evidenceReference": { "type": "string", "minLength": 1 },
+    "followUpRequired": { "type": "string", "minLength": 1 },
+    "sanitizationConfirmed": { "type": "boolean", "const": true }
+  }
+}
