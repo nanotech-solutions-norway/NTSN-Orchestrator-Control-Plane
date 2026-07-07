@@ -13,7 +13,8 @@ $requiredFiles = @(
     'config/protected-endpoint-validation-execution.yml',
     'templates/protected-endpoint-validation/PROTECTED_ENDPOINT_OPERATOR_EXECUTION_RUNBOOK.md',
     'templates/protected-endpoint-validation/PROTECTED_ENDPOINT_RESULT_TEMPLATE.json',
-    'examples/protected-endpoint-validation/sample_sanitized_validation_result.json'
+    'examples/protected-endpoint-validation/sample_sanitized_validation_result.json',
+    'tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1'
 )
 
 foreach ($file in $requiredFiles) {
@@ -30,7 +31,8 @@ foreach ($marker in @(
     'repository_endpoint_calls_allowed: false',
     'live_write_approved: false',
     'result_storage_policy: sanitized_summary_only',
-    'unknown_result_default: PENDING_REVIEW'
+    'unknown_result_default: PENDING_REVIEW',
+    'operator_wrapper: tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1'
 )) {
     if ($policy -notmatch [regex]::Escape($marker)) {
         throw "O-RT12 policy missing marker: $marker"
@@ -45,6 +47,17 @@ foreach ($target in @(
 )) {
     if ($policy -notmatch [regex]::Escape($target)) {
         throw "O-RT12 policy missing validation target: $target"
+    }
+}
+
+$wrapper = Get-Content (Join-Path $RepoRoot 'tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1') -Raw
+foreach ($marker in @(
+    'Invoke-WebRequest -Method GET',
+    'Set-Content -Path $OutputPath',
+    'sanitizationConfirmed = $true'
+)) {
+    if ($wrapper -notmatch [regex]::Escape($marker)) {
+        throw "O-RT12 wrapper missing marker: $marker"
     }
 }
 
