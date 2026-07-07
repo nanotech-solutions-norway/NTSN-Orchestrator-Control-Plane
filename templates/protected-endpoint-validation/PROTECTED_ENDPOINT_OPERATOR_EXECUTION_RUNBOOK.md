@@ -8,40 +8,53 @@ Use this runbook for O-RT12 operator-local readiness checks.
 
 ```text
 Use local workstation or controlled read-only runner.
-Do not commit request material.
 Commit sanitized result summaries only.
 Mark uncertain results as PENDING_REVIEW.
+```
+
+## Preferred wrapper
+
+Use the repository wrapper:
+
+```powershell
+./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 \
+  -TargetId '<target-id>' \
+  -Category '<public_health/protected_status/protected_mcp>' \
+  -Uri '<endpoint-url>' \
+  -OutputPath './artifacts/protected-endpoint-validation/<target-id>.json'
+```
+
+For a protected endpoint, set the auth value only in the local terminal environment and pass the variable name:
+
+```powershell
+$env:LOCAL_ENDPOINT_TOKEN = '<enter-locally-only>'
+
+./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 \
+  -TargetId '<target-id>' \
+  -Category 'protected_status' \
+  -Uri '<endpoint-url>' \
+  -AuthEnvVarName 'LOCAL_ENDPOINT_TOKEN' \
+  -OutputPath './artifacts/protected-endpoint-validation/<target-id>.json'
 ```
 
 ## Public health check pattern
 
 ```powershell
-$Uri = '<public-health-url>'
-$response = Invoke-WebRequest -Method GET -Uri $Uri -UseBasicParsing
-$response.StatusCode
-```
-
-Record only:
-
-```text
-status code
-status class
-timestamp
-short sanitized note
+./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 \
+  -TargetId 'domeneshop_mcp_public_health' \
+  -Category 'public_health' \
+  -Uri '<public-health-url>'
 ```
 
 ## Protected status check pattern
 
 ```powershell
-$Uri = '<protected-status-url>'
-$Headers = @{
-  'Authorization' = 'Bearer <operator-local-token-not-logged>'
-}
-$response = Invoke-WebRequest -Method GET -Uri $Uri -Headers $Headers -UseBasicParsing
-$response.StatusCode
+./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 \
+  -TargetId 'domeneshop_mcp_status' \
+  -Category 'protected_status' \
+  -Uri '<protected-status-url>' \
+  -AuthEnvVarName 'LOCAL_ENDPOINT_TOKEN'
 ```
-
-Before saving output, remove request headers and response bodies unless the response is already a public, non-sensitive status message.
 
 ## Repository readiness check pattern
 
@@ -51,7 +64,7 @@ Before saving output, remove request headers and response bodies unless the resp
 
 ## Result file
 
-Use:
+The wrapper writes only the result fields defined in:
 
 ```text
 templates/protected-endpoint-validation/PROTECTED_ENDPOINT_RESULT_TEMPLATE.json
