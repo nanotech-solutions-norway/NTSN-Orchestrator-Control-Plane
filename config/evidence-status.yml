@@ -21,6 +21,7 @@ status_legend:
   protected_endpoint_validation_plan: repository-controlled protected endpoint validation planning
   runtime_readiness_report_pack: repository-controlled runtime readiness report pack
   local_client_evidence_pack: repository-controlled local MCP client evidence collection pack
+  protected_endpoint_execution_pack: repository-controlled protected endpoint operator execution package
   log_review: repository-controlled validation log diagnosis and corrective action record
   admin_export_complete: repository-controlled GitHub admin/environment export completion evidence
 
@@ -171,6 +172,19 @@ categories:
       - tests/Test-OrchestratorLocalClientEvidencePack.ps1
     validation_file: docs/validation/ORT11_LOCAL_MCP_CLIENT_EVIDENCE_PACK_PENDING_20260705.md
     control_status: pending_real_local_client_evidence_no_live_write_approval
+
+  ort12_protected_endpoint_validation_execution_pack:
+    status: protected_endpoint_execution_pack
+    release_train: O-RT12
+    execution_doc: docs/ORT12_PROTECTED_ENDPOINT_VALIDATION_EXECUTION_PACK_20260706.md
+    execution_policy: config/protected-endpoint-validation-execution.yml
+    operator_runbook: templates/protected-endpoint-validation/PROTECTED_ENDPOINT_OPERATOR_EXECUTION_RUNBOOK.md
+    result_template: templates/protected-endpoint-validation/PROTECTED_ENDPOINT_RESULT_TEMPLATE.json
+    sample_result: examples/protected-endpoint-validation/sample_sanitized_validation_result.json
+    tests:
+      - tests/Test-OrchestratorProtectedEndpointExecutionPack.ps1
+    validation_file: docs/validation/ORT12_PROTECTED_ENDPOINT_VALIDATION_EXECUTION_PACK_COMPLETE_20260706.md
+    control_status: operator_local_execution_pack_complete_no_live_write_approval
 
   drift_validation_log_review_77656234734:
     status: log_review
