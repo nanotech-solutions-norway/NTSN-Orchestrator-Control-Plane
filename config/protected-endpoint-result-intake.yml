@@ -1,0 +1,56 @@
+# Protected endpoint validation result intake — O-RT13 — 2026-07-06
+
+release_train: O-RT13
+mode: ENDPOINT_VALIDATION_RESULT_INTAKE
+repository_endpoint_calls_allowed: false
+live_write_approved: false
+intake_location: evidence/protected-endpoint-results
+unknown_result_default: PENDING_REVIEW
+
+source_controls:
+  - docs/ORT13_ENDPOINT_VALIDATION_RESULT_INTAKE_20260706.md
+  - config/protected-endpoint-validation-execution.yml
+  - templates/protected-endpoint-validation/PROTECTED_ENDPOINT_RESULT_TEMPLATE.json
+
+accepted_targets:
+  - domeneshop_mcp_public_health
+  - domeneshop_mcp_status
+  - conta_mcp
+  - ntsn_orchestrator_control_plane
+
+accepted_result_classes:
+  - READ_ONLY_READY
+  - PLAN_ONLY_READY
+  - PENDING_REVIEW
+  - NOT_CONFIGURED
+  - FAILED_VALIDATION
+
+required_fields:
+  - validationId
+  - releaseTrain
+  - targetId
+  - category
+  - timestampUtc
+  - operator
+  - resultClass
+  - httpStatus
+  - statusSummary
+  - evidenceReference
+  - followUpRequired
+  - sanitizationConfirmed
+
+blocked_markers:
+  - credentialValue
+  - tokenValue
+  - rawHeader
+  - rawPrivateBody
+  - fullEnvValue
+  - mutationPayload
+
+current_result_status:
+  real_operator_results_ingested: false
+  current_readiness_update: pending_operator_result_files
+
+minimum_validation:
+  - ./tests/Test-OrchestratorEndpointValidationResultIntake.ps1
+  - ./tests/Test-OrchestratorProtectedEndpointExecutionPack.ps1
