@@ -14,19 +14,28 @@ source_controls:
   - config/mcp-runtime-client-alignment.yml
   - docs/ORT12_PROTECTED_ENDPOINT_VALIDATION_EXECUTION_PACK_20260706.md
 
+scope_correction_20260708:
+  ds_atlas_ai_health_php_classification: DOMENESHOP_MCP_PUBLIC_HEALTH_ONLY
+  orchestrator_health_php_status: NOT_IMPLEMENTED_NO_PUBLIC_OR_SERVER_SIDE_HEALTH_FILE_EVIDENCED
+  orchestrator_readiness_method: REPOSITORY_VALIDATION_SUITE_ONLY
+  note: Do not classify https://ds.atlas-ai.no/health.php as an Orchestrator health endpoint.
+
 validation_targets:
   domeneshop_mcp_public_health:
     source_entry: domeneshop-mcp-public-health
     category: public_health
+    endpoint_classification: DOMENESHOP_MCP_PUBLIC_HEALTH_ONLY
+    known_operator_url: https://ds.atlas-ai.no/health.php
     expected_result_class: READ_ONLY_READY
-    operator_command_template: ./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 -TargetId domeneshop_mcp_public_health -Category public_health -Uri '<public-health-url>'
+    operator_command_template: ./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 -TargetId domeneshop_mcp_public_health -Category public_health -Uri 'https://ds.atlas-ai.no/health.php'
     protected_input_required: false
     sanitized_result_required: true
   domeneshop_mcp_status:
     source_entry: domeneshop-mcp-status
     category: protected_status
+    endpoint_classification: DOMENESHOP_MCP_PROTECTED_STATUS_ONLY
     expected_result_class: PLAN_ONLY_READY
-    operator_command_template: ./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 -TargetId domeneshop_mcp_status -Category protected_status -Uri '<protected-status-url>' -AuthEnvVarName '<LOCAL_ENV_VAR_NAME>'
+    operator_command_template: ./tools/protected-endpoint-validation/Invoke-ProtectedEndpointValidation.ps1 -TargetId domeneshop_mcp_status -Category protected_status -Uri '<domeneshop-mcp-status-url>' -AuthEnvVarName 'MCP_BRIDGE_BEARER_TOKEN'
     protected_input_required: true
     sanitized_result_required: true
   conta_mcp:
@@ -39,6 +48,7 @@ validation_targets:
   ntsn_orchestrator_control_plane:
     source_entry: ntsn-orchestrator-control-plane
     category: repository_readiness
+    endpoint_classification: NO_ORCHESTRATOR_HEALTH_ENDPOINT_EVIDENCED
     expected_result_class: READ_ONLY_READY
     operator_command_template: ./tests/Test-OrchestratorValidationSuite.ps1
     protected_input_required: false
