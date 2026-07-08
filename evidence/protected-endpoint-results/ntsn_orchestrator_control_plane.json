@@ -1,0 +1,14 @@
+{
+  "validationId": "ORT13-ntsn_orchestrator_control_plane-20260708-operator-reported",
+  "releaseTrain": "O-RT13",
+  "targetId": "ntsn_orchestrator_control_plane",
+  "category": "repository_readiness",
+  "timestampUtc": "2026-07-08T00:00:00Z",
+  "operator": "operator-local",
+  "resultClass": "READ_ONLY_READY",
+  "httpStatus": "not_applicable_repository_suite",
+  "statusSummary": "Operator reported repository validation suite passed. No Orchestrator health endpoint was used or inferred.",
+  "evidenceReference": "operator_reported_ntsn_orchestrator_control_plane_passed",
+  "followUpRequired": "none",
+  "sanitizationConfirmed": true
+}
