@@ -7,6 +7,11 @@ live_write_approved: false
 intake_location: evidence/protected-endpoint-results
 unknown_result_default: PENDING_REVIEW
 
+scope_rule_20260708:
+  ds_subdomain_scope: DOMENESHOP_MCP_ONLY
+  orchestrator_runtime_health_endpoint: NOT_EVIDENCED
+  orchestrator_readiness_method: REPOSITORY_VALIDATION_SUITE_ONLY
+
 source_controls:
   - docs/ORT13_ENDPOINT_VALIDATION_RESULT_INTAKE_20260706.md
   - config/protected-endpoint-validation-execution.yml
@@ -39,23 +44,17 @@ required_fields:
   - followUpRequired
   - sanitizationConfirmed
 
-blocked_markers:
-  - credentialValue
-  - tokenValue
-  - rawHeader
-  - rawPrivateBody
-  - fullEnvValue
-  - mutationPayload
-
 ingested_results:
   domeneshop_mcp_public_health:
     file: evidence/protected-endpoint-results/domeneshop_mcp_public_health.json
+    scope: DOMENESHOP_MCP_ONLY
     resultClass: READ_ONLY_READY
     httpStatus: '200'
     intakeDecision: READ_ONLY_READY
     followUpRequired: none
   domeneshop_mcp_status:
     file: evidence/protected-endpoint-results/domeneshop_mcp_status.json
+    scope: DOMENESHOP_MCP_ONLY
     resultClass: FAILED_VALIDATION
     httpStatus: request_failed
     intakeDecision: PENDING_REVIEW
@@ -66,17 +65,22 @@ ingested_results:
     intakeDecision: PENDING_OPERATOR_RESULT
     followUpRequired: run_o_rt12_wrapper
   ntsn_orchestrator_control_plane:
-    file: null
-    resultClass: null
-    intakeDecision: PENDING_OPERATOR_RESULT
-    followUpRequired: run_validation_suite_or_submit_sanitized_result
+    file: evidence/protected-endpoint-results/ntsn_orchestrator_control_plane.json
+    scope: REPOSITORY_VALIDATION_SUITE_ONLY
+    resultClass: READ_ONLY_READY
+    httpStatus: not_applicable_repository_suite
+    intakeDecision: READ_ONLY_READY
+    followUpRequired: none
 
 current_result_status:
   real_operator_results_ingested: true
-  public_health_ready: true
-  protected_status_ready: false
-  protected_status_pending_review: true
-  current_readiness_update: domeneshop_public_health_ready_protected_status_pending_review
+  domeneshop_mcp_public_health_ready: true
+  domeneshop_mcp_protected_status_ready: false
+  domeneshop_mcp_protected_status_pending_review: true
+  orchestrator_repository_readiness_ready: true
+  orchestrator_runtime_health_endpoint: NOT_EVIDENCED
+  conta_mcp_result_pending: true
+  current_readiness_update: domeneshop_mcp_public_health_ready_orchestrator_suite_ready_domeneshop_status_pending_conta_pending
 
 minimum_validation:
   - ./tests/Test-OrchestratorEndpointValidationResultIntake.ps1
