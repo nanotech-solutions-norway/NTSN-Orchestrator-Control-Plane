@@ -47,9 +47,36 @@ blocked_markers:
   - fullEnvValue
   - mutationPayload
 
+ingested_results:
+  domeneshop_mcp_public_health:
+    file: evidence/protected-endpoint-results/domeneshop_mcp_public_health.json
+    resultClass: READ_ONLY_READY
+    httpStatus: '200'
+    intakeDecision: READ_ONLY_READY
+    followUpRequired: none
+  domeneshop_mcp_status:
+    file: evidence/protected-endpoint-results/domeneshop_mcp_status.json
+    resultClass: FAILED_VALIDATION
+    httpStatus: request_failed
+    intakeDecision: PENDING_REVIEW
+    followUpRequired: review_endpoint_or_network
+  conta_mcp:
+    file: null
+    resultClass: null
+    intakeDecision: PENDING_OPERATOR_RESULT
+    followUpRequired: run_o_rt12_wrapper
+  ntsn_orchestrator_control_plane:
+    file: null
+    resultClass: null
+    intakeDecision: PENDING_OPERATOR_RESULT
+    followUpRequired: run_validation_suite_or_submit_sanitized_result
+
 current_result_status:
-  real_operator_results_ingested: false
-  current_readiness_update: pending_operator_result_files
+  real_operator_results_ingested: true
+  public_health_ready: true
+  protected_status_ready: false
+  protected_status_pending_review: true
+  current_readiness_update: domeneshop_public_health_ready_protected_status_pending_review
 
 minimum_validation:
   - ./tests/Test-OrchestratorEndpointValidationResultIntake.ps1
