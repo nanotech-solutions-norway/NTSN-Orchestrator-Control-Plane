@@ -1,0 +1,14 @@
+{
+  "validationId": "ORT12-domeneshop_mcp_status-20260708T000718Z",
+  "releaseTrain": "O-RT12",
+  "targetId": "domeneshop_mcp_status",
+  "category": "protected_status",
+  "timestampUtc": "2026-07-08T00:07:18Z",
+  "operator": "operator-local",
+  "resultClass": "FAILED_VALIDATION",
+  "httpStatus": "request_failed",
+  "statusSummary": "GET failed; sanitized error class=ParameterBindingException",
+  "evidenceReference": ".\\evidence\\protected-endpoint-results\\domeneshop_mcp_status.json",
+  "followUpRequired": "review_endpoint_or_network",
+  "sanitizationConfirmed": true
+}
