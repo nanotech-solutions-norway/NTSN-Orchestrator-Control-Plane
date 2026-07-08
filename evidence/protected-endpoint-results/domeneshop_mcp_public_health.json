@@ -1,0 +1,14 @@
+{
+  "validationId": "ORT12-domeneshop_mcp_public_health-20260708T000229Z",
+  "releaseTrain": "O-RT12",
+  "targetId": "domeneshop_mcp_public_health",
+  "category": "public_health",
+  "timestampUtc": "2026-07-08T00:02:29Z",
+  "operator": "operator-local",
+  "resultClass": "READ_ONLY_READY",
+  "httpStatus": "200",
+  "statusSummary": "GET completed; body omitted; bodyLength=611; elapsedMs=691",
+  "evidenceReference": ".\\evidence\\protected-endpoint-results\\domeneshop_mcp_public_health.json",
+  "followUpRequired": "none",
+  "sanitizationConfirmed": true
+}
