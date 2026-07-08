@@ -10,13 +10,15 @@ PLAN_ONLY_READY
 PR_FIRST_CHANGE_PACK_READY
 PROTECTED_ENDPOINT_VALIDATION_PLANNING_READY
 PROTECTED_ENDPOINT_EXECUTION_PACK_READY
+DOMENESHOP_PUBLIC_HEALTH_READY
+DOMENESHOP_PROTECTED_STATUS_PENDING_REVIEW
 GITHUB_ADMIN_EXPORT_COMPLETE
 LIVE_WRITE_NOT_APPROVED
 ```
 
 ## Scope
 
-This report consolidates O-RT1 through O-RT9 for the NTSN Orchestrator Control Plane, with later GitHub admin/environment protection evidence closure and O-RT12 protected endpoint execution packaging recorded on 2026-07-06.
+This report consolidates O-RT1 through O-RT13 for the NTSN Orchestrator Control Plane, with GitHub admin/environment protection evidence closure and endpoint result intake recorded through 2026-07-08.
 
 ## Completed release phases
 
@@ -32,6 +34,7 @@ This report consolidates O-RT1 through O-RT9 for the NTSN Orchestrator Control P
 | O-RT8 | Complete | MCP runtime/client config refresh. |
 | O-RT9 | Complete | Protected endpoint validation planning. |
 | O-RT12 | Complete | Protected endpoint validation execution pack. |
+| O-RT13 | Partial results ingested | Domeneshop public health ready; protected status pending review. |
 
 ## Current capability posture
 
@@ -46,6 +49,8 @@ This report consolidates O-RT1 through O-RT9 for the NTSN Orchestrator Control P
 | MCP runtime/client evidence tracking | Refreshed | O-RT8 current source: 12:33, 04.07.2026 package. |
 | Protected endpoint validation planning | Ready | O-RT9 plan complete. |
 | Protected endpoint execution package | Ready | O-RT12 operator-local runbook and sanitized result template complete. |
+| Domeneshop public health | Ready | Sanitized O-RT13 result: READ_ONLY_READY / HTTP 200. |
+| Domeneshop protected status | Pending review | Sanitized O-RT13 result: FAILED_VALIDATION / ParameterBindingException. |
 | GitHub admin/environment protection evidence | Complete | Completed 2026-07-06 from connector metadata and operator GitHub UI review. |
 | Live provider operations | Not approved | Requires separate approval package. |
 | Production deployment | Not approved | Requires separate approval package. |
@@ -97,26 +102,33 @@ No repository or environment secrets configured.
 No repository or environment variables configured.
 ```
 
-## Protected endpoint execution package
+## Protected endpoint result intake
 
-Current execution package source:
+Current intake source:
 
 ```text
-docs/ORT12_PROTECTED_ENDPOINT_VALIDATION_EXECUTION_PACK_20260706.md
-config/protected-endpoint-validation-execution.yml
-templates/protected-endpoint-validation/PROTECTED_ENDPOINT_OPERATOR_EXECUTION_RUNBOOK.md
-templates/protected-endpoint-validation/PROTECTED_ENDPOINT_RESULT_TEMPLATE.json
+evidence/protected-endpoint-results/domeneshop_mcp_public_health.json
+evidence/protected-endpoint-results/domeneshop_mcp_status.json
+docs/validation/ORT13_DOMENESHOP_ENDPOINT_RESULTS_INGESTED_20260708.md
+config/protected-endpoint-result-intake.yml
 ```
 
-O-RT12 provides operator-local commands and sanitized result capture. It does not perform endpoint calls from the repository.
+Current endpoint status:
+
+| Target | Result | Intake decision |
+|---|---|---|
+| `domeneshop_mcp_public_health` | `READ_ONLY_READY`, HTTP `200` | `READ_ONLY_READY` |
+| `domeneshop_mcp_status` | `FAILED_VALIDATION`, `request_failed` | `PENDING_REVIEW` |
+| `conta_mcp` | no result submitted | `PENDING_OPERATOR_RESULT` |
+| `ntsn_orchestrator_control_plane` | no result submitted | `PENDING_OPERATOR_RESULT` |
 
 ## Remaining gaps before a future controlled live-operation proposal
 
 | Gap | Required resolution |
 |---|---|
-| Sanitized endpoint validation results not yet ingested | Run operator-local checks and process results through O-RT13. |
-| Domeneshop HTTPS/certificate readiness remains pending | Confirm certificate correction and public health status through sanitized result intake. |
+| Domeneshop protected status validation failed | Review endpoint URL, local auth variable, and wrapper behavior; rerun O-RT12 locally. |
 | Conta MCP validation is stale or plan-only | Refresh sandbox/server validation evidence through sanitized result intake. |
+| Orchestrator local readiness result absent | Run validation suite or submit sanitized result for `ntsn_orchestrator_control_plane`. |
 | Claude Desktop local MCP config absent | Provide sanitized config evidence if required. |
 | Cursor local MCP config absent | Provide sanitized config evidence if required. |
 | Provider write rollback plans absent | Create provider-specific rollback/disable plans before any write proposal. |
@@ -133,7 +145,7 @@ destructive_operations_approved: false
 
 ## Operator conclusion
 
-The orchestrator is ready for report-only, read-only, plan-only, adapter-contract review, protected endpoint operator-local validation packaging, and PR-first change-pack workflows.
+The orchestrator is ready for report-only, read-only, plan-only, adapter-contract review, protected endpoint operator-local validation packaging, sanitized result intake, and PR-first change-pack workflows.
 
 It is not ready or approved for direct live provider operations, production deployment, or protected-value handling outside controlled operator processes.
 
@@ -142,9 +154,9 @@ It is not ready or approved for direct live provider operations, production depl
 Choose one of:
 
 ```text
-A. Run O-RT4/O-RT12 validation workflow and review artifacts.
-B. Proceed to O-RT13 endpoint validation result intake.
-C. Provide missing sanitized local client config evidence for Claude/Cursor.
+A. Rerun Domeneshop protected status O-RT12 validation after correcting local command/endpoint/auth setup.
+B. Run Conta MCP O-RT12 validation and submit sanitized result.
+C. Run repository validation suite and submit sanitized orchestrator readiness result.
 D. Prepare provider-specific rollback/disable plans.
-E. Hold release train at report-only/readiness-package state.
+E. Hold release train at current read-only/readiness state.
 ```
